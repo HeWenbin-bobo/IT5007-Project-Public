@@ -74,7 +74,7 @@ function AccountProfileContent(props) {
         </Card>
 )};
 
-export default class AccountProfile extends React.Component {
+export class AccountProfile extends React.Component {
     static contextTypes = {
         currentUser: PropTypes.object,
     };

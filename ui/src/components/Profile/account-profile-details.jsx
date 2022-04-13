@@ -208,7 +208,7 @@ function AccountProfileDetailsContent(props) {
 };
 
 
-export default class AccountProfileDetails extends React.Component {
+export class AccountProfileDetails extends React.Component {
     static contextTypes = {
         currentUser: PropTypes.object,
     };

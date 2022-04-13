@@ -68,7 +68,7 @@ function SettingsPasswordContent(props) {
 };
 
 
-export default class SettingsPassword extends React.Component {
+export class SettingsPassword extends React.Component {
     static contextTypes = {
         currentUser: PropTypes.object,
     };

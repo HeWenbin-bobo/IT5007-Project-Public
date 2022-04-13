@@ -143,7 +143,7 @@ export default class Homepage extends React.Component {
   async userQuery(email) {
     const queryUser = `query userFind($email: String!) {
       userFind(email: $email) {
-        _id id email firstName lastName password balance
+        _id id email firstName lastName password balance photoURL
       }
     }`;
     const resultFind = await graphQLFetch(queryUser, { email });

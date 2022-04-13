@@ -17,7 +17,7 @@ function NativeSelectContent(props) {
                 <NativeSelect
                 defaultValue={0}
                 inputProps={{
-                    name: 'age',
+                    name: 'type',
                     id: 'uncontrolled-native',
                 }}
                 >

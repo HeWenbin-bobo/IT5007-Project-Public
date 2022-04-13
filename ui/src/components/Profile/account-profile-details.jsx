@@ -39,7 +39,7 @@ const user = {
 
 function AccountProfileDetailsContent(props) {
 
-    const values = {
+    const [values, setValues] = useState({
         firstName: props.currentUser.displayName != undefined? props.currentUser.displayName.split(" ").at(0) : user.displayName.split(" ").at(0),
         lastName: props.currentUser.displayName != undefined? props.currentUser.displayName.split(" ").at(1) : user.displayName.split(" ").at(1),
         email: props.currentUser.email != undefined? props.currentUser.email : user.email,
@@ -47,10 +47,13 @@ function AccountProfileDetailsContent(props) {
         country: props.currentUser.country != undefined? props.currentUser.country : user.country,
         currentCity: props.currentUser.currentCity != undefined? props.currentUser.currentCity : user.currentCity,
         cities: props.currentUser.cities != undefined? props.currentUser.cities : user.cities,
-    }
+    });
 
-    const handleSubmit = (event) => {
-        alert("not developed yet!")
+    const handleChange = (event) => {
+        setValues({
+            ...values,
+            [event.target.name]: event.target.value
+        });
     };
 
     return (

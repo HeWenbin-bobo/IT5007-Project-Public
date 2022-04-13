@@ -57,7 +57,6 @@ export default class Homepage extends React.Component {
 
   async componentDidMount() {
     await this.checkLoginStatus();
-    this.changePage("Assets");
   }
   
   //定义孙子及以后辈组件能接收到的参数和方法
@@ -211,6 +210,8 @@ export default class Homepage extends React.Component {
   }
 
   async login(email, password) {
+    this.changePage("Assets");
+
     if (this.state.currentUser.email != '') {
       alert("You have logged in");
       return true;
@@ -268,6 +269,8 @@ export default class Homepage extends React.Component {
   }
 
   async register(firstName, lastName, email, password, photoURL='') {
+    this.changePage("Assets");
+
     const mutation = `mutation register($user: UserInputs!) {
       register(user: $user)
     }`;

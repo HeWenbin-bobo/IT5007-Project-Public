@@ -19,18 +19,19 @@ db.users.createIndex({ firstName: 1 });
 db.users.createIndex({ lastName: 1 });
 db.users.createIndex({ password: 1 });
 db.users.createIndex({ balance: 1 });
+db.users.createIndex({ photoURL: 1 });
 
 db.userCounters.remove({ _id: 'users' });
 db.userCounters.insert({ _id: 'users', current: 0 });
 
 const typesDB = 
 [
-  {id:0, typeName:"ETH", price:10}, 
-  {id:1, typeName:"BTC", price:20}, 
-  {id:2, typeName:"XRP", price:30}, 
-  {id:3, typeName:"BNB", price:40}, 
-  {id:4, typeName:"AMD", price:50}, 
-  {id:5, typeName:"AAPL", price:60}
+  {id:0, typeName:"ETH", description:"test", price:10},
+  {id:1, typeName:"BTC", description:"test", price:20},
+  {id:2, typeName:"XRP", description:"test", price:30},
+  {id:3, typeName:"BNB", description:"test", price:40},
+  {id:4, typeName:"AMD", description:"test", price:50},
+  {id:5, typeName:"AAPL", description:"test", price:60}
 ];
 db.types.remove({});
 db.types.insertMany(typesDB);
@@ -56,3 +57,10 @@ db.historyCounters.remove({});
 
 db.currentUser.remove({});
 db.currentUser.insert({ _id: 'currentUser', currentId: -1, email: '' });
+
+db.orders.remove({});
+db.orders.createIndex({ id: 1 }, { unique: true });
+db.orders.createIndex({ currenSstate: 1 });
+db.orders.createIndex({ price: 1 });
+db.orders.createIndex({ quantity: 1 });
+db.orders.createIndex({ symbol: 1 });

@@ -15,14 +15,14 @@ function roundFun(value, n) {
   return Math.round(value*Math.pow(10,n))/Math.pow(10,n);
 }
 
-// For copy of dictionary, use slice for array
-function clone(obj) {
-  var copy = {};
-  for (var attr in obj) {
-    copy[attr] = typeof(obj[attr])==='object' ? clone(obj[attr]) : obj[attr];
-  }
-  return copy;
-}
+// // For copy of dictionary, use slice for array
+// function clone(obj) {
+//   var copy = {};
+//   for (var attr in obj) {
+//     copy[attr] = typeof(obj[attr])==='object' ? clone(obj[attr]) : obj[attr];
+//   }
+//   return copy;
+// }
 
 export default class Homepage extends React.Component {
   constructor() {
@@ -99,7 +99,7 @@ export default class Homepage extends React.Component {
   async currentUserQueryFunction() {
     const query = `query { 
       currentUserQuery {
-        currentId, email
+        currentId, email, photoURL
       } 
     }`;
     const result = await graphQLFetch(query);
@@ -122,14 +122,15 @@ export default class Homepage extends React.Component {
     this.setState({ balance: newBalance, history: newHistory }, ()=>{} );
   }
 
-  async loadData(userId, email) {
+  async loadData(userId, email, photoURL) {
     const resultFind = await this.userQuery(email);
     const currentUser =
     {
       id: resultFind.userFind.id,
       displayName: resultFind.userFind.firstName + ' ' + resultFind.userFind.lastName,
       email: email,
-      photoURL: '/static/mock-images/avatars/avatar_' + String(resultFind.userFind.id % 25) + '.jpg',
+      // photoURL: '/static/mock-images/avatars/avatar_' + String(resultFind.userFind.id % 25) + '.jpg',
+      photoURL: photoURL,
     };
 
     const newBalance = resultFind.userFind.balance;
@@ -202,7 +203,7 @@ export default class Homepage extends React.Component {
       alert(result.logout);
     } else {
       alert("You have not logged in!");
-    };
+    }
   }
 
   async login(email, password, photoURL='') {
@@ -213,7 +214,7 @@ export default class Homepage extends React.Component {
 
     const queryUserList = `query {
       users {
-        id email firstName lastName password balance
+        id email firstName lastName password balance photoURL
       }
     }`;
     const userList = await graphQLFetch(queryUserList);
@@ -243,7 +244,7 @@ export default class Homepage extends React.Component {
           id: resultFind.userFind.id,
           displayName: resultFind.userFind.firstName + ' ' + resultFind.userFind.lastName,
           email: email,
-          photoURL: photoURL == ''? '/static/mock-images/avatars/avatar_' + String(resultFind.userFind.id % 25) + '.jpg' : photoURL,
+          photoURL: resultFind.userFind.photoURL,
         };
         const userId = currentUser.id;
         const newBalance = resultFind.userFind.balance;
@@ -271,6 +272,7 @@ export default class Homepage extends React.Component {
       firstName: firstName,
       lastName: lastName,
       password: password,
+      photoURL: photoURL == ''? '/static/mock-images/avatars/avatar_' + String(resultFind.userFind.id % 25) + '.jpg' : photoURL,
     };
 
     const data = await graphQLFetch(mutation, { user });
@@ -283,7 +285,7 @@ export default class Homepage extends React.Component {
           id: resultFind.userFind.id,
           displayName: resultFind.userFind.firstName + ' ' + resultFind.userFind.lastName,
           email: email,
-          photoURL: photoURL == ''? '/static/mock-images/avatars/avatar_' + String(resultFind.userFind.id % 25) + '.jpg' : photoURL,
+          photoURL: resultFind.userFind.photoURL,
         };
         const userId = currentUser.id;
         const newBalance = resultFind.userFind.balance;
@@ -376,8 +378,8 @@ export default class Homepage extends React.Component {
     
               const newBalance = await this.balanceQuery(userId);
 
-              this.setState({ wallet: newWallet, balance : newBalance, history: newHistory }, () => { alert(data.walletItemSell);; });
-            };
+              this.setState({ wallet: newWallet, balance : newBalance, history: newHistory }, () => { alert(data.walletItemSell); });
+            }
           } else {
             alert(`You do not have enough ${typeName}! You only have ${typeBalance}`);
           }
@@ -427,7 +429,7 @@ export default class Homepage extends React.Component {
                 const newBalance = await this.balanceQuery(userId);
 
                 this.setState({ wallet: newWallet, balance : newBalance, history: newHistory }, () => { alert(data.walletItemConvert); console.log(this.state); });
-              };
+              }
             } else {
               alert(`You do not have enough ${typeNameFrom}! You only have ${itemFrom.balance}`);
             }
@@ -468,7 +470,7 @@ export default class Homepage extends React.Component {
 
   async checkLoginStatus() {
     const result = await this.currentUserQueryFunction();
-    result.currentId === -1? this.state.webHistory.replace('/login') : await (async () => {await this.loadData(result.currentId, result.email);})();
+    result.currentId === -1? this.state.webHistory.replace('/login') : await (async () => {await this.loadData(result.currentId, result.email, result.photoURL);})();
   }
 
   render() {

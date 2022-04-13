@@ -15,6 +15,7 @@ type User {
   lastName: String!
   password: String!
   balance: Float!
+  photoURL: String!
 }
 
 type History {
@@ -38,6 +39,7 @@ type Balance {
 type CurrentUser {
   currentId: Int!
   email: String!
+  photoURL: String!
 }
 
 input HistoryInputs {
@@ -50,6 +52,7 @@ input UserInputs {
   firstName: String!
   lastName: String!
   password: String!
+  photoURL: String!
 }
 
 input WalletItemInput {

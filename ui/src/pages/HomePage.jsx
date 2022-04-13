@@ -169,7 +169,7 @@ export default class Homepage extends React.Component {
       updatePassword(passwordInput: $passwordInput)
     }`;
     const result = await graphQLFetch(mutation, {passwordInput});
-    alert(result);
+    alert(result.updatePassword);
   }
 
   async loadData(userId, email, photoURL) {

@@ -59,7 +59,6 @@ function AccountProfileDetailsContent(props) {
         <form
             autoComplete="off"
             noValidate
-            {...props}
         >
             <Card>
                 <CardHeader

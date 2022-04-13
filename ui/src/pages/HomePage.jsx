@@ -5,6 +5,7 @@ import AssetsPage from './AssetsPage';
 import TradePage from './TradePage';
 import LoginPage from './LoginPage';
 import RegisterPage from './RegisterPage';
+import ProfilePage from './ProfilePage';
 import HomePageContent from '../pageContent/HomePageContent';
 import account from '../_mocks_/account';
 import graphQLFetch from '../graphQLFetch';
@@ -462,6 +463,9 @@ export default class Homepage extends React.Component {
         break;
       case 'Register':
         temp = <RegisterPage />
+        break;
+      case 'Profile':
+        temp = <ProfilePage />
         break;
       default:
         temp = <AssetsPage />

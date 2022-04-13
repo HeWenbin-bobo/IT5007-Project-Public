@@ -38,7 +38,7 @@ const user = {
 };
 
 
-const AccountProfileDetailsContent = (props) => {
+function AccountProfileDetailsContent(props) {
 
     const values = {
         firstName: props.currentUser.displayName != undefined? props.currentUser.displayName.split(" ").at(0) : user.displayName.split(" ").at(0),

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box, Button, Card, CardContent, CardHeader, Divider, TextField } from '@mui/material';
 import PropTypes from 'prop-types';
 
-const SettingsPasswordContent = (props) => {
+function SettingsPasswordContent(props) {
     const [values, setValues] = useState({
         password: '',
         confirm: ''

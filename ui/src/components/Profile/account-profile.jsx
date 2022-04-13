@@ -19,58 +19,59 @@ const user = {
     timezone: 'GTM-8'
 };
 
-const AccountProfileContent = (props) => (
-    <Card {...props}>
-        <CardContent>
-            <Box
-                sx={{
-                    alignItems: 'center',
-                    display: 'flex',
-                    flexDirection: 'column'
-                }}
-            >
-                <Avatar
-                    src={props.currentUser.photoURL != undefined? props.currentUser.photoURL : user.photoURL}
+function AccountProfileContent(props) {
+    return (
+        <Card {...props}>
+            <CardContent>
+                <Box
                     sx={{
-                        height: 64,
-                        mb: 2,
-                        width: 64
+                        alignItems: 'center',
+                        display: 'flex',
+                        flexDirection: 'column'
                     }}
-                />
-                <Typography
-                    color="textPrimary"
-                    gutterBottom
-                    variant="h5"
                 >
-                    {props.currentUser.displayName != undefined? props.currentUser.displayName : user.displayName}
-                </Typography>
-                <Typography
-                    color="textSecondary"
-                    variant="body2"
+                    <Avatar
+                        src={props.currentUser.photoURL != undefined? props.currentUser.photoURL : user.photoURL}
+                        sx={{
+                            height: 64,
+                            mb: 2,
+                            width: 64
+                        }}
+                    />
+                    <Typography
+                        color="textPrimary"
+                        gutterBottom
+                        variant="h5"
+                    >
+                        {props.currentUser.displayName != undefined? props.currentUser.displayName : user.displayName}
+                    </Typography>
+                    <Typography
+                        color="textSecondary"
+                        variant="body2"
+                    >
+                        {props.currentUser.city != undefined && props.currentUser.country != undefined? `${props.currentUser.city} ${props.currentUser.country}` : `${user.city} ${user.country}`}
+                    </Typography>
+                    <Typography
+                        color="textSecondary"
+                        variant="body2"
+                    >
+                        {props.currentUser.timezone != undefined? props.currentUser.timezone : user.timezone}
+                    </Typography>
+                </Box>
+            </CardContent>
+            <Divider />
+            <CardActions>
+                <Button
+                    color="primary"
+                    fullWidth
+                    variant="text"
+                    disabled
                 >
-                    {props.currentUser.city != undefined && props.currentUser.country != undefined? `${props.currentUser.city} ${props.currentUser.country}` : `${user.city} ${user.country}`}
-                </Typography>
-                <Typography
-                    color="textSecondary"
-                    variant="body2"
-                >
-                    {props.currentUser.timezone != undefined? props.currentUser.timezone : user.timezone}
-                </Typography>
-            </Box>
-        </CardContent>
-        <Divider />
-        <CardActions>
-            <Button
-                color="primary"
-                fullWidth
-                variant="text"
-                disabled
-            >
-                Upload picture
-            </Button>
-        </CardActions>
-    </Card>
-);
+                    Upload picture
+                </Button>
+            </CardActions>
+        </Card>
+)};
 
 export default class AccountProfile extends React.Component {
     static contextTypes = {

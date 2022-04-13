@@ -74,6 +74,7 @@ input TopupInput {
 }
 
 input ProfileInput {
+  userId: Int!
   firstName: String!
   lastName: String!
 }

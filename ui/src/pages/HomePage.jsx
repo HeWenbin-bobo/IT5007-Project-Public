@@ -136,14 +136,14 @@ export default class Homepage extends React.Component {
     if (firstName + ' ' + lastName == this.state.currentUser.displayName) {
       alert('Nothing change, please check what you enter!');
     } else {
-      const profileInput = {firstName: firstName, lastName: lastName};
-      const mutation = `mutation updateProfile(profileInput: ProfileInput!) {
+      const profileInput = {userId: this.state.currentUser.id, firstName: firstName, lastName: lastName};
+      const mutation = `mutation updateProfile($profileInput: ProfileInput!) {
         updateProfile(profileInput: $profileInput)
       }`;
       const result = await graphQLFetch(mutation, {profileInput});
 
       const newDisplayName = firstName + ' ' + lastName;
-      const newUser = object.assign({}, this.state.currentUser);
+      const newUser = Object.assign({}, this.state.currentUser);
       newUser.displayName = newDisplayName;
       this.setState({currentUser: newUser}, alert(`You have changed your firstName to ${firstName}, and lastName to ${lastName}`));
     }

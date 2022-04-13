@@ -141,7 +141,6 @@ export default class Homepage extends React.Component {
         updateProfile(profileInput: $profileInput)
       }`;
       const result = await graphQLFetch(mutation, {profileInput});
-      console.log(result);
       const newDisplayName = firstName + ' ' + lastName;
       const newUser = Object.assign({}, this.state.currentUser);
       newUser.displayName = newDisplayName;

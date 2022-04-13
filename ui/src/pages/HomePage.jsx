@@ -148,6 +148,27 @@ export default class Homepage extends React.Component {
     }
   }
 
+  async updatePassword(password, confirm) {
+    if (password == '' || confirm == '') {
+      alert('You must enter the new password twice');
+      return false;
+    }
+    if (password.length * confirm.length < 9) {
+      alert('Your new password is too short');
+      return false;
+    }
+    if (password != confirm) {
+      alert('You must enter the new password twice correctly');
+      return false;
+    }
+    const passwordInput = {userId: this.state.currentUser.id, password: password};
+    const mutation = `mutation updatePassword($passwordInput: PasswordInput!) {
+      updatePassword(passwordInput: $passwordInput)
+    }`;
+    const result = await graphQLFetch(mutation, {passwordInput});
+    alert(result);
+  }
+
   async loadData(userId, email, photoURL) {
     const resultFind = await this.userQuery(email);
     const currentUser =

@@ -16,6 +16,15 @@ function SettingsPasswordContent(props) {
         });
     };
 
+    const handleSubmit = async (event) => {
+        await props.updatePassword(values.password, values.confirm);
+        setValues({
+            ...values,
+            password: '',
+            confirm:''
+        });
+    };
+
     return (
         <form>
             <Card>
@@ -57,7 +66,7 @@ function SettingsPasswordContent(props) {
                     <Button
                         color="primary"
                         variant="contained"
-                        onClick={() => {alert(`${values.password},${values.confirm}`)}}
+                        onClick={async () => await handleSubmit()}
                     >
                         Update
                     </Button>
@@ -71,11 +80,12 @@ function SettingsPasswordContent(props) {
 export class SettingsPassword extends React.Component {
     static contextTypes = {
         currentUser: PropTypes.object,
+        updatePassword: PropTypes.func,
     };
 
     render() {
         return (
-            <SettingsPasswordContent currentUser={this.context.currentUser} />
+            <SettingsPasswordContent currentUser={this.context.currentUser} updatePassword={this.context.updatePassword}/>
         );
     }
 }

@@ -106,4 +106,18 @@ async function updateProfile(_, { profileInput }) {
     return 'Successfully update profile!';
 }
 
-module.exports = { users, register, login, logout, userFind, currentUserQuery, topup, updateProfile };
+async function updatePassword(_, { passwordInput }) {
+    const db = getDb();
+
+    const userId = passwordInput.userId;
+    const password = passwordInput.password;
+
+    await db.collection('users').findOneAndUpdate(
+        { id: userId },
+        { $set: {password: password} }
+    );
+
+    return 'Successfully update password!';
+}
+
+module.exports = { users, register, login, logout, userFind, currentUserQuery, topup, updateProfile, updatePassword };

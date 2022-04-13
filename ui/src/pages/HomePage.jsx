@@ -280,7 +280,7 @@ export default class Homepage extends React.Component {
       firstName: firstName,
       lastName: lastName,
       password: password,
-      photoURL: photoURL == ''? '/static/mock-images/avatars/avatar_' + String(resultFind.userFind.id % 25) + '.jpg' : photoURL,
+      photoURL: photoURL == ''? '' : photoURL,
     };
 
     const data = await graphQLFetch(mutation, { user });

@@ -95,6 +95,7 @@ async function updateProfile(_, { profileInput }) {
     const db = getDb();
 
     const userId = profileInput.userId;
+    console.log(userId);
     const firstName = profileInput.firstName;
     const lastName = profileInput.lastName;
 

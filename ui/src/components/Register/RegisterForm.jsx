@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useFormik, Form, FormikProvider } from 'formik';
 import PropTypes from 'prop-types';
 // material
@@ -49,6 +49,13 @@ function RegisterFormContent(props) {
       };
     }
   });
+
+  useEffect(() => {
+    return () => {
+      setFieldValue("email", '');
+      setFieldValue("password", '');
+    };
+  }, []);
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps, setFieldValue } = formik;
 

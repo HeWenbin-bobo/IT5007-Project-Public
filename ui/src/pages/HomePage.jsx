@@ -5,11 +5,13 @@ import AssetsPage from './AssetsPage';
 import TradePage from './TradePage';
 import LoginPage from './LoginPage';
 import RegisterPage from './RegisterPage';
+import SettingPage from "./SettingPage";
 import ProfilePage from './ProfilePage';
 import HomePageContent from '../pageContent/HomePageContent';
 import account from '../_mocks_/account';
 import graphQLFetch from '../graphQLFetch';
 import { createHashHistory } from 'history';
+
 
 //保留n位小数
 function roundFun(value, n) {
@@ -466,6 +468,9 @@ export default class Homepage extends React.Component {
         break;
       case 'Profile':
         temp = <ProfilePage />
+        break;
+      case 'Setting':
+        temp = <SettingPage />
         break;
       default:
         temp = <AssetsPage />

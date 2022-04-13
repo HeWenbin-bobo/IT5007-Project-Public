@@ -138,7 +138,7 @@ export default class Homepage extends React.Component {
     } else {
       const profileInput = {firstName: firstName, lastName: lastName};
       const mutation = `mutation updateProfile(profileInput: ProfileInput!) {
-        updateProfile(profileInput: profileInput)
+        updateProfile(profileInput: $profileInput)
       }`;
       const result = await graphQLFetch(mutation, {profileInput});
 

@@ -8,17 +8,18 @@ import {
     Divider,
     Typography
 } from '@mui/material';
+import PropTypes from 'prop-types';
 
 const user = {
-    avatar: '/static/images/avatars/avatar_6.png',
-    city: 'Los Angeles',
-    country: 'USA',
-    jobTitle: 'Senior Developer',
-    name: 'Katarina Smith',
-    timezone: 'GTM-7'
+    photoURL: '/static/mock-images/avatars/avatar_default.jpg',
+    city: 'GuangZhou',
+    country: 'China',
+    jobTitle: 'TBC',
+    displayName: 'Katarina Smith',
+    timezone: 'GTM-8'
 };
 
-export const AccountProfile = (props) => (
+const AccountProfileContent = (props) => (
     <Card {...props}>
         <CardContent>
             <Box
@@ -29,7 +30,7 @@ export const AccountProfile = (props) => (
                 }}
             >
                 <Avatar
-                    src={user.avatar}
+                    src={props.currentUser.photoURL != undefined? props.currentUser.photoURL : user.photoURL}
                     sx={{
                         height: 64,
                         mb: 2,
@@ -41,19 +42,19 @@ export const AccountProfile = (props) => (
                     gutterBottom
                     variant="h5"
                 >
-                    {user.name}
+                    {props.currentUser.displayName != undefined? props.currentUser.displayName : user.displayName}
                 </Typography>
                 <Typography
                     color="textSecondary"
                     variant="body2"
                 >
-                    {`${user.city} ${user.country}`}
+                    {props.currentUser.city != undefined && props.currentUser.country != undefined? `${props.currentUser.city} ${props.currentUser.country}` : `${user.city} ${user.country}`}
                 </Typography>
                 <Typography
                     color="textSecondary"
                     variant="body2"
                 >
-                    {user.timezone}
+                    {props.currentUser.timezone != undefined? props.currentUser.timezone : user.timezone}
                 </Typography>
             </Box>
         </CardContent>
@@ -63,9 +64,22 @@ export const AccountProfile = (props) => (
                 color="primary"
                 fullWidth
                 variant="text"
+                disabled
             >
                 Upload picture
             </Button>
         </CardActions>
     </Card>
 );
+
+export default class AccountProfile extends React.Component {
+    static contextTypes = {
+        currentUser: PropTypes.object,
+    };
+
+    render() {
+        return (
+            <AccountProfileContent currentUser={this.context.currentUser} />
+        );
+    }
+}

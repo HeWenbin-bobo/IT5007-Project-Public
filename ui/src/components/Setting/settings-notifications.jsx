@@ -127,6 +127,7 @@ export const SettingsNotifications = (props) => (
                 <Button
                     color="primary"
                     variant="contained"
+                    onClick={() => {alert("not developed yet, please contact the developer!")}}
                 >
                     Save
                 </Button>

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Box, Button, Card, CardContent, CardHeader, Divider, TextField } from '@mui/material';
+import PropTypes from 'prop-types';
 
-export const SettingsPassword = (props) => {
+const SettingsPasswordContent = (props) => {
     const [values, setValues] = useState({
         password: '',
         confirm: ''
@@ -55,6 +56,7 @@ export const SettingsPassword = (props) => {
                     <Button
                         color="primary"
                         variant="contained"
+                        onClick={() => {alert(`${values.password},${values.confirm}`)}}
                     >
                         Update
                     </Button>
@@ -63,3 +65,16 @@ export const SettingsPassword = (props) => {
         </form>
     );
 };
+
+
+export default class SettingsPassword extends React.Component {
+    static contextTypes = {
+        currentUser: PropTypes.object,
+    };
+
+    render() {
+        return (
+            <SettingsPasswordContent currentUser={this.context.currentUser} />
+        );
+    }
+}

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
     Box,
     Button,
@@ -9,37 +8,48 @@ import {
     Grid,
     TextField
 } from '@mui/material';
+import PropTypes from 'prop-types';
 
-const states = [
-    {
-        value: 'alabama',
-        label: 'Alabama'
-    },
-    {
-        value: 'new-york',
-        label: 'New York'
-    },
-    {
-        value: 'san-francisco',
-        label: 'San Francisco'
+
+const user = {
+    photoURL: '/static/mock-images/avatars/avatar_default.jpg',
+    city: 'GuangZhou',
+    country: 'China',
+    jobTitle: 'TBC',
+    displayName: 'Katarina Smith',
+    timezone: 'GTM-8',
+    email: 'test@test.com',
+    phone: 'test',
+    currentCity: 'GuangZhou',
+    cities: [
+        {
+            value: 'Foshan',
+            label: 'Foshan'
+        },
+        {
+            value: 'HK',
+            label: 'HK'
+        },
+        {
+            value: 'Beijing',
+            label: 'Beijing'
+        }
+    ],
+};
+
+
+const AccountProfileDetailsContent = (props) => {
+
+    const values = {
+        firstName: props.currentUser.displayName != undefined? props.currentUser.displayName.split(" ").at(0) : user.displayName.split(" ").at(0),
+        lastName: props.currentUser.displayName != undefined? props.currentUser.displayName.split(" ").at(1) : user.displayName.split(" ").at(1),
+        email: props.currentUser.email != undefined? props.currentUser.email : user.email,
+        phone: props.currentUser.phone != undefined? props.currentUser.phone : user.phone,
+        country: props.currentUser.country != undefined? props.currentUser.country : user.country,
     }
-];
 
-export const AccountProfileDetails = (props) => {
-    const [values, setValues] = useState({
-        firstName: 'Katarina',
-        lastName: 'Smith',
-        email: 'demo@devias.io',
-        phone: '',
-        state: 'Alabama',
-        country: 'USA'
-    });
-
-    const handleChange = (event) => {
-        setValues({
-            ...values,
-            [event.target.name]: event.target.value
-        });
+    const handleSubmit = (event) => {
+        alert("not developed yet!")
     };
 
     return (
@@ -69,7 +79,7 @@ export const AccountProfileDetails = (props) => {
                                 helperText="Please specify the first name"
                                 label="First name"
                                 name="firstName"
-                                onChange={handleChange}
+                                // onChange={handleChange}
                                 required
                                 value={values.firstName}
                                 variant="outlined"
@@ -84,7 +94,7 @@ export const AccountProfileDetails = (props) => {
                                 fullWidth
                                 label="Last name"
                                 name="lastName"
-                                onChange={handleChange}
+                                // onChange={handleChange}
                                 required
                                 value={values.lastName}
                                 variant="outlined"
@@ -99,10 +109,13 @@ export const AccountProfileDetails = (props) => {
                                 fullWidth
                                 label="Email Address"
                                 name="email"
-                                onChange={handleChange}
+                                // onChange={handleChange}
                                 required
                                 value={values.email}
                                 variant="outlined"
+                                InputProps={{
+                                    readOnly: true,
+                                }}
                             />
                         </Grid>
                         <Grid
@@ -114,10 +127,13 @@ export const AccountProfileDetails = (props) => {
                                 fullWidth
                                 label="Phone Number"
                                 name="phone"
-                                onChange={handleChange}
+                                // onChange={handleChange}
                                 type="number"
                                 value={values.phone}
                                 variant="outlined"
+                                InputProps={{
+                                    readOnly: true,
+                                }}
                             />
                         </Grid>
                         <Grid
@@ -129,10 +145,13 @@ export const AccountProfileDetails = (props) => {
                                 fullWidth
                                 label="Country"
                                 name="country"
-                                onChange={handleChange}
+                                // onChange={handleChange}
                                 required
                                 value={values.country}
                                 variant="outlined"
+                                InputProps={{
+                                    readOnly: true,
+                                }}
                             />
                         </Grid>
                         <Grid
@@ -142,16 +161,19 @@ export const AccountProfileDetails = (props) => {
                         >
                             <TextField
                                 fullWidth
-                                label="Select State"
-                                name="state"
-                                onChange={handleChange}
+                                label="Select City"
+                                name="City"
+                                // onChange={handleChange}
                                 required
                                 select
                                 SelectProps={{ native: true }}
-                                value={values.state}
+                                value={values.currentCity}
                                 variant="outlined"
+                                InputProps={{
+                                    readOnly: true,
+                                }}
                             >
-                                {states.map((option) => (
+                                {values.cities.map((option) => (
                                     <option
                                         key={option.value}
                                         value={option.value}
@@ -174,6 +196,7 @@ export const AccountProfileDetails = (props) => {
                     <Button
                         color="primary"
                         variant="contained"
+                        onClick={handleSubmit()}
                     >
                         Save details
                     </Button>
@@ -182,3 +205,16 @@ export const AccountProfileDetails = (props) => {
         </form>
     );
 };
+
+
+export default class AccountProfileDetails extends React.Component {
+    static contextTypes = {
+        currentUser: PropTypes.object,
+    };
+
+    render() {
+        return (
+            <AccountProfileDetailsContent currentUser={this.context.currentUser} />
+        );
+    }
+}

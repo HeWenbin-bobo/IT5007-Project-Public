@@ -191,7 +191,7 @@ function AccountProfileDetailsContent(props) {
                     <Button
                         color="primary"
                         variant="contained"
-                        onClick={() => props.updateProfile(values.firstName, values.lastName)}
+                        onClick={async () => await props.updateProfile(values.firstName, values.lastName)}
                     >
                         Save details
                     </Button>

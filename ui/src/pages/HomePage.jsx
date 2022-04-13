@@ -57,6 +57,7 @@ export default class Homepage extends React.Component {
 
   async componentDidMount() {
     await this.checkLoginStatus();
+    this.changePage("Assets");
   }
   
   //定义孙子及以后辈组件能接收到的参数和方法

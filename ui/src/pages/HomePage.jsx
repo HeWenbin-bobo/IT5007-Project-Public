@@ -206,7 +206,7 @@ export default class Homepage extends React.Component {
     }
   }
 
-  async login(email, password, photoURL='') {
+  async login(email, password) {
     if (this.state.currentUser.email != '') {
       alert("You have logged in");
       return true;
@@ -232,6 +232,7 @@ export default class Homepage extends React.Component {
       firstName: '',
       lastName: '',
       password: password,
+      photoURL: '',
     };
 
     const data = await graphQLFetch(query, { user });

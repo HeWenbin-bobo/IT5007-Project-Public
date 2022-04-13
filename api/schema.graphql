@@ -73,6 +73,11 @@ input TopupInput {
   amount: Float!
 }
 
+input ProfileInput {
+  firstName: String!
+  lastName: String!
+}
+
 ##### Top level declarations
 
 type Query {
@@ -97,4 +102,5 @@ type Mutation {
   walletItemSell(item: WalletItemInput!): String!
   walletItemConvert(item: WalletConvertItemInput!): String!
   topup(topupInput: TopupInput!): Float!
+  updateProfile(profileInput: ProfileInput!): String!
 }

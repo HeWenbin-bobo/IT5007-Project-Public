@@ -32,6 +32,7 @@ const resolvers = {
     walletItemSell: wallet.walletItemSell,
     walletItemConvert: wallet.walletItemConvert,
     topup: user.topup,
+    updateProfile: user.updateProfile,
   },
   GraphQLDate,
 };

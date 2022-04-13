@@ -23,7 +23,7 @@ function BuyOrderTypeAndPriceContent(props) {
         <React.Fragment>
             <Box sx={{ minWidth: 120 }}>
                 <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                    Buy
+                    OrderType
                 </InputLabel>
                 <FormControl fullWidth>
                     <NativeSelect
@@ -31,7 +31,7 @@ function BuyOrderTypeAndPriceContent(props) {
                         onChange={handleChange('orderType')}
                         inputProps={{
                             name: 'type',
-                            id: 'BuyOrderType',
+                            id: 'buyOrderType',
                         }}
                     >
                         {GenerateTypes([{id:'Limit',typeName:'Limit'}, {id:'Market',typeName:'Market'}])}

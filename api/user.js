@@ -91,4 +91,19 @@ async function topup(_, { topupInput }) {
     return newBalance;
 }
 
-module.exports = { users, register, login, logout, userFind, currentUserQuery, topup };
+async function updateProfile(_, { profileInput }) {
+    const db = getDb();
+
+    const userId = profileInput.userId;
+    const firstName = profileInput.firstName;
+    const lastName = profileInput.lastName;
+
+    await db.collection('users').findOneAndUpdate(
+        { id: userId },
+        { $set: {firstName: firstName, lastName: lastName} }
+    );
+
+    return 'Successfully update profile!';
+}
+
+module.exports = { users, register, login, logout, userFind, currentUserQuery, topup, updateProfile };

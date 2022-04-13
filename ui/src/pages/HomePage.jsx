@@ -53,6 +53,7 @@ export default class Homepage extends React.Component {
     this.balanceQuery = this.balanceQuery.bind(this);
     this.userQuery = this.userQuery.bind(this);
     this.topup = this.topup.bind(this);
+    this.updateProfile = this.updateProfile.bind(this);
   }
 
   async componentDidMount() {
@@ -76,6 +77,7 @@ export default class Homepage extends React.Component {
     logout: PropTypes.func,
     getAssets: PropTypes.func,
     topup: PropTypes.func,
+    updateProfile: PropTypes.func,
   };
 
   //将参数和处理方法传递给context
@@ -96,6 +98,7 @@ export default class Homepage extends React.Component {
       logout: this.logout,
       getAssets: this.getAssets,
       topup: this.topup,
+      updateProfile: this.updateProfile,
     };
   }
 
@@ -111,18 +114,39 @@ export default class Homepage extends React.Component {
 
   async topup() {
     const topupAmount = document.getElementById("topup").value;
-    const userId = this.state.currentUser.id;
-    const topupInput = { amount: topupAmount, userId: userId };
-    const mutation = `mutation topup($topupInput: TopupInput!) {
-      topup(topupInput: $topupInput)
-    }`;
-    const result = await graphQLFetch(mutation, { topupInput });
-    const newBalance = result.topup;
-    console.log(newBalance);
+    if (topupAmount <= 0) {
+      alert('You should enter a positive value!');
+    } else {
+      const userId = this.state.currentUser.id;
+      const topupInput = {amount: topupAmount, userId: userId};
+      const mutation = `mutation topup($topupInput: TopupInput!) {
+        topup(topupInput: $topupInput)
+      }`;
+      const result = await graphQLFetch(mutation, {topupInput});
+      const newBalance = result.topup;
+      console.log(newBalance);
 
-    const newHistory = await this.historyQuery(userId);
+      const newHistory = await this.historyQuery(userId);
 
-    this.setState({ balance: newBalance, history: newHistory }, ()=>{} );
+      this.setState({balance: newBalance, history: newHistory}, () => {alert(`You add ${topupAmount} SGD into your amount`)});
+    }
+  }
+
+  async updateProfile(firstName, lastName) {
+    if (firstName + ' ' + lastName == this.state.currentUser.displayName) {
+      alert('Nothing change, please check what you enter!');
+    } else {
+      const profileInput = {firstName: firstName, lastName: lastName};
+      const mutation = `mutation updateProfile(profileInput: ProfileInput!) {
+        updateProfile(profileInput: profileInput)
+      }`;
+      const result = await graphQLFetch(mutation, {profileInput});
+
+      const newDisplayName = firstName + ' ' + lastName;
+      const newUser = object.assign({}, this.state.currentUser);
+      newUser.displayName = newDisplayName;
+      this.setState({currentUser: newUser}, alert(`You have changed your firstName to ${firstName}, and lastName to ${lastName}`));
+    }
   }
 
   async loadData(userId, email, photoURL) {

@@ -188,7 +188,7 @@ function AccountProfileDetailsContent(props) {
                     <Button
                         color="primary"
                         variant="contained"
-                        onClick={() => handleSubmit()}
+                        onClick={() => props.updateProfile(values.firstName, values.lastName)}
                     >
                         Save details
                     </Button>
@@ -202,11 +202,12 @@ function AccountProfileDetailsContent(props) {
 export class AccountProfileDetails extends React.Component {
     static contextTypes = {
         currentUser: PropTypes.object,
+        updateProfile: PropTypes.func,
     };
 
     render() {
         return (
-            <AccountProfileDetailsContent currentUser={this.context.currentUser} />
+            <AccountProfileDetailsContent currentUser={this.context.currentUser} updateProfile={this.context.updateProfile}/>
         );
     }
 }

@@ -47,6 +47,8 @@ function AccountProfileDetailsContent(props) {
         email: props.currentUser.email != undefined? props.currentUser.email : user.email,
         phone: props.currentUser.phone != undefined? props.currentUser.phone : user.phone,
         country: props.currentUser.country != undefined? props.currentUser.country : user.country,
+        currentCity: props.currentUser.currentCity != undefined? props.currentUser.currentCity : user.currentCity,
+        cities: props.currentUser.cities != undefined? props.currentUser.cities : user.cities,
     }
 
     const handleSubmit = (event) => {

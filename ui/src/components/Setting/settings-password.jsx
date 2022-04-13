@@ -17,7 +17,7 @@ function SettingsPasswordContent(props) {
     };
 
     return (
-        <form {...props}>
+        <form>
             <Card>
                 <CardHeader
                     subheader="Update password"

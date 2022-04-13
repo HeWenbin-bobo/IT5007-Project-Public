@@ -79,7 +79,7 @@ function AccountProfileDetailsContent(props) {
                                 helperText="Please specify the first name"
                                 label="First name"
                                 name="firstName"
-                                // onChange={handleChange}
+                                onChange={handleChange}
                                 required
                                 value={values.firstName}
                                 variant="outlined"
@@ -94,7 +94,7 @@ function AccountProfileDetailsContent(props) {
                                 fullWidth
                                 label="Last name"
                                 name="lastName"
-                                // onChange={handleChange}
+                                onChange={handleChange}
                                 required
                                 value={values.lastName}
                                 variant="outlined"
@@ -110,7 +110,7 @@ function AccountProfileDetailsContent(props) {
                                 fullWidth
                                 label="Email Address"
                                 name="email"
-                                // onChange={handleChange}
+                                onChange={handleChange}
                                 required
                                 defaultValue={values.email}
                                 variant="outlined"
@@ -126,7 +126,7 @@ function AccountProfileDetailsContent(props) {
                                 fullWidth
                                 label="Phone Number"
                                 name="phone"
-                                // onChange={handleChange}
+                                onChange={handleChange}
                                 type="number"
                                 defaultValue={values.phone}
                                 variant="outlined"
@@ -142,7 +142,7 @@ function AccountProfileDetailsContent(props) {
                                 fullWidth
                                 label="Country"
                                 name="country"
-                                // onChange={handleChange}
+                                onChange={handleChange}
                                 required
                                 defaultValue={values.country}
                                 variant="outlined"
@@ -158,7 +158,7 @@ function AccountProfileDetailsContent(props) {
                                 fullWidth
                                 label="Select City"
                                 name="City"
-                                // onChange={handleChange}
+                                onChange={handleChange}
                                 required
                                 select
                                 SelectProps={{ native: true }}

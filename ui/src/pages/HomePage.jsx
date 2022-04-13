@@ -128,7 +128,7 @@ export default class Homepage extends React.Component {
 
       const newHistory = await this.historyQuery(userId);
 
-      this.setState({balance: newBalance, history: newHistory}, () => {alert(`You add ${topupAmount} SGD into your amount`)});
+      this.setState({balance: newBalance, history: newHistory}, () => {alert(`You add ${parseFloat(topupAmount)} SGD into your amount`)});
     }
   }
 

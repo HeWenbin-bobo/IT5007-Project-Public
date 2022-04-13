@@ -56,7 +56,7 @@ db.history.createIndex({ balance: 1 });
 db.historyCounters.remove({});
 
 db.currentUser.remove({});
-db.currentUser.insert({ _id: 'currentUser', currentId: -1, email: '' });
+db.currentUser.insert({ _id: 'currentUser', currentId: -1, email: '', photoURL: '' });
 
 db.orders.remove({});
 db.orders.createIndex({ id: 1 }, { unique: true });

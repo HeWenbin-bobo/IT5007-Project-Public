@@ -29,7 +29,7 @@ async function register(_, { user }) {
         await historyInit(newuser.id, newuser.balance);
         const result = await db.collection('users').insertOne(newuser);
         if (await db.collection('users').findOne({ _id: result.insertedId })) {
-            await db.collection('currentUser').findOneAndUpdate({ _id: 'currentUser' },{ $set: {currentId: newuser.id, email: newuser.email }});
+            await db.collection('currentUser').findOneAndUpdate({ _id: 'currentUser' },{ $set: {currentId: newuser.id, email: newuser.email, photoURL: newuser.photoURL }});
             return 'Successfully register!';
         } else {
             return 'Something wrong when register!';
@@ -46,7 +46,7 @@ async function login(_, { user }) {
         .findOne({ email: user.email });
     if (userMatch) {
         if (userMatch.password === user.password) {
-            await db.collection('currentUser').findOneAndUpdate({ _id: 'currentUser' },{ $set: {currentId: userMatch.id, email: userMatch.email}});
+            await db.collection('currentUser').findOneAndUpdate({ _id: 'currentUser' },{ $set: {currentId: userMatch.id, email: userMatch.email, photoURL: userMatch.photoURL }});
             return 'Successfully login!';
         } else {
             return 'Password does not match the email, please check!';
@@ -59,7 +59,7 @@ async function login(_, { user }) {
 async function logout() {
     const db = getDb();
 
-    await db.collection('currentUser').findOneAndUpdate({ _id: 'currentUser' },{ $set: {currentId: -1, email: ''} });
+    await db.collection('currentUser').findOneAndUpdate({ _id: 'currentUser' },{ $set: {currentId: -1, email: '', photoURL: ''} });
     return 'Successfully logout!';
 }
 
@@ -67,7 +67,7 @@ async function currentUserQuery() {
     const db = getDb();
 
     const currentUser = await db.collection('currentUser').findOne({ _id: 'currentUser' });
-    const result = {currentId: currentUser.currentId, email: currentUser.email};
+    const result = {currentId: currentUser.currentId, email: currentUser.email, photoURL: currentUser.photoURL};
     return result;
 }
 

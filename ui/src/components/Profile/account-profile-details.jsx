@@ -14,9 +14,7 @@ import PropTypes from 'prop-types';
 
 const user = {
     photoURL: '/static/mock-images/avatars/avatar_default.jpg',
-    city: 'GuangZhou',
     country: 'China',
-    jobTitle: 'TBC',
     displayName: 'Katarina Smith',
     timezone: 'GTM-8',
     email: 'test@test.com',
@@ -108,16 +106,14 @@ function AccountProfileDetailsContent(props) {
                             xs={12}
                         >
                             <TextField
+                                disabled
                                 fullWidth
                                 label="Email Address"
                                 name="email"
                                 // onChange={handleChange}
                                 required
-                                value={values.email}
+                                defaultValue={values.email}
                                 variant="outlined"
-                                InputProps={{
-                                    readOnly: true,
-                                }}
                             />
                         </Grid>
                         <Grid
@@ -126,16 +122,14 @@ function AccountProfileDetailsContent(props) {
                             xs={12}
                         >
                             <TextField
+                                disabled
                                 fullWidth
                                 label="Phone Number"
                                 name="phone"
                                 // onChange={handleChange}
                                 type="number"
-                                value={values.phone}
+                                defaultValue={values.phone}
                                 variant="outlined"
-                                InputProps={{
-                                    readOnly: true,
-                                }}
                             />
                         </Grid>
                         <Grid
@@ -144,16 +138,14 @@ function AccountProfileDetailsContent(props) {
                             xs={12}
                         >
                             <TextField
+                                disabled
                                 fullWidth
                                 label="Country"
                                 name="country"
                                 // onChange={handleChange}
                                 required
-                                value={values.country}
+                                defaultValue={values.country}
                                 variant="outlined"
-                                InputProps={{
-                                    readOnly: true,
-                                }}
                             />
                         </Grid>
                         <Grid
@@ -162,6 +154,7 @@ function AccountProfileDetailsContent(props) {
                             xs={12}
                         >
                             <TextField
+                                disabled
                                 fullWidth
                                 label="Select City"
                                 name="City"
@@ -169,11 +162,8 @@ function AccountProfileDetailsContent(props) {
                                 required
                                 select
                                 SelectProps={{ native: true }}
-                                value={values.currentCity}
+                                defaultValue={values.currentCity}
                                 variant="outlined"
-                                InputProps={{
-                                    readOnly: true,
-                                }}
                             >
                                 {values.cities.map((option) => (
                                     <option
@@ -198,7 +188,7 @@ function AccountProfileDetailsContent(props) {
                     <Button
                         color="primary"
                         variant="contained"
-                        onClick={handleSubmit()}
+                        onClick={() => handleSubmit()}
                     >
                         Save details
                     </Button>

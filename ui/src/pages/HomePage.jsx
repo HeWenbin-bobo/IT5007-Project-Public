@@ -54,6 +54,7 @@ export default class Homepage extends React.Component {
     this.userQuery = this.userQuery.bind(this);
     this.topup = this.topup.bind(this);
     this.updateProfile = this.updateProfile.bind(this);
+    this.updatePassword = this.updatePassword.bind(this);
   }
 
   async componentDidMount() {
@@ -78,6 +79,7 @@ export default class Homepage extends React.Component {
     getAssets: PropTypes.func,
     topup: PropTypes.func,
     updateProfile: PropTypes.func,
+    updatePassword: PropTypes.func,
   };
 
   //将参数和处理方法传递给context
@@ -99,6 +101,7 @@ export default class Homepage extends React.Component {
       getAssets: this.getAssets,
       topup: this.topup,
       updateProfile: this.updateProfile,
+      updatePassword: this.updatePassword,
     };
   }
 

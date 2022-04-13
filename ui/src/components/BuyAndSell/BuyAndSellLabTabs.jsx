@@ -6,8 +6,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Grid from '@mui/material/Grid';
 import BuyTextField from './Buy/BuyTextField';
-import BuyPrice from './Buy/BuyPrice';
-import BuyOrderType from './Buy/BuyOrderType';
+import BuyOrderTypeAndPrice from './Buy/BuyOrderTypeAndPrice';
 import BuyType from './Buy/BuyType';
 import BuyButton from './Buy/BuyButton';
 import SellTextField from './Sell/SellTextField';
@@ -20,14 +19,8 @@ import ConvertButton from './Convert/ConvertButton';
 function LabTabsContent(props) {
   const [value, setValue] = React.useState('1');
 
-  const [orderType, setOrderType] = React.useState('Limit');
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
-  };
-
-  const handleOrderTypeChange = (event, newOrderType) => {
-    setOrderType(newOrderType);
   };
 
   return (
@@ -48,8 +41,7 @@ function LabTabsContent(props) {
             spacing={1}
           >
             <Grid item xs><BuyTextField /></Grid>
-            <Grid item xs><BuyOrderType onChange={handleOrderTypeChange}/></Grid>
-            <Grid item xs><BuyPrice disabled={orderType}/></Grid>
+            <Grid item xs><BuyOrderTypeAndPrice /></Grid>
             <Grid item xs><BuyType /></Grid>
             <Grid item xs><BuyButton /></Grid>
           </Grid>

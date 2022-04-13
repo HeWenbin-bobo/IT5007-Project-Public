@@ -38,9 +38,11 @@ function LoginFormContent(props) {
       const password = document.getElementById('password').value;
       const result = await props.login(email, password);
       if (result == true) {
-        setTimeout(() => {setFieldValue("email", ''); setFieldValue("password", ''); props.webHistory.replace('/'); }, 100); //wait for sometime
+        setTimeout(() => {setFieldValue("email", ''); setFieldValue("password", ''); }, 100); //wait for sometime
+        setTimeout(() => {props.webHistory.replace('/'); }, 200); //wait for sometime
       } else {
-        setTimeout(() => {setFieldValue("email", ''); setFieldValue("password", ''); props.webHistory.replace('/login');}, 10); //wait for sometime
+        setTimeout(() => {setFieldValue("email", ''); setFieldValue("password", ''); }, 10); //wait for sometime
+        setTimeout(() => {props.webHistory.replace('/'); }, 100); //wait for sometime
       };
 
     }

@@ -113,7 +113,7 @@ function AccountProfileDetailsContent(props) {
                                 fullWidth
                                 label="Email Address"
                                 name="email"
-                                onChange={handleChange}
+                                //onChange={handleChange}
                                 required
                                 defaultValue={values.email}
                                 variant="outlined"
@@ -129,7 +129,7 @@ function AccountProfileDetailsContent(props) {
                                 fullWidth
                                 label="Phone Number"
                                 name="phone"
-                                onChange={handleChange}
+                                //onChange={handleChange}
                                 type="number"
                                 defaultValue={values.phone}
                                 variant="outlined"
@@ -145,7 +145,7 @@ function AccountProfileDetailsContent(props) {
                                 fullWidth
                                 label="Country"
                                 name="country"
-                                onChange={handleChange}
+                                //onChange={handleChange}
                                 required
                                 defaultValue={values.country}
                                 variant="outlined"
@@ -161,13 +161,14 @@ function AccountProfileDetailsContent(props) {
                                 fullWidth
                                 label="Select City"
                                 name="City"
-                                onChange={handleChange}
+                                //onChange={handleChange}
                                 required
                                 select
                                 SelectProps={{ native: true }}
                                 defaultValue={values.currentCity}
                                 variant="outlined"
                             >
+                                {/*
                                 {values.cities.map((option) => (
                                     <option
                                         key={option.value}
@@ -176,6 +177,7 @@ function AccountProfileDetailsContent(props) {
                                         {option.label}
                                     </option>
                                 ))}
+                                */}
                             </TextField>
                         </Grid>
                     </Grid>

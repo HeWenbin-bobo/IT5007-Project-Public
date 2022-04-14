@@ -59,7 +59,7 @@ db.currentUser.remove({});
 db.currentUser.insert({ _id: 'currentUser', currentId: -1, email: '', photoURL: '' });
 
 db.orders.remove({});
-db.orders.createIndex({ id: 1 }, { unique: true });
+db.orders.createIndex({ id: 1 });
 db.orders.createIndex({ userId: 1 });
 db.orders.createIndex({ currentState: 1 });
 db.orders.createIndex({ symbol: 1 });

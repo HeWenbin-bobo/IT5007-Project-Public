@@ -130,7 +130,7 @@ function AccountProfileDetailsContent(props) {
                                 label="Phone Number"
                                 name="phone"
                                 //onChange={handleChange}
-                                type="number"
+                                //type="number"
                                 defaultValue={values.phone}
                                 variant="outlined"
                             />

@@ -52,6 +52,7 @@ export default class Homepage extends React.Component {
     this.getOrders = this.getOrders.bind(this);
     this.walletQuery = this.walletQuery.bind(this);
     this.historyQuery = this.historyQuery.bind(this);
+    this.orderQuery = this.orderQuery.bind(this);
     this.balanceQuery = this.balanceQuery.bind(this);
     this.userQuery = this.userQuery.bind(this);
     this.topup = this.topup.bind(this);
@@ -192,7 +193,7 @@ export default class Homepage extends React.Component {
     const newWallet = await this.walletQuery(userId);
     const newHistory = await this.historyQuery(userId);
     const newOrders = await this.orderQuery(userId);
-    this.setState({ currentUser: currentUser, balance: newBalance, history: newHistory, wallet: newWallet, types: newtypes, order: newOrders }, ()=>{} );
+    this.setState({ currentUser: currentUser, balance: newBalance, history: newHistory, wallet: newWallet, types: newtypes, orders: newOrders }, ()=>{} );
   }
 
   async userQuery(email) {
@@ -394,7 +395,7 @@ export default class Homepage extends React.Component {
           orders.push({ id: item.id, state: item.currentState, symbol: item.symbol, quantity: item.quantity, price: item.price, amount: item.amount });
         }
     );
-    return orders;
+    return orders.reverse();
   }
 
   async buy() {
@@ -467,7 +468,7 @@ export default class Homepage extends React.Component {
 
               const newOrders = await this.orderQuery(userId);
 
-              this.setState({ wallet: newWallet, balance : newBalance, history: newHistory, order: newOrders }, () => { alert(data.walletItemSell); });
+              this.setState({ wallet: newWallet, balance : newBalance, history: newHistory, orders: newOrders }, () => { alert(data.walletItemSell); });
             }
           } else {
             alert(`You do not have enough ${typeName}! You only have ${typeBalance}`);

@@ -9,6 +9,9 @@ import { Box, Card, CardContent } from '@mui/material';
 import PropTypes from 'prop-types';
 
 function OrderListContent(props) {
+  const num = props.num != undefined? props.num : props.orders.length;
+  const orders = props.orders.slice(0,num);
+
   return (
     <React.Fragment>
       <Box sx={{ mt: 3 }}>
@@ -27,7 +30,7 @@ function OrderListContent(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.orders.map((row) => (
+            {orders.map((row) => (
               <TableRow key={row.id}>
                 <TableCell>{row.id}</TableCell>
                 <TableCell>{row.state}</TableCell>
@@ -61,7 +64,7 @@ export default class OrderList extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <OrderListContent orders={this.context.getOrders()}/>
+        <OrderListContent orders={this.context.getOrders()} num={this.props.num} />
       </React.Fragment>
     )
   }

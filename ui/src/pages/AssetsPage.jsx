@@ -78,7 +78,7 @@ export default class AssetsPage extends React.Component {
                 {/* OrderList */}
                 <Grid item xs={10} md={8} lg={9}>
                     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                        <OrderList />
+                        <OrderList num={5}/>
                     </Paper>
                 </Grid>
                 {/* WatchList */}

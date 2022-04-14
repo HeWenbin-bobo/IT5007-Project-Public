@@ -42,12 +42,12 @@ function OrderListContent(props) {
             ))}
           </TableBody>
         </Table>
-        { num != 0?
-          <Button variant="outlined" size="medium"  onClick={() => {props.changePage('Order')}} sx={{mt: 3}}>
+        { num != props.orders.length?
+          <Button variant="outlined" size="medium" onClick={() => {props.changePage('Order')}} sx={{mt: 3}}>
             See more orders
           </Button>
             :
-          <Button variant="outlined" size="medium"  onClick={() => {props.changePage('Assets')}} sx={{mt: 3}}>
+          <Button variant="outlined" size="medium" onClick={() => {props.changePage('Assets')}} sx={{mt: 3}}>
             Return homepage
           </Button>
         }

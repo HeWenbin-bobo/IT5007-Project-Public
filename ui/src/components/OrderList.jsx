@@ -9,7 +9,7 @@ import { Box, Card, CardContent, Button } from '@mui/material';
 import PropTypes from 'prop-types';
 
 function OrderListContent(props) {
-  const num = props.num != 0? props.num : props.orders.length;
+  const num = props.num != -1? props.num : props.orders.length;
   const orders = props.orders.slice(0,num);
 
   return (
@@ -42,7 +42,7 @@ function OrderListContent(props) {
             ))}
           </TableBody>
         </Table>
-        { num != props.orders.length?
+        { props.num != -1?
           <Button variant="outlined" size="medium" onClick={() => {props.changePage('Order')}} sx={{mt: 3}}>
             See more orders
           </Button>
@@ -71,7 +71,7 @@ export default class OrderList extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <OrderListContent orders={this.context.getOrders()} num={this.props.num != undefined? this.props.num : 0} changePage={this.context.changePage} />
+        <OrderListContent orders={this.context.getOrders()} num={this.props.num != undefined? this.props.num : -1} changePage={this.context.changePage} />
       </React.Fragment>
     )
   }

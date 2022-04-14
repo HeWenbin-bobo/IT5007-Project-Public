@@ -168,7 +168,6 @@ function AccountProfileDetailsContent(props) {
                                 defaultValue={values.currentCity}
                                 variant="outlined"
                             >
-                                {/*
                                 {values.cities.map((option) => (
                                     <option
                                         key={option.value}
@@ -177,6 +176,15 @@ function AccountProfileDetailsContent(props) {
                                         {option.label}
                                     </option>
                                 ))}
+                                {/*
+                                    {values.cities.map((option) => (
+                                        <option
+                                            key={option.value}
+                                            value={option.value}
+                                        >
+                                            {option.label}
+                                        </option>
+                                    ))}
                                 */}
                             </TextField>
                         </Grid>

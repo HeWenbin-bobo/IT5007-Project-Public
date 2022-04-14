@@ -203,7 +203,7 @@ export default class Homepage extends React.Component {
   async typesQuery() {
     const typesList = `query {
       typesList {
-        id typeName price
+        id typeName description price
       }
     }`;
     const typesResult = await graphQLFetch(typesList);
@@ -361,7 +361,8 @@ export default class Homepage extends React.Component {
   getAssets() {
     const assets = [];
     this.state.wallet.map((item) => {
-        assets.push({ id: item.id, typeName: item.typeName, balance: item.balance, price: this.state.types.find(type => type.id == item.id).price });
+      /*assets.push({ id: item.id, typeName: item.typeName, balance: item.balance, price: this.state.types.find(type => type.id == item.id).price });*/
+      assets.push({ id: item.id, typeName: item.typeName, balance: item.balance, description: this.state.types.find(type => type.id == item.id).description });
       }
     );
     return assets;

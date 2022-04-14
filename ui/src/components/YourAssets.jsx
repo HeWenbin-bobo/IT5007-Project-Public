@@ -21,7 +21,8 @@ function YourAssetsContent(props) {
               <TableCell>Id</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Balance</TableCell>
-              <TableCell align="right">Price</TableCell>
+              <TableCell align="right">Description</TableCell>
+              {/*<TableCell align="right">Price</TableCell>*/}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -30,7 +31,8 @@ function YourAssetsContent(props) {
                 <TableCell>{row.id}</TableCell>
                 <TableCell>{row.typeName}</TableCell>
                 <TableCell>{row.balance}</TableCell>
-                <TableCell align="right">{`$${row.price}`}</TableCell>
+                {/*<TableCell align="right">{`$${row.price}`}</TableCell>*/}
+                <TableCell align="right">{`$${row.description}`}</TableCell>
               </TableRow>
             ))}
           </TableBody>

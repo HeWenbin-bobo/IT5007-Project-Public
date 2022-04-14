@@ -5,7 +5,7 @@ async function orderInit( userId ) {
     const db = getDb();
     const orderCounter = await db.collection('orderCounters')
     orderCounter.remove({ _id: 'order'+String(userId) });
-    orderCounter.insert({ _id: 'order'+String(userId), current: 1 });
+    orderCounter.insert({ _id: 'order'+String(userId), current: 0 });
 
     return "Successfully Init";
 }

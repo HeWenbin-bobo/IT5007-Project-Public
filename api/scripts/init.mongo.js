@@ -12,6 +12,19 @@
 /* global db print */
 /* eslint no-restricted-globals: "off" */
 
+// Drop all the collections in case that they are used before
+// Remove only remove the data in a collection, but will not override the rule (such as unique or not)
+// The best way might directly drop these collections and recreate them
+db.users.drop({})
+db.userCounters.drop({})
+db.types.drop({})
+db.wallet.drop({})
+db.history.drop({})
+db.historyCounters.drop({})
+db.currentUser.drop({})
+db.orders.drop({})
+db.orderCounters.drop({})
+
 db.users.remove({});
 db.users.createIndex({ id: 1 }, { unique: true });
 db.users.createIndex({ email: 1 }, { unique: true });

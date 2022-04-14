@@ -5,11 +5,11 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
-import { Box, Card, CardContent } from '@mui/material';
+import { Box, Card, CardContent, Button } from '@mui/material';
 import PropTypes from 'prop-types';
 
 function OrderListContent(props) {
-  const num = props.num != undefined? props.num : props.orders.length;
+  const num = props.num != 0? props.num : props.orders.length;
   const orders = props.orders.slice(0,num);
 
   return (
@@ -42,9 +42,15 @@ function OrderListContent(props) {
             ))}
           </TableBody>
         </Table>
-        {/* <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-          See more orders
-        </Link> */}
+        { num != 0?
+          <Button variant="outlined" size="medium"  onClick={() => {props.changePage('Order')}} sx={{mt: 3}}>
+            See more orders
+          </Button>
+            :
+          <Button variant="outlined" size="medium"  onClick={() => {props.changePage('Assets')}} sx={{mt: 3}}>
+            Return homepage
+          </Button>
+        }
       </CardContent>
       </Card>
       </Box>
@@ -59,12 +65,13 @@ export default class OrderList extends React.Component {
 
   static contextTypes = {
     getOrders: PropTypes.func,  //接收传递的方法
+    changePage: PropTypes.func,
   };
 
   render() {
     return (
       <React.Fragment>
-        <OrderListContent orders={this.context.getOrders()} num={this.props.num} />
+        <OrderListContent orders={this.context.getOrders()} num={this.props.num != undefined? this.props.num : 0} changePage={this.context.changePage} />
       </React.Fragment>
     )
   }

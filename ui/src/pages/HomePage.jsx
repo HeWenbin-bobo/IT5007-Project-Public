@@ -5,6 +5,7 @@ import AssetsPage from './AssetsPage';
 import TradePage from './TradePage';
 import LoginPage from './LoginPage';
 import RegisterPage from './RegisterPage';
+import OrderPage from './OrderPage';
 import SettingPage from "./SettingPage";
 import ProfilePage from './ProfilePage';
 import HomePageContent from '../pageContent/HomePageContent';
@@ -557,6 +558,9 @@ export default class Homepage extends React.Component {
         break;
       case 'Setting':
         temp = <SettingPage />
+        break;
+      case 'Order':
+        temp = <OrderPage />
         break;
       default:
         temp = <AssetsPage />

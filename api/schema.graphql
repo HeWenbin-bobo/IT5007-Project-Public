@@ -25,6 +25,16 @@ type History {
   balance: Float!
 }
 
+type Order {
+  _id: ID!
+  id: Int!
+  currentState: String!
+  symbol: String!
+  quantity: Float!
+  price: Float!
+  amount: Float!
+}
+
 type Type {
   _id: ID!
   id: Int!
@@ -94,6 +104,7 @@ type Query {
   login(user: UserInputs!): String!
   logout: String!
   historyList(userId: Int!): [History]!
+  orderList(userId: Int!): [Order]!
   typesList: [Type!]!
   typeFind(id: Int!): Type!
   walletDetail(userId: Int!): [Item]!

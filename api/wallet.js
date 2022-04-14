@@ -3,6 +3,7 @@ const { getDb, balanceDetail, balanceUpdate } = require('./db.js');
 const { roundFun } = require('./util.js');
 const { typeFind } = require('./types.js');
 const { addHistory } = require('./history.js');
+const { addOrder } = require('./order.js');
 
 async function walletDetail( _, { userId } ) {
     const db = getDb();
@@ -48,6 +49,8 @@ async function walletItemBuy(_, { item }) {
     const newItem = {userId: userId, id: id, typeName: type.typeName, balance: balanceChange};
     await walletUpdate(newItem);
 
+    await addOrder({ userId: userId, currentState: 'BUY', symbol: type.typeName, quantity: balanceChange, price: price, amount: modification });
+
     await balanceUpdate(userId, -roundFun(balanceChange*price, 5));
     const balance = await balanceDetail( 'server', { userId } );
 
@@ -69,6 +72,8 @@ async function walletItemSell(_, { item }) {
     const balanceChange = roundFun(modification*price, 5);
     await balanceUpdate( userId, balanceChange );
     const balance = await balanceDetail( 'server', { userId } );
+
+    await addOrder({ userId: userId, currentState: 'SELL', symbol: type.typeName, quantity: modification, price: price, amount: balanceChange });
 
     const history = { userId: userId, balance: balance };
     await addHistory("server", { history });

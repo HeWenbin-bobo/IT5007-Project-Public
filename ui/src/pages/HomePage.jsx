@@ -35,6 +35,7 @@ export default class Homepage extends React.Component {
       balance: 0,
       types: [],
       wallet: [],
+      orders: [],
       currentUser: account,
       history: [],
       webHistory: createHashHistory(),
@@ -48,6 +49,7 @@ export default class Homepage extends React.Component {
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.getAssets = this.getAssets.bind(this);
+    this.getOrders = this.getOrders.bind(this);
     this.walletQuery = this.walletQuery.bind(this);
     this.historyQuery = this.historyQuery.bind(this);
     this.balanceQuery = this.balanceQuery.bind(this);
@@ -77,6 +79,7 @@ export default class Homepage extends React.Component {
     login: PropTypes.func,
     logout: PropTypes.func,
     getAssets: PropTypes.func,
+    getOrders: PropTypes.func,
     topup: PropTypes.func,
     updateProfile: PropTypes.func,
     updatePassword: PropTypes.func,
@@ -99,6 +102,7 @@ export default class Homepage extends React.Component {
       login: this.login,
       logout: this.logout,
       getAssets: this.getAssets,
+      getOrders: this.getOrders,
       topup: this.topup,
       updateProfile: this.updateProfile,
       updatePassword: this.updatePassword,
@@ -187,7 +191,8 @@ export default class Homepage extends React.Component {
     const newtypes = await this.typesQuery();
     const newWallet = await this.walletQuery(userId);
     const newHistory = await this.historyQuery(userId);
-    this.setState({ currentUser: currentUser, balance: newBalance, history: newHistory, wallet: newWallet, types: newtypes }, ()=>{} );
+    const newOrders = await this.orderQuery(userId);
+    this.setState({ currentUser: currentUser, balance: newBalance, history: newHistory, wallet: newWallet, types: newtypes, order: newOrders }, ()=>{} );
   }
 
   async userQuery(email) {
@@ -234,6 +239,17 @@ export default class Homepage extends React.Component {
     const historyResult = await graphQLFetch(historyList, { userId });
     const newHistory = historyResult.historyList;
     return newHistory;
+  }
+
+  async orderQuery(userId) {
+    const orderList = `query orderList($userId: Int!) {
+      orderList(userId: $userId) {
+        id currentState symbol quantity price amount
+      }
+    }`;
+    const orderResult = await graphQLFetch(orderList, { userId });
+    const newOrders = orderResult.orderList;
+    return newOrders;
   }
 
   async balanceQuery(userId) {
@@ -307,8 +323,10 @@ export default class Homepage extends React.Component {
         const newWallet = await this.walletQuery(userId);
 
         const newHistory = await this.historyQuery(userId);
+
+        const newOrders = await this.orderQuery(userId);
         
-        this.setState({ currentUser: currentUser, balance: newBalance, history: newHistory, wallet: newWallet, types: newtypes });
+        this.setState({ currentUser: currentUser, balance: newBalance, history: newHistory, wallet: newWallet, types: newtypes, orders: newOrders });
         return true;
       }
     }
@@ -351,7 +369,9 @@ export default class Homepage extends React.Component {
 
         const newHistory = await this.historyQuery(userId);
 
-        this.setState({ currentUser: currentUser, balance: newBalance, history: newHistory, wallet: newWallet, types: newtypes });
+        const newOrders = await this.orderQuery(userId);
+
+        this.setState({ currentUser: currentUser, balance: newBalance, history: newHistory, wallet: newWallet, types: newtypes, orders: newOrders });
         return true;
       }
     }
@@ -366,6 +386,15 @@ export default class Homepage extends React.Component {
       }
     );
     return assets;
+  }
+
+  getOrders() {
+    const orders = [];
+    this.state.orders.map((item) => {
+          orders.push({ id: item.id, state: item.currentState, symbol: item.symbol, quantity: item.quantity, price: item.price, amount: item.amount });
+        }
+    );
+    return orders;
   }
 
   async buy() {
@@ -393,7 +422,9 @@ export default class Homepage extends React.Component {
 
           const newBalance = await this.balanceQuery(userId);
 
-          this.setState({ wallet: newWallet, balance : newBalance, history: newHistory }, () => { alert(data.walletItemBuy); });
+          const newOrders = await this.orderQuery(userId);
+
+          this.setState({ wallet: newWallet, balance : newBalance, history: newHistory, orders: newOrders }, () => { alert(data.walletItemBuy); });
         }
       } else {
         alert(`Do not have enough money! Only have ${this.state.balance}`);
@@ -434,7 +465,9 @@ export default class Homepage extends React.Component {
     
               const newBalance = await this.balanceQuery(userId);
 
-              this.setState({ wallet: newWallet, balance : newBalance, history: newHistory }, () => { alert(data.walletItemSell); });
+              const newOrders = await this.orderQuery(userId);
+
+              this.setState({ wallet: newWallet, balance : newBalance, history: newHistory, order: newOrders }, () => { alert(data.walletItemSell); });
             }
           } else {
             alert(`You do not have enough ${typeName}! You only have ${typeBalance}`);

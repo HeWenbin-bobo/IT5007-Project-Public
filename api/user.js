@@ -1,6 +1,7 @@
 /* const { UserInputError } = require('apollo-server-express'); */
 const { getDb, getNextUserId } = require('./db.js');
 const { historyInit, addHistory } = require('./history.js');
+const { orderInit } = require('./order.js');
 
 async function users() {
     const db = getDb();
@@ -28,6 +29,7 @@ async function register(_, { user }) {
         newuser.balance = 100;
         newuser.photoURL = newuser.photoURL == ''? '/static/mock-images/avatars/avatar_' + String(newuser.id % 25) + '.jpg' : newuser.photoURL
         await historyInit(newuser.id, newuser.balance);
+        await orderInit(newuser.id);
         const result = await db.collection('users').insertOne(newuser);
         if (await db.collection('users').findOne({ _id: result.insertedId })) {
             await db.collection('currentUser').findOneAndUpdate({ _id: 'currentUser' },{ $set: {currentId: newuser.id, email: newuser.email, photoURL: newuser.photoURL }});

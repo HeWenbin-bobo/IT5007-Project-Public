@@ -88,18 +88,21 @@ async function walletItemSell(_, { item }) {
 }
 
 async function walletItemConvert(_, { item }) {
-
+    // Convert equals to one buy operation and one sell operation
     const {userId, idFrom, idTo, quantity} = item;
     const typeFrom = await typeFind( idFrom );
     const priceFrom = typeFrom.price;
     const newItemFrom = {userId: userId, id: idFrom, typeName: typeFrom.typeName, quantity: -quantity};
+    const amountFrom = roundFun(quantity*priceFrom, 5);
     await walletUpdate(newItemFrom);
+    await addOrder({ userId: userId, currentState: 'BUY', symbol: typeFrom.typeName, quantity: quantity, price: priceFrom, amount: amountFrom });
 
     const typeTo = await typeFind( idTo );
     const priceTo = typeTo.price;
     const quantityChange = roundFun(quantity*priceFrom/priceTo, 5);
     const newItemTo = {userId: userId, id: idTo, typeName: typeTo.typeName, quantity: quantityChange};
     await walletUpdate(newItemTo);
+    await addOrder({ userId: userId, currentState: 'BUY', symbol: typeTo.typeName, quantity: quantity, price: priceTo, amount: amountFrom });
 
     const balance = await balanceDetail( 'server', { userId } );
     const history = { userId: userId, balance: balance };

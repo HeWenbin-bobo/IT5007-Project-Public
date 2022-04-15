@@ -534,7 +534,7 @@ export default class Homepage extends React.Component {
               alert(`You do not have enough ${typeNameFrom}! You only have ${itemFrom.quantity}`);
             }
           } else {
-            alert("Please enter a non-negative modification!");
+            alert("Please enter a positive modification!");
           }
         } else {
           alert(`You do not own ${typeNameFrom}!`);

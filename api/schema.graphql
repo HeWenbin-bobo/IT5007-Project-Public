@@ -77,7 +77,7 @@ input WalletConvertItemInput {
   userId: Int!
   idFrom: Int!
   idTo: Int!
-  modification: Float!
+  quantity: Float!
 }
 
 input TopupInput {

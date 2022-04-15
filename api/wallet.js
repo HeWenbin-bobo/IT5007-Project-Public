@@ -89,23 +89,23 @@ async function walletItemSell(_, { item }) {
 
 async function walletItemConvert(_, { item }) {
 
-    const {userId, idFrom, idTo, modification} = item;
+    const {userId, idFrom, idTo, quantity} = item;
     const typeFrom = await typeFind( idFrom );
     const priceFrom = typeFrom.price;
-    const newItemFrom = {userId: userId, id: idFrom, typeName: typeFrom.typeName, balance: -modification};
+    const newItemFrom = {userId: userId, id: idFrom, typeName: typeFrom.typeName, quantity: -quantity};
     await walletUpdate(newItemFrom);
 
     const typeTo = await typeFind( idTo );
     const priceTo = typeTo.price;
-    const balanceChange = roundFun(modification*priceFrom/priceTo, 5);
-    const newItemTo = {userId: userId, id: idTo, typeName: typeTo.typeName, balance: balanceChange};
+    const quantityChange = roundFun(quantity*priceFrom/priceTo, 5);
+    const newItemTo = {userId: userId, id: idTo, typeName: typeTo.typeName, quantity: quantityChange};
     await walletUpdate(newItemTo);
 
     const balance = await balanceDetail( 'server', { userId } );
     const history = { userId: userId, balance: balance };
     await addHistory("server", { history });
 
-    return `You convert ${modification} ${typeFrom.typeName} to ${balanceChange} ${typeTo.typeName}!`;
+    return `You convert ${quantity} ${typeFrom.typeName} to ${quantityChange} ${typeTo.typeName}!`;
 }
 
 module.exports = { walletDetail, walletItemBuy, walletItemSell, walletItemConvert };

@@ -505,9 +505,9 @@ export default class Homepage extends React.Component {
       } else {
         const itemFrom = this.state.wallet.find(type => type.id == typeIdFrom);
         if (itemFrom !== undefined) {
-          const modification = document.getElementById('quantity').value;
-          if (modification > 0) {
-            if (itemFrom.balance >= modification) {
+          const quantity = document.getElementById('quantity').value;
+          if (quantity > 0) {
+            if (itemFrom.quantity >= quantity) {
               const userId = this.state.currentUser.id;
               const mutation = `mutation walletItemConvert($item: WalletConvertItemInput!) {
                 walletItemConvert(item: $item)
@@ -517,7 +517,7 @@ export default class Homepage extends React.Component {
                 userId: userId,
                 idFrom: typeIdFrom,
                 idTo: typeIdTo,
-                modification: modification
+                quantity: quantity
               };
               const data = await graphQLFetch(mutation, { item });
       
@@ -531,7 +531,7 @@ export default class Homepage extends React.Component {
                 this.setState({ wallet: newWallet, balance : newBalance, history: newHistory }, () => { alert(data.walletItemConvert); console.log(this.state); });
               }
             } else {
-              alert(`You do not have enough ${typeNameFrom}! You only have ${itemFrom.balance}`);
+              alert(`You do not have enough ${typeNameFrom}! You only have ${itemFrom.quantity}`);
             }
           } else {
             alert("Please enter a non-negative modification!");

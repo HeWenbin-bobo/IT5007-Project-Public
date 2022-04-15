@@ -4,7 +4,7 @@ import { Grid, Button, Container, Stack, Typography } from '@mui/material';
 // components
 import Page from '../components/Page';
 import Iconify from '../components/Iconify';
-import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../components/Blog.jsx';
+import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../components/Blog';
 // mock
 import POSTS from '../_mock/blog';
 

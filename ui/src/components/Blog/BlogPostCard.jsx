@@ -141,7 +141,7 @@ export default function BlogPostCard({ post, index }) {
                         color="inherit"
                         variant="subtitle2"
                         underline="hover"
-                        component={RouterLink}
+                        /*component={RouterLink}*/
                         sx={{
                             ...(latestPostLarge && { typography: 'h5', height: 60 }),
                             ...((latestPostLarge || latestPost) && {

@@ -24,17 +24,17 @@ async function walletUpdate( item ) {
     const itemMatch = await walletItemFind(item.userId, item.id);
     if ( itemMatch == null ) {
         await db.collection('wallet').insertOne(item);
-        return item.balance;
+        return item.quantity;
     } else {
         const wallet = await db.collection('wallet').findOneAndUpdate(
             { id: item.id, userId: item.userId },
-            { $inc: { balance: item.balance } },
+            { $inc: { quantity: item.quantity } },
             { returnOriginal: false },
         );
-        if (wallet.value.balance == 0) {
+        if (wallet.value.quantity == 0) {
             await db.collection('wallet').deleteOne( { id: item.id, userId: item.userId });
         }
-        return wallet.value.balance;
+        return wallet.value.quantity;
     }
 }
 
@@ -57,7 +57,6 @@ async function walletItemBuy(_, { item }) {
 
     await addOrder({ userId: userId, currentState: 'BUY', symbol: type.typeName, quantity: quantityChange, price: price, amount: amount });
 
-    console.log(amount == 10);
     await balanceUpdate(userId, -amount);
     const balance = await balanceDetail( 'server', { userId } );
 

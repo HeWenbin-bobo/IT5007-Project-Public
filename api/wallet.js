@@ -72,7 +72,7 @@ async function walletItemSell(_, { item }) {
     const type = await typeFind( id );
     const price = type.price;
 
-    const newItem = {userId: userId, id: id, typeName: type.symbol, quantity: -quantity};
+    const newItem = {userId: userId, id: id, symbol: type.symbol, quantity: -quantity};
     await walletUpdate( newItem );
 
     const amount = roundFun(quantity*price, 5);

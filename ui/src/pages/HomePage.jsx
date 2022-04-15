@@ -571,7 +571,7 @@ export default class Homepage extends React.Component {
       case 'Order':
         temp = <OrderPage />
         break;
-      case 'Blog.jsx':
+      case 'Blog':
         temp = <BlogPage />
         break;
       default:

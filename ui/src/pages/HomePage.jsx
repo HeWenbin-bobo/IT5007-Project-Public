@@ -384,7 +384,7 @@ export default class Homepage extends React.Component {
     const assets = [];
     this.state.wallet.map((item) => {
       /*assets.push({ id: item.id, typeName: item.typeName, balance: item.balance, price: this.state.types.find(type => type.id == item.id).price });*/
-      assets.push({ id: item.id, typeName: item.typeName, quantity: item.quantity, description: this.state.types.find(type => type.id == item.id).description });
+      assets.push({ id: item.id, symbol: item.symbol, quantity: item.quantity, description: this.state.types.find(type => type.id == item.id).description });
       }
     );
     return assets;
@@ -437,9 +437,6 @@ export default class Homepage extends React.Component {
 
         this.setState({ wallet: newWallet, balance : newBalance, history: newHistory, orders: newOrders }, () => { alert(data.walletItemBuy); });
       }
-      // else {
-      //   alert(`Do not have enough money! Only have ${this.state.balance}`);
-      // }
     } else {
       alert("Please enter a non-negative modification!");
     }
@@ -450,7 +447,7 @@ export default class Homepage extends React.Component {
       alert("Before sell, you should buy something");
     } else {
       const typeId = document.getElementById('type').value;
-      const typeName = this.state.types.find(type => type.id == typeId).typeName;
+      const typeName = this.state.types.find(type => type.id == typeId).symbol;
       const item = this.state.wallet.find(item => item.id == typeId);
       if (item != undefined) {
         const quantity = document.getElementById('quantity').value;

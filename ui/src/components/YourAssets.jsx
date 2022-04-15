@@ -29,7 +29,7 @@ function YourAssetsContent(props) {
             {props.assets.map((row) => (
               <TableRow key={row.id}>
                 <TableCell>{row.id}</TableCell>
-                <TableCell>{row.typeName}</TableCell>
+                <TableCell>{row.symbol}</TableCell>
                 <TableCell>{row.quantity}</TableCell>
                 {/*<TableCell align="right">{`$${row.price}`}</TableCell>*/}
                 <TableCell align="right">{`$${row.description}`}</TableCell>

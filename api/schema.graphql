@@ -3,7 +3,7 @@ scalar GraphQLDate
 type Item {
   _id: ID!
   id: Int!
-  typeName: String!
+  symbol: String!
   quantity: Float!
 }
 
@@ -38,7 +38,7 @@ type Order {
 type Type {
   _id: ID!
   id: Int!
-  typeName: String!
+  symbol: String!
   description: String!
   price: Float!
 }

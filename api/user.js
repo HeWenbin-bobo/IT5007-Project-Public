@@ -114,6 +114,11 @@ async function updatePassword(_, { passwordInput }) {
     const userId = passwordInput.userId;
     const password = passwordInput.password;
 
+    const currentUser = await db.collection('users').findOne({ id: userId });
+    if (currentUser.password == password) {
+        return 'New password cannot be the same as the old one!'
+    }
+
     await db.collection('users').findOneAndUpdate(
         { id: userId },
         { $set: {password: password} }

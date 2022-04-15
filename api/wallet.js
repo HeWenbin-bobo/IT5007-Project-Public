@@ -49,13 +49,13 @@ async function walletItemBuy(_, { item }) {
     const amount = roundFun(quantityChange*price, 5);
     const nowBalance = await balanceDetail( 'server', { userId } );
     if (nowBalance < amount) {
-        return `Do not have enough money! Only have ${nowBalance}, and you can at most buy ${roundFun(nowBalance/price, 5)} ${type.typeName}!`;
+        return `Do not have enough money! Only have ${nowBalance}, and you can at most buy ${roundFun(nowBalance/price, 5)} ${type.symbol}!`;
     }
 
-    const newItem = {userId: userId, id: id, typeName: type.typeName, quantity: quantityChange};
+    const newItem = {userId: userId, id: id, symbol: type.symbol, quantity: quantityChange};
     await walletUpdate(newItem);
 
-    await addOrder({ userId: userId, currentState: 'BUY', symbol: type.typeName, quantity: quantityChange, price: price, amount: amount });
+    await addOrder({ userId: userId, currentState: 'BUY', symbol: type.symbol, quantity: quantityChange, price: price, amount: amount });
 
     await balanceUpdate(userId, -amount);
     const balance = await balanceDetail( 'server', { userId } );
@@ -63,7 +63,7 @@ async function walletItemBuy(_, { item }) {
     const history = { userId: userId, balance: balance };
     await addHistory("server", { history });
 
-    return `You have bought ${quantityChange} ${type.typeName}!`;
+    return `You have bought ${quantityChange} ${type.symbol}!`;
 }
 
 async function walletItemSell(_, { item }) {
@@ -72,19 +72,19 @@ async function walletItemSell(_, { item }) {
     const type = await typeFind( id );
     const price = type.price;
 
-    const newItem = {userId: userId, id: id, typeName: type.typeName, quantity: -quantity};
+    const newItem = {userId: userId, id: id, typeName: type.symbol, quantity: -quantity};
     await walletUpdate( newItem );
 
     const amount = roundFun(quantity*price, 5);
     await balanceUpdate( userId, amount );
     const balance = await balanceDetail( 'server', { userId } );
 
-    await addOrder({ userId: userId, currentState: 'SELL', symbol: type.typeName, quantity: quantity, price: price, amount: amount });
+    await addOrder({ userId: userId, currentState: 'SELL', symbol: type.symbol, quantity: quantity, price: price, amount: amount });
 
     const history = { userId: userId, balance: balance };
     await addHistory("server", { history });
 
-    return `You sold ${quantity} ${type.typeName}! Now, you have money ${balance}`;
+    return `You sold ${quantity} ${type.symbol}! Now, you have money ${balance}`;
 }
 
 async function walletItemConvert(_, { item }) {
@@ -92,23 +92,23 @@ async function walletItemConvert(_, { item }) {
     const {userId, idFrom, idTo, quantity} = item;
     const typeFrom = await typeFind( idFrom );
     const priceFrom = typeFrom.price;
-    const newItemFrom = {userId: userId, id: idFrom, typeName: typeFrom.typeName, quantity: -quantity};
+    const newItemFrom = {userId: userId, id: idFrom, symbol: typeFrom.symbol, quantity: -quantity};
     const amountFrom = roundFun(quantity*priceFrom, 5);
     await walletUpdate(newItemFrom);
-    await addOrder({ userId: userId, currentState: 'BUY', symbol: typeFrom.typeName, quantity: quantity, price: priceFrom, amount: amountFrom });
+    await addOrder({ userId: userId, currentState: 'SELL', symbol: typeFrom.symbol, quantity: quantity, price: priceFrom, amount: amountFrom });
 
     const typeTo = await typeFind( idTo );
     const priceTo = typeTo.price;
     const quantityChange = roundFun(quantity*priceFrom/priceTo, 5);
-    const newItemTo = {userId: userId, id: idTo, typeName: typeTo.typeName, quantity: quantityChange};
+    const newItemTo = {userId: userId, id: idTo, symbol: typeTo.symbol, quantity: quantityChange};
     await walletUpdate(newItemTo);
-    await addOrder({ userId: userId, currentState: 'SELL', symbol: typeTo.typeName, quantity: quantity, price: priceTo, amount: amountFrom });
+    await addOrder({ userId: userId, currentState: 'BUY', symbol: typeTo.symbol, quantity: quantity, price: priceTo, amount: amountFrom });
 
     const balance = await balanceDetail( 'server', { userId } );
     const history = { userId: userId, balance: balance };
     await addHistory("server", { history });
 
-    return `You convert ${quantity} ${typeFrom.typeName} to ${quantityChange} ${typeTo.typeName}!`;
+    return `You convert ${quantity} ${typeFrom.symbol} to ${quantityChange} ${typeTo.symbol}!`;
 }
 
 module.exports = { walletDetail, walletItemBuy, walletItemSell, walletItemConvert };

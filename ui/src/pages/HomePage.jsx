@@ -210,7 +210,7 @@ export default class Homepage extends React.Component {
   async typesQuery() {
     const typesList = `query {
       typesList {
-        id typeName description price
+        id symbol description price
       }
     }`;
     const typesResult = await graphQLFetch(typesList);
@@ -221,7 +221,7 @@ export default class Homepage extends React.Component {
   async walletQuery(userId) {
     const walletDetail = `query walletDetail($userId: Int!) {
       walletDetail(userId: $userId) {
-        id typeName quantity
+        id symbol quantity
       }
     }`;
     const walletResult = await graphQLFetch(walletDetail, { userId });
@@ -383,7 +383,7 @@ export default class Homepage extends React.Component {
   getAssets() {
     const assets = [];
     this.state.wallet.map((item) => {
-      /*assets.push({ id: item.id, typeName: item.typeName, balance: item.balance, price: this.state.types.find(type => type.id == item.id).price });*/
+      /*assets.push({ id: item.id, symbol: item.symbol, balance: item.balance, price: this.state.types.find(type => type.id == item.id).price });*/
       assets.push({ id: item.id, symbol: item.symbol, quantity: item.quantity, description: this.state.types.find(type => type.id == item.id).description });
       }
     );
@@ -447,7 +447,7 @@ export default class Homepage extends React.Component {
       alert("Before sell, you should buy something");
     } else {
       const typeId = document.getElementById('type').value;
-      const typeName = this.state.types.find(type => type.id == typeId).symbol;
+      const symbol = this.state.types.find(type => type.id == typeId).symbol;
       const item = this.state.wallet.find(item => item.id == typeId);
       if (item != undefined) {
         const quantity = document.getElementById('quantity').value;
@@ -478,13 +478,13 @@ export default class Homepage extends React.Component {
               this.setState({ wallet: newWallet, balance : newBalance, history: newHistory, orders: newOrders }, () => { alert(data.walletItemSell); });
             }
           } else {
-            alert(`You do not have enough ${typeName}! You only have ${typeQuantity}`);
+            alert(`You do not have enough ${symbol}! You only have ${typeQuantity}`);
           }
         } else {
           alert("Please enter a non-negative modification!");
         }
       } else {
-        alert(`You do not own ${typeName}!`);
+        alert(`You do not own ${symbol}!`);
       }
     }
   }
@@ -494,9 +494,9 @@ export default class Homepage extends React.Component {
       alert("Before convert, you should buy something");
     } else {
       const typeIdFrom = document.getElementById('type-from').value;
-      const typeNameFrom = this.state.types.find(type => type.id == typeIdFrom).typeName;
+      const symbolFrom = this.state.types.find(type => type.id == typeIdFrom).symbol;
       const typeIdTo = document.getElementById('type-to').value;
-      const typeNameTo = this.state.types.find(type => type.id == typeIdTo).typeName;
+      const symbolTo = this.state.types.find(type => type.id == typeIdTo).symbol;
       if (typeIdFrom == typeIdTo) {
         alert('From and To types should not be the same!');
       } else {
@@ -530,13 +530,13 @@ export default class Homepage extends React.Component {
                 this.setState({ wallet: newWallet, balance : newBalance, history: newHistory, orders: newOrders }, () => { alert(data.walletItemConvert); });
               }
             } else {
-              alert(`You do not have enough ${typeNameFrom}! You only have ${itemFrom.quantity}`);
+              alert(`You do not have enough ${symbolFrom}! You only have ${itemFrom.quantity}`);
             }
           } else {
             alert("Please enter a positive modification!");
           }
         } else {
-          alert(`You do not own ${typeNameFrom}!`);
+          alert(`You do not own ${symbolFrom}!`);
         }
       }
     }

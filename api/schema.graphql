@@ -69,7 +69,8 @@ input UserInputs {
 input WalletItemInput {
   userId: Int!
   id: Int!
-  modification: Float!
+  quantity: Float!
+  price: Float!
 }
 
 input WalletConvertItemInput {

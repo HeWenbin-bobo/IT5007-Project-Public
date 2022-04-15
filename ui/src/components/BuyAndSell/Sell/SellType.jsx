@@ -18,7 +18,7 @@ function NativeSelectContent(props) {
                 defaultValue={0}
                 inputProps={{
                     name: 'type',
-                    id: 'uncontrolled-native',
+                    id: 'type',
                 }}
                 >
                 {GenerateTypes(props.types)}

@@ -41,23 +41,29 @@ async function walletUpdate( item ) {
 async function walletItemBuy(_, { item }) {
     const userId = item.userId;
     const id = item.id;
-    const modification = item.modification;
+    const quantity = item.quantity;
     const type = await typeFind( id );
-    const price = type.price;
+    const price = item.price == 0? type.price : item.price;
 
-    const balanceChange = roundFun(modification/price, 5);
-    const newItem = {userId: userId, id: id, typeName: type.typeName, balance: balanceChange};
+    const quantityChange = roundFun(quantity, 5);
+    const amount = roundFun(quantityChange*price, 5);
+    const nowBalance = await balanceDetail( 'server', { userId } );
+    if (nowBalance < amount) {
+        return `Do not have enough money! Only have ${nowBalance}, and you can at most buy ${roundFun(nowBalance/price, 5)} ${type.typeName}!`;
+    }
+
+    const newItem = {userId: userId, id: id, typeName: type.typeName, quantity: quantityChange};
     await walletUpdate(newItem);
 
-    await addOrder({ userId: userId, currentState: 'BUY', symbol: type.typeName, quantity: balanceChange, price: price, amount: modification });
+    await addOrder({ userId: userId, currentState: 'BUY', symbol: type.typeName, quantity: quantityChange, price: price, amount: amount });
 
-    await balanceUpdate(userId, -roundFun(balanceChange*price, 5));
+    await balanceUpdate(userId, -amount);
     const balance = await balanceDetail( 'server', { userId } );
 
     const history = { userId: userId, balance: balance };
     await addHistory("server", { history });
 
-    return `You have bought ${balanceChange} ${type.typeName}!`;
+    return `You have bought ${quantityChange} ${type.typeName}!`;
 }
 
 async function walletItemSell(_, { item }) {

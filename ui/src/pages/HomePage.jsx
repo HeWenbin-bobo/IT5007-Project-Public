@@ -221,7 +221,7 @@ export default class Homepage extends React.Component {
   async walletQuery(userId) {
     const walletDetail = `query walletDetail($userId: Int!) {
       walletDetail(userId: $userId) {
-        id typeName balance
+        id typeName quantity
       }
     }`;
     const walletResult = await graphQLFetch(walletDetail, { userId });
@@ -384,7 +384,7 @@ export default class Homepage extends React.Component {
     const assets = [];
     this.state.wallet.map((item) => {
       /*assets.push({ id: item.id, typeName: item.typeName, balance: item.balance, price: this.state.types.find(type => type.id == item.id).price });*/
-      assets.push({ id: item.id, typeName: item.typeName, balance: item.balance, description: this.state.types.find(type => type.id == item.id).description });
+      assets.push({ id: item.id, typeName: item.typeName, quantity: item.quantity, description: this.state.types.find(type => type.id == item.id).description });
       }
     );
     return assets;
@@ -400,37 +400,46 @@ export default class Homepage extends React.Component {
   }
 
   async buy() {
-    const modification = document.getElementById('outlined-adornment-amount').value;
-    if (modification > 0) {
-      if (this.state.balance >= modification) {
-        const userId = this.state.currentUser.id;
-        const typeId = document.getElementById('uncontrolled-native').value;
-        
-        const mutation = `mutation walletItemBuy($item: WalletItemInput!) {
-          walletItemBuy(item: $item)
-        }`;
-        const item = 
-        {
-          userId: userId, 
-          id: typeId,
-          modification: modification
-        };
-        const data = await graphQLFetch(mutation, { item });
-
-        if (data !== null) {
-          const newWallet = await this.walletQuery(userId);
-
-          const newHistory = await this.historyQuery(userId);
-
-          const newBalance = await this.balanceQuery(userId);
-
-          const newOrders = await this.orderQuery(userId);
-
-          this.setState({ wallet: newWallet, balance : newBalance, history: newHistory, orders: newOrders }, () => { alert(data.walletItemBuy); });
+    const quantity = document.getElementById('quantity').value;
+    if (quantity > 0) {
+      const userId = this.state.currentUser.id;
+      const typeId = document.getElementById('type').value;
+      const buyOrderType = document.getElementById('buyOrderType').value;
+      let price = 0;
+      if (buyOrderType == 'Limit') {
+        price = document.getElementById('price').value;
+        if (price <= 0) {
+          alert("Please enter a non-negative price!");
+          return false;
         }
-      } else {
-        alert(`Do not have enough money! Only have ${this.state.balance}`);
       }
+
+      const mutation = `mutation walletItemBuy($item: WalletItemInput!) {
+        walletItemBuy(item: $item)
+      }`;
+      const item =
+      {
+        userId: userId,
+        id: typeId,
+        quantity: quantity,
+        price: price,
+      };
+      const data = await graphQLFetch(mutation, { item });
+
+      if (data !== null) {
+        const newWallet = await this.walletQuery(userId);
+
+        const newHistory = await this.historyQuery(userId);
+
+        const newBalance = await this.balanceQuery(userId);
+
+        const newOrders = await this.orderQuery(userId);
+
+        this.setState({ wallet: newWallet, balance : newBalance, history: newHistory, orders: newOrders }, () => { alert(data.walletItemBuy); });
+      }
+      // else {
+      //   alert(`Do not have enough money! Only have ${this.state.balance}`);
+      // }
     } else {
       alert("Please enter a non-negative modification!");
     }
@@ -440,11 +449,11 @@ export default class Homepage extends React.Component {
     if ( this.state.wallet.length === 0 ) {
       alert("Before sell, you should buy something");
     } else {
-      const typeId = document.getElementById('uncontrolled-native').value;
+      const typeId = document.getElementById('type').value;
       const typeName = this.state.types.find(type => type.id == typeId).typeName;
       const item = this.state.wallet.find(item => item.id == typeId);
       if (item != undefined) {
-        const modification = document.getElementById('outlined-adornment-amount').value;
+        const modification = document.getElementById('quantity').value;
         if (modification > 0) {
           const typeBalance = item.balance;
           if (typeBalance >= modification) {
@@ -487,16 +496,16 @@ export default class Homepage extends React.Component {
     if ( this.state.wallet.length === 0 ) {
       alert("Before convert, you should buy something");
     } else {
-      const typeIdFrom = document.getElementById('uncontrolled-native-from').value;
+      const typeIdFrom = document.getElementById('type-from').value;
       const typeNameFrom = this.state.types.find(type => type.id == typeIdFrom).typeName;
-      const typeIdTo = document.getElementById('uncontrolled-native-to').value;
+      const typeIdTo = document.getElementById('type-to').value;
       const typeNameTo = this.state.types.find(type => type.id == typeIdTo).typeName;
       if (typeIdFrom == typeIdTo) {
         alert('From and To types should not be the same!');
       } else {
         const itemFrom = this.state.wallet.find(type => type.id == typeIdFrom);
         if (itemFrom !== undefined) {
-          const modification = document.getElementById('outlined-adornment-amount').value;
+          const modification = document.getElementById('quantity').value;
           if (modification > 0) {
             if (itemFrom.balance >= modification) {
               const userId = this.state.currentUser.id;

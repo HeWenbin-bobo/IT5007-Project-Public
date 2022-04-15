@@ -58,7 +58,7 @@ db.wallet.remove({});
 db.wallet.createIndex({ id: 1 });
 db.wallet.createIndex({ userId: 1 });
 db.wallet.createIndex({ typeName: 1 });
-db.wallet.createIndex({ balance: 1 });
+db.wallet.createIndex({ quantity: 1 });
 
 db.history.remove({});
 db.history.createIndex({ id: 1 });

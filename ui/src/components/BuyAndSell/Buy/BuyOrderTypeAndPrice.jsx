@@ -43,11 +43,11 @@ function BuyOrderTypeAndPriceContent(props) {
                 <div>
                     <FormControl sx={{ m: 1, width: '25ch', p: 1, mx: 'auto', }} variant="outlined">
                         <OutlinedInput
-                            id="outlined-adornment-price"
+                            id="price"
                             value={values.price}
                             onChange={handleChange('price')}
                             endAdornment={<InputAdornment position="end">SGD</InputAdornment>}
-                            aria-describedby="outlined-amount-helper-text"
+                            aria-describedby="outlined-price-helper-text"
                             inputProps={{
                                 'aria-label': 'price',
                             }}

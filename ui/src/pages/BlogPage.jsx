@@ -8,7 +8,7 @@ import BlogPostCard from '../components/Blog/BlogPostCard';
 import BlogPostsSort from '../components/Blog/BlogPostsSort';
 import BlogPostsSearch from '../components/Blog/BlogPostsSearch';
 // mock
-import POSTS from '../_mock/blog';
+import POSTS from '../_mocks_/blog';
 
 // ----------------------------------------------------------------------
 

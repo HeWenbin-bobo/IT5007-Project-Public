@@ -34,7 +34,7 @@ function BuyOrderTypeAndPriceContent(props) {
                             id: 'buyOrderType',
                         }}
                     >
-                        {GenerateTypes([{id:'Limit',typeName:'Limit'}, {id:'Market',typeName:'Market'}])}
+                        {GenerateTypes([{id:'Limit',symbol:'Limit'}, {id:'Market',symbol:'Market'}])}
                     </NativeSelect>
                 </FormControl>
             </Box>

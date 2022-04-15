@@ -8,6 +8,7 @@ import RegisterPage from './RegisterPage';
 import OrderPage from './OrderPage';
 import SettingPage from "./SettingPage";
 import ProfilePage from './ProfilePage';
+import BlogPage from './BlogPage';
 import HomePageContent from '../pageContent/HomePageContent';
 import account from '../_mocks_/account';
 import graphQLFetch from '../graphQLFetch';
@@ -569,6 +570,9 @@ export default class Homepage extends React.Component {
         break;
       case 'Order':
         temp = <OrderPage />
+        break;
+      case 'Blog.jsx':
+        temp = <BlogPage />
         break;
       default:
         temp = <AssetsPage />

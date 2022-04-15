@@ -70,7 +70,7 @@ input WalletItemInput {
   userId: Int!
   id: Int!
   quantity: Float!
-  price: Float!
+  price: Float
 }
 
 input WalletConvertItemInput {

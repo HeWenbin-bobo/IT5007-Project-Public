@@ -528,7 +528,7 @@ export default class Homepage extends React.Component {
       
                 const newBalance = await this.balanceQuery(userId);
 
-                this.setState({ wallet: newWallet, balance : newBalance, history: newHistory }, () => { alert(data.walletItemConvert); console.log(this.state); });
+                this.setState({ wallet: newWallet, balance : newBalance, history: newHistory }, () => { alert(data.walletItemConvert); });
               }
             } else {
               alert(`You do not have enough ${typeNameFrom}! You only have ${itemFrom.quantity}`);

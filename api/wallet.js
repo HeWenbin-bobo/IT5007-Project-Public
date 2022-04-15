@@ -102,7 +102,7 @@ async function walletItemConvert(_, { item }) {
     const quantityChange = roundFun(quantity*priceFrom/priceTo, 5);
     const newItemTo = {userId: userId, id: idTo, typeName: typeTo.typeName, quantity: quantityChange};
     await walletUpdate(newItemTo);
-    await addOrder({ userId: userId, currentState: 'BUY', symbol: typeTo.typeName, quantity: quantity, price: priceTo, amount: amountFrom });
+    await addOrder({ userId: userId, currentState: 'SELL', symbol: typeTo.typeName, quantity: quantity, price: priceTo, amount: amountFrom });
 
     const balance = await balanceDetail( 'server', { userId } );
     const history = { userId: userId, balance: balance };

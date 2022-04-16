@@ -78,15 +78,15 @@ function generateRabbitMQMessage( msg ) {
     if (msgArray.length == 1) {
         const rabbitmq = {};
         for (var i = 0; i < columns.length; i++) {
-            var column = columns.at(i);
-            rabbitmq[column] = msgArray.at(i);
+            var column = columns(i);
+            rabbitmq[column] = msgArray(i);
         }
         rabbitmq.note = msg;
     } else {
         const rabbitmq = {};
         for (var i = 0; i < msgArray.length; i++) {
-            var column = columns.at(i);
-            rabbitmq[column] = msgArray.at(i);
+            var column = columns(i);
+            rabbitmq[column] = msgArray(i);
         }
         rabbitmq.note == undefined? '' : rabbitmq.note;
     }

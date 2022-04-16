@@ -117,8 +117,6 @@ async function walletItemConvert(_, { item }) {
     const history = { userId: userId, balance: balance };
     await addHistory("server", { history });
 
-    rabbitmq( temp );
-
     return `You convert ${quantity} ${typeFrom.symbol} to ${quantityChange} ${typeTo.symbol}!`;
 }
 

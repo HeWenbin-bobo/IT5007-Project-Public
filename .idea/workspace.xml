@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="95b956f3-f434-475d-92e7-fa6b34d5c120" name="默认变更列表" comment="First commit">
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-    </list>
+    <list default="true" id="95b956f3-f434-475d-92e7-fa6b34d5c120" name="默认变更列表" comment="First commit" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -65,14 +63,7 @@
       <workItem from="1649955660091" duration="3601000" />
       <workItem from="1650001197092" duration="12349000" />
       <workItem from="1650098921392" duration="2686000" />
-      <workItem from="1650112532649" duration="324000" />
-    </task>
-    <task id="LOCAL-00045" summary="First commit">
-      <created>1649923160128</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1649923160128</updated>
+      <workItem from="1650112532649" duration="507000" />
     </task>
     <task id="LOCAL-00046" summary="First commit">
       <created>1649923433330</created>
@@ -410,7 +401,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650112775246</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="First commit">
+      <created>1650112865888</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1650112865888</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -61,7 +61,7 @@ async function rabbitmqCreate( temp ) {
     await sendMessage(msg);
 
     const msgReceive = await receiveMessage();
-    const rabbitmq = createRabbitMQMessage(msgReceive);
+    const rabbitmq = generateRabbitMQMessage(msgReceive);
     rabbitmq.id = await getNextRabbitMQId('rabbitmq'+String(userId))-1;
     rabbitmq.tradeId = rabbitmq.id;
 
@@ -94,4 +94,4 @@ async function rabbitmqAdd( rabbitmq ) {
     return "Successfully add a rabbitmq record";
 }
 
-module.exports = { rabbitmqInit, sendMessage, receiveMessage, rabbitmqList, rabbitmqCreate, createRabbitMQMessage, rabbitmqAdd };
+module.exports = { rabbitmqInit, sendMessage, receiveMessage, rabbitmqList, rabbitmqCreate, generateRabbitMQMessage, rabbitmqAdd };

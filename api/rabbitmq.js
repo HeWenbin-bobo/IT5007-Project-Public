@@ -58,6 +58,7 @@ async function rabbitmqList(_, { userId } ) {
 }
 
 async function rabbitmqCreate( temp ) {
+    console.log(temp);
     const {msg} = temp;
 
     await sendMessage(msg);

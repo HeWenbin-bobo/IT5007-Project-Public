@@ -73,20 +73,20 @@ async function rabbitmqCreate( temp ) {
 }
 
 function generateRabbitMQMessage( msg ) {
-    const columns = ['userId', 'state', 'symbol', 'orderType', 'side', 'quantity', 'price', 'note'];
+    const columnName = ['userId', 'state', 'symbol', 'orderType', 'side', 'quantity', 'price', 'note'];
     const msgArray = msg.split(',');
     if (msgArray.length == 1) {
         const rabbitmq = {};
-        for (var i = 0; i < columns.length; i++) {
-            var column = columns(i);
-            rabbitmq[column] = msgArray(i);
+        for (var i = 0; i < columnName.length; i++) {
+            var column = columnName.at(i);
+            rabbitmq[column] = msgArray.at(i);
         }
         rabbitmq.note = msg;
     } else {
         const rabbitmq = {};
         for (var i = 0; i < msgArray.length; i++) {
-            var column = columns(i);
-            rabbitmq[column] = msgArray(i);
+            var column = columnName.at(i);
+            rabbitmq[column] = msgArray.at(i);
         }
         rabbitmq.note == undefined? '' : rabbitmq.note;
     }

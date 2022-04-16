@@ -37,7 +37,7 @@ async function receiveMessage() {
 
             if (ok) {
                 await ch.consume(queue, function(msg) {
-                    messgae = msg.content.toString();
+                    message = msg.content.toString();
                     console.log(" [x] Received '%s'", msg.content.toString());
                 }, {noAck: true});
             };
@@ -61,7 +61,6 @@ async function rabbitmqCreate( temp ) {
     await sendMessage(msg);
 
     const msgReceive = await receiveMessage();
-    console.log(msgReceive);
     const rabbitmq = generateRabbitMQMessage(msgReceive);
     rabbitmq.id = await getNextRabbitMQId('rabbitmq'+String(userId))-1;
     rabbitmq.tradeId = rabbitmq.id;

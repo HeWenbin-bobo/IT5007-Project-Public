@@ -410,7 +410,7 @@ export default class Homepage extends React.Component {
       if (buyOrderType == 'Limit') {
         price = document.getElementById('price').value;
         if (price <= 0) {
-          alert("Please enter a non-negative price!");
+          alert("Please enter a possitive price!");
           return false;
         }
       }
@@ -439,7 +439,7 @@ export default class Homepage extends React.Component {
         this.setState({ wallet: newWallet, balance : newBalance, history: newHistory, orders: newOrders }, () => { alert(data.walletItemBuy); });
       }
     } else {
-      alert("Please enter a non-negative modification!");
+      alert("Please enter a positive modification!");
     }
   }
 
@@ -482,7 +482,7 @@ export default class Homepage extends React.Component {
             alert(`You do not have enough ${symbol}! You only have ${typeQuantity}`);
           }
         } else {
-          alert("Please enter a non-negative modification!");
+          alert("Please enter a positive modification!");
         }
       } else {
         alert(`You do not own ${symbol}!`);

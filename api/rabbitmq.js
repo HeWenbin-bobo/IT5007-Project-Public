@@ -28,7 +28,7 @@ async function sendMessage(msg) {
 }
 
 async function receiveMessage() {
-    var message = '';
+    var message;
 
     await amqp.connect('amqp://localhost').then(function(conn) {
         return conn.createChannel().then(async function(ch) {
@@ -38,15 +38,16 @@ async function receiveMessage() {
             if (ok) {
                 await ch.consume(queue, function(msg) {
                     message = msg.content.toString();
-                    console.log(message);
                     console.log(" [x] Received '%s'", msg.content.toString());
                 }, {noAck: true});
             };
 
             return ch.close();
 
-        }).finally(function() { conn.close(); return message });
+        }).finally(function() { conn.close(); });
     }).catch(console.warn);
+
+    return message;
 }
 
 async function rabbitmqList(_, { userId } ) {

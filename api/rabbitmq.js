@@ -64,7 +64,7 @@ async function rabbitmqCreate( temp ) {
 
     const msgReceive = await receiveMessage();
     const rabbitmq = generateRabbitMQMessage(msgReceive);
-    rabbitmq.id = await getNextRabbitMQId('rabbitmq'+String(userId))-1;
+    rabbitmq.id = await getNextRabbitMQId('rabbitmq'+String(rabbitmq.userId))-1;
     rabbitmq.tradeId = rabbitmq.id;
 
     const result = await rabbitmqAdd(rabbitmq);
@@ -75,18 +75,18 @@ async function rabbitmqCreate( temp ) {
 function generateRabbitMQMessage( msg ) {
     const columnName = ['userId', 'state', 'symbol', 'orderType', 'side', 'quantity', 'price', 'note'];
     const msgArray = msg.split(',');
+    const rabbitmq = {};
+
     if (msgArray.length == 1) {
-        const rabbitmq = {};
         for (var i = 0; i < columnName.length; i++) {
-            var column = columnName.at(i);
-            rabbitmq[column] = msgArray.at(i);
+            var column = columnName[i];
+            rabbitmq[column] = msgArray[i];
         }
         rabbitmq.note = msg;
     } else {
-        const rabbitmq = {};
         for (var i = 0; i < msgArray.length; i++) {
-            var column = columnName.at(i);
-            rabbitmq[column] = msgArray.at(i);
+            var column = columnName[i];
+            rabbitmq[column] = msgArray[i];
         }
         rabbitmq.note == undefined? '' : rabbitmq.note;
     }

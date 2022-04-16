@@ -39,7 +39,7 @@ async function getNextOrderId(name) {
 }
 
 async function getNextRabbitMQId(name) {
-  const result = await db.collection('rabbitmq').findOneAndUpdate(
+  const result = await db.collection('rabbitmqCounters').findOneAndUpdate(
       { _id: name },
       { $inc: { current: 1 } },
       { returnOriginal: false },

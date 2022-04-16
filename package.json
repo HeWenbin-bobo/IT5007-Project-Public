@@ -1,16 +1,16 @@
 {
-  "name": "NUS-Crypto-Exchange-FrontEnd",
+  "name": "websocket_rabbit_test",
   "version": "1.0.0",
-  "description": "This is a front end project for nus crypto exchange",
+  "description": "",
+  "main": "publisher_to_ws.js",
   "scripts": {
-    "start": "service rabbitmq-server restart && cd api && npm run api && cd .. && cd ui && npm run ui",
-    "dbInit": "cd api && npm run dbInit"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/HeWenbin-bobo/NUS-Crypto-Exchange-FrontEnd.git"
-  },
-  "author": "hewenbin243854232@outlook.com",
+  "author": "",
   "license": "ISC",
-  "homepage": "https://github.com/HeWenbin-bobo/NUS-Crypto-Exchange-FrontEnd.git"
+  "dependencies": {
+    "amqplib": "^0.5.3",
+    "lodash": "^4.17.11",
+    "websocket": "^1.0.28"
+  }
 }

@@ -24,7 +24,6 @@ async function sendMessage() {
 
 async function receiveMessage() {
     await amqp.connect('amqp://localhost').then(function(conn) {
-        process.once('SIGINT', function() { conn.close(); });
         return conn.createChannel().then(async function(ch) {
 
             var ok = ch.assertQueue('hello', {durable: false});

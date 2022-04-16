@@ -58,7 +58,6 @@ async function rabbitmqList(_, { userId } ) {
 }
 
 async function rabbitmqCreate( temp ) {
-    console.log(temp);
     const {msg} = temp;
 
     await sendMessage(msg);
@@ -76,7 +75,7 @@ async function rabbitmqCreate( temp ) {
 function generateRabbitMQMessage( msg ) {
     const columns = ['userId', 'state', 'symbol', 'orderType', 'side', 'quantity', 'price', 'note'];
     const msgArray = msg.split(',');
-    if (temp.length == 1) {
+    if (msgArray.length == 1) {
         const rabbitmq = { note: msg };
     } else {
         const rabbitmq = {};

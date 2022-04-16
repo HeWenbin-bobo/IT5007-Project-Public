@@ -1,9 +1,12 @@
 require('dotenv').config();
 const { MongoClient } = require('mongodb');
+const { sendMessage, receiveMessage } = require('./rabbitmq.js');
 
 let db;
 
 async function connectToDb() {
+  await sendMessage();
+  await receiveMessage();
   const url = process.env.DB_URL || 'mongodb://localhost/NUSSwap';
   const client = new MongoClient(url, { useNewUrlParser: true });
   await client.connect();

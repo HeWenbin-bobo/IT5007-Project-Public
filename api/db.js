@@ -1,12 +1,9 @@
 require('dotenv').config();
 const { MongoClient } = require('mongodb');
-const { sendMessage, receiveMessage } = require('./rabbitmq.js');
 
 let db;
 
 async function connectToDb() {
-  await sendMessage('hello');
-  await receiveMessage();
   const url = process.env.DB_URL || 'mongodb://localhost/NUSSwap';
   const client = new MongoClient(url, { useNewUrlParser: true });
   await client.connect();
@@ -41,6 +38,15 @@ async function getNextOrderId(name) {
   return result.value.current;
 }
 
+async function getNextRabbitMQId(name) {
+  const result = await db.collection('rabbitmq').findOneAndUpdate(
+      { _id: name },
+      { $inc: { current: 1 } },
+      { returnOriginal: false },
+  );
+  return result.value.current;
+}
+
 async function balanceDetail(_, { userId }) {
   const db = getDb();
   const user = await db.collection('users').findOne({ id: userId });
@@ -61,4 +67,4 @@ function getDb() {
   return db;
 }
 
-module.exports = { connectToDb, getNextUserId, getNextHistoryId, getDb, balanceDetail, balanceUpdate, getNextOrderId };
+module.exports = { connectToDb, getNextUserId, getNextHistoryId, getDb, balanceDetail, balanceUpdate, getNextOrderId, getNextRabbitMQId };

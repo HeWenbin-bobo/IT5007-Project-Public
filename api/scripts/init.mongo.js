@@ -15,15 +15,17 @@
 // Drop all the collections in case that they are used before
 // Remove only remove the data in a collection, but will not override the rule (such as unique or not)
 // The best way might directly drop these collections and recreate them
-db.users.drop({})
-db.userCounters.drop({})
-db.types.drop({})
-db.wallet.drop({})
-db.history.drop({})
-db.historyCounters.drop({})
-db.currentUser.drop({})
-db.orders.drop({})
-db.orderCounters.drop({})
+db.users.drop({});
+db.userCounters.drop({});
+db.types.drop({});
+db.wallet.drop({});
+db.history.drop({});
+db.historyCounters.drop({});
+db.currentUser.drop({});
+db.orders.drop({});
+db.orderCounters.drop({});
+db.rabbitmq.drop({});
+db.rabbitmqCounters.drop({});
 
 db.users.remove({});
 db.users.createIndex({ id: 1 }, { unique: true });
@@ -82,3 +84,17 @@ db.orders.createIndex({ price: 1 });
 db.orders.createIndex({ amount: 1 });
 
 db.orderCounters.remove({});
+
+db.rabbitmq.remove({});
+db.rabbitmq.createIndex({ id: 1 });
+db.rabbitmq.createIndex({ userId: 1 });
+db.rabbitmq.createIndex({ state: 1 });
+db.rabbitmq.createIndex({ symbol: 1 });
+db.rabbitmq.createIndex({ orderType: 1 });
+db.rabbitmq.createIndex({ side: 1 });
+db.rabbitmq.createIndex({ quantity: 1 });
+db.rabbitmq.createIndex({ price: 1 });
+db.rabbitmq.createIndex({ tradeId: 1 });
+db.rabbitmq.createIndex({ note: 1 });
+
+db.rabbitmqCounters.remove({});

@@ -5,7 +5,7 @@ const queue = 'NUSSwap';
 
 async function rabbitmqInit( userId ) {
     const db = getDb();
-    const rabbitmqCounter = await db.collection('rabbitmqCounters')
+    const rabbitmqCounter = await db.collection('rabbitmqCounters');
     rabbitmqCounter.remove({ _id: 'rabbitmq'+String(userId) });
     rabbitmqCounter.insert({ _id: 'rabbitmq'+String(userId), current: 1 });
 
@@ -64,6 +64,7 @@ async function rabbitmqCreate( temp ) {
 
     const msgReceive = await receiveMessage();
     const rabbitmq = generateRabbitMQMessage(msgReceive);
+    console.log(rabbitmq);
     rabbitmq.id = await getNextRabbitMQId('rabbitmq'+String(rabbitmq.userId))-1;
     rabbitmq.tradeId = rabbitmq.id;
 

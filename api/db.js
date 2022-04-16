@@ -5,7 +5,7 @@ const { sendMessage, receiveMessage } = require('./rabbitmq.js');
 let db;
 
 async function connectToDb() {
-  await sendMessage();
+  await sendMessage('hello');
   await receiveMessage();
   const url = process.env.DB_URL || 'mongodb://localhost/NUSSwap';
   const client = new MongoClient(url, { useNewUrlParser: true });

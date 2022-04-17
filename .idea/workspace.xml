@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="95b956f3-f434-475d-92e7-fa6b34d5c120" name="默认变更列表" comment="First commit">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,13 +67,6 @@
       <workItem from="1650001197092" duration="12349000" />
       <workItem from="1650098921392" duration="2686000" />
       <workItem from="1650112532649" duration="507000" />
-    </task>
-    <task id="LOCAL-00047" summary="First commit">
-      <created>1649924853833</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1649924853833</updated>
     </task>
     <task id="LOCAL-00048" summary="First commit">
       <created>1649956714435</created>
@@ -410,7 +404,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650179963280</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="First commit">
+      <created>1650204769266</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1650204769266</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

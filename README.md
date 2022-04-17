@@ -9,16 +9,15 @@
 
 ## Setup
 * ```git clone https://github.com/HeWenbin-bobo/IT5007-Project-Public.git```
+* ```cd IT5007-Project-Public```
 * ```git checkout oldVersion_noRabbitMQ```
 * (Automatically setup)
-    * ```cd IT5007-Project-Public```
     * ```npm run start```
         * only need to enter ```Ctrl+A+D``` when creating screen
             * one for mongodb
             * one for api server
             * one for ui server
 * (Manully setup)
-    * ```cd IT5007-Project-Public```
     * (for api server)
         * ```cd api```
         * ```npm install```

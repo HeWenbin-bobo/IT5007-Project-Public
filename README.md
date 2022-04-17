@@ -3,20 +3,21 @@
 This is a demostration about how achieve a bidireccional communication with rabbitMQ and websockets,
 default rabbitMQ queue is named tasks but you can change this using an environment variable WSTOAMQQUEUE
 
-Code updated using Async await :D
-
 <br>
 
-<br>
+## Git
+* https://github.com/HeWenbin-bobo/IT5007-Project-Public.git
+    * modify from https://github.com/cocodrino/RabbitMQ-to-NodeJS-Websocket.git
 
-<br>
-
-<br>
+## Setup
+* ```git clone https://github.com/HeWenbin-bobo/IT5007-Project-Public.git```
+* ```git checkout oldVersion_withWebsocket_RabbitMQ```
+* open the ./client/main.html on local machine, you can see the message
 
 <br>
 
 ## DIAGRAM
 
-![enter image description here](https://github.com/cocodrino/RabbitMQ-to-NodeJS-Websocket/blob/master/images/graph.png?raw=true)
+![enter image description here](https://github.com/HeWenbin-bobo/IT5007-Project-Public/oldVersion_withWebsocket_RabbitMQ/images/graph.png?raw=true)
 
 > Written with [StackEdit](https://stackedit.io/).

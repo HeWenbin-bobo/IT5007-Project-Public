@@ -1,41 +1,42 @@
 # NUS-Crypto-Exchange-FrontEnd
 
 ## Git
-* https://github.com/HeWenbin-bobo/NUS-Crypto-Exchange-FrontEnd.git
+* https://github.com/HeWenbin-bobo/IT5007-Project-Public.git
 
 ## Port Usage
 * api server: 3000
 * ui server: 8000
 
 ## Setup
-* git clone https://github.com/HeWenbin-bobo/NUS-Crypto-Exchange-FrontEnd.git
-* (Automation)
-    * cd NUS-Crypto-Exchange-FrontEnd
-    * npm run start
+* ```git clone https://github.com/HeWenbin-bobo/IT5007-Project-Public.git```
+* ```git checkout oldVersion_noRabbitMQ```
+* (Automatically setup)
+    * ```cd IT5007-Project-Public```
+    * ```npm run start```
         * only need to enter ```Ctrl+A+D``` when creating screen
             * one for mongodb
             * one for api server
             * one for ui server
-* (Manully)
-    * cd NUS-Crypto-Exchange-FrontEnd
+* (Manully setup)
+    * ```cd IT5007-Project-Public```
     * (for api server)
-        * cd api
-        * npm install
-        * screen mongod
+        * ```cd api```
+        * ```npm install```
+        * ```screen mongod```
             * enter ```Ctrl+A+D```
-        * mongo NUSSwap scripts/init.mongo.js
-        * screen npm start
+        * ```mongo NUSSwap scripts/init.mongo.js```
+        * ```screen npm start```
             * enter ```Ctrl+A+D```
     * (for ui server)
-        * cd ui
-        * npm install
-        * screen npm start
+        * ```cd ui```
+        * ```npm install```
+        * ```screen npm start```
             * enter ```Ctrl+A+D```
         * If need to recompile, run following commands:
-            * npm run fast
+            * ```npm run fast```
 
 ## Web Browser
-* Enter ***localhost:8000*** on web browser
+* Enter ```localhost:8000``` on web browser
 
 ## Functions
 * User registration (```/#/register``` page)
@@ -47,6 +48,9 @@
 * Convert one type to another type (Buy/Sell button on ```Assets``` tag)
 * Topup money (on ```Assets``` tag)
 * View information of all Cryptocurrency (```Trade``` tag)
+* Template for blog (```Blog``` tag)
+* Update profile (```Profile``` tag)
+* Update password (```Setting``` tag)
 
 ## Database structure(MongoDB)
 * database name: NUSSwap
@@ -80,4 +84,15 @@
     * currentUser: Record the information of current user
         * _id: *[String]*
         * currentId: *[Int]*
-        * email: *[String]*# IT5007-test
+        * email: *[String]*
+    * orders: Record the information of orders
+        * id: *[Int]*
+        * userId: *[Int]*
+        * currentState: *[String]*
+        * symbol: *[String]*
+        * quantity: *[Int]*
+        * price: *[Double]*
+        * amount: *[Double]*
+    * orderCounters: Record the number of orders
+        * _id: *[String]*
+        * current: *[Int]*

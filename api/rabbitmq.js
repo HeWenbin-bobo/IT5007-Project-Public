@@ -64,7 +64,7 @@ async function rabbitmqCreate( temp ) {
 
     const msgReceive = await receiveMessage();
     const rabbitmq = generateRabbitMQMessage(msgReceive);
-    rabbitmq.id = await getNextRabbitMQId('rabbitmq'+String(rabbitmq.userId))-1;
+    rabbitmq.id = await getNextRabbitMQId('rabbitmq'+String(userId))-1;
     rabbitmq.tradeId = rabbitmq.id;
     rabbitmq.userId = userId;
 

@@ -18,6 +18,6 @@ default rabbitMQ queue is named tasks but you can change this using an environme
 
 ## DIAGRAM
 
-![enter image description here](https://github.com/HeWenbin-bobo/IT5007-Project-Public/oldVersion_withWebsocket_RabbitMQ/images/graph.png?raw=true)
+![enter image description here](https://github.com/HeWenbin-bobo/IT5007-Project-Public/blob/oldVersion_withWebsocket_RabbitMQ/images/graph.png?raw=true)
 
 > Written with [StackEdit](https://stackedit.io/).

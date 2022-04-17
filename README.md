@@ -6,6 +6,8 @@
 ## Port Usage
 * api server: 3000
 * ui server: 8000
+* rabbitmq: 5672
+* rabbitmq web management: 15672
 
 ## Setup
 * ```git clone https://github.com/HeWenbin-bobo/IT5007-Project-Public.git```

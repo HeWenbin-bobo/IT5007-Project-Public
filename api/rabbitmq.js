@@ -58,7 +58,7 @@ async function rabbitmqList(_, { userId } ) {
 }
 
 async function rabbitmqCreate( temp ) {
-    const {msg} = temp;
+    const {userId, msg} = temp;
 
     await sendMessage(msg);
 
@@ -66,6 +66,7 @@ async function rabbitmqCreate( temp ) {
     const rabbitmq = generateRabbitMQMessage(msgReceive);
     rabbitmq.id = await getNextRabbitMQId('rabbitmq'+String(rabbitmq.userId))-1;
     rabbitmq.tradeId = rabbitmq.id;
+    rabbitmq.userId = userId;
 
     const result = await rabbitmqAdd(rabbitmq);
 
@@ -73,7 +74,8 @@ async function rabbitmqCreate( temp ) {
 }
 
 function generateRabbitMQMessage( msg ) {
-    const columnName = ['userId', 'state', 'symbol', 'orderType', 'side', 'quantity', 'price', 'note'];
+    // const columnName = ['userId', 'state', 'symbol', 'orderType', 'side', 'quantity', 'price', 'note'];
+    const columnName = ['state', 'symbol', 'orderType', 'side', 'quantity', 'price', 'note'];
     const msgArray = msg.split(',');
     const rabbitmq = {};
 

@@ -64,7 +64,7 @@ async function walletItemBuy(_, { item }) {
     const history = { userId: userId, balance: balance };
     await addHistory("server", { history });
 
-    await rabbitmqCreate({ msg: `${userId},BUY,${type.symbol},${item.price == 0? 'Limit' : 'Market'},ask,${quantity},${price}` });
+    await rabbitmqCreate( { userId: userId, msg: `BUY,${type.symbol},${item.price == 0? 'Limit' : 'Market'},ask,${quantity},${price}` });
 
     return `You have bought ${quantityChange} ${type.symbol}!`;
 }
@@ -87,7 +87,7 @@ async function walletItemSell(_, { item }) {
     const history = { userId: userId, balance: balance };
     await addHistory("server", { history });
 
-    await rabbitmqCreate({ msg: `${userId},SELL,${type.symbol},'Market',ask,${quantity},${price}` });
+    await rabbitmqCreate({ userId: userId, msg: `SELL,${type.symbol},'Market',ask,${quantity},${price}` });
 
     return `You sold ${quantity} ${type.symbol}! Now, you have money ${balance}`;
 }
@@ -102,7 +102,7 @@ async function walletItemConvert(_, { item }) {
     await walletUpdate(newItemFrom);
     await addOrder({ userId: userId, currentState: 'SELL', symbol: typeFrom.symbol, quantity: quantity, price: priceFrom, amount: amountFrom });
 
-    await rabbitmqCreate({ msg: `${userId},BUY,${typeFrom.symbol},'Market',ask,${quantity},${priceFrom}` });
+    await rabbitmqCreate({ userId: userId, msg: `BUY,${typeFrom.symbol},'Market',ask,${quantity},${priceFrom}` });
 
     const typeTo = await typeFind( idTo );
     const priceTo = typeTo.price;
@@ -111,7 +111,7 @@ async function walletItemConvert(_, { item }) {
     await walletUpdate(newItemTo);
     await addOrder({ userId: userId, currentState: 'BUY', symbol: typeTo.symbol, quantity: quantity, price: priceTo, amount: amountFrom });
 
-    await rabbitmqCreate({ msg: `${userId},SELL,${typeTo.symbol},'Market',ask,${quantityChange},${priceTo}` });
+    await rabbitmqCreate({ userId: userId, msg: `SELL,${typeTo.symbol},'Market',ask,${quantityChange},${priceTo}` });
 
     const balance = await balanceDetail( 'server', { userId } );
     const history = { userId: userId, balance: balance };

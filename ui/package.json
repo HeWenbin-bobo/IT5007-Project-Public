@@ -6,8 +6,7 @@
   "scripts": {
     "start": "nodemon -w server ./uiserver.js",
     "compile": "npx babel src --presets @babel/react --out-dir public",
-    "bundle": "browserify ./public/App.js -o ./public/App2.js",
-    "minify": "npm install terser -g && terser ./public/App2.js --compress ecma=2015,computed_props=false --output ./public/App2.js",
+    "bundle": "npm install terser -g && browserify ./public/App.js | terser --compress --mangle > ./public/App2.js",
     "fast": "npm run compile && npm run bundle",
     "watch": "babel src --out-dir public --watch --verbose",
     "test": "echo \"Error: no test specified\" && exit 1",

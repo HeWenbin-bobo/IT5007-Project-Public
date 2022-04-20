@@ -81,7 +81,7 @@ function Login(props) {
               }}
             >
               Don't have an account?&nbsp;
-              <Link variant="subtitle2" underline="hover">
+              <Link variant="subtitle2" underline="hover" href="/#/register">
                 Get started
               </Link>
             </Typography>

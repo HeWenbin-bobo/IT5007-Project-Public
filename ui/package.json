@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon -w server ./uiserver.js",
-    "compile": "npx babel src --presets @babel/react --out-dir public",
+    "compile": "npx babel -s inline src --presets @babel/react --out-dir public",
     "bundle": "npm install terser -g && browserify ./public/App.js | terser --compress --mangle > ./public/App2.js",
     "fast": "npm run compile && npm run bundle",
     "watch": "babel src --out-dir public --watch --verbose",

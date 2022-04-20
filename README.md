@@ -1,7 +1,7 @@
 # NUS-Crypto-Exchange-FrontEnd
 
 ## Git
-* https://github.com/HeWenbin-bobo/IT5007-Project-Public.git
+* https://github.com/HeWenbin-bobo/NUS-Crypto-Exchange-FrontEnd.git
 
 ## Port Usage
 * api server: 3000
@@ -10,16 +10,19 @@
 * rabbitmq web management: 15672
 
 ## Setup
-* ```git clone https://github.com/HeWenbin-bobo/IT5007-Project-Public.git```
-* ```cd IT5007-Project-Public```
+* ```git clone https://github.com/HeWenbin-bobo/NUS-Crypto-Exchange-FrontEnd.git```
 * (Automatically setup)
+    * ```cd NUS-Crypto-Exchange-FrontEnd```
+    * ```git checkout origin/AWS```
     * ```npm run start```
         * only need to enter ```Ctrl+A+D``` when creating screen
             * one for mongodb
             * one for api server
             * one for ui server
 * (Manully setup)
-        * ```service rabbitmq-server restart```
+    * ```cd NUS-Crypto-Exchange-FrontEnd```
+        * ```git checkout origin/AWS```
+        * ```sudo service rabbitmq-server restart```
     * (for api server)
         * ```cd api```
         * ```npm install```
@@ -37,7 +40,7 @@
             * ```npm run fast```
 
 ## Web Browser
-* Enter ```localhost:8000``` on web browser
+* Enter ```http://35.160.80.61.nip.io:8000/``` on web browser
 
 ## Functions
 * User registration (```/#/register``` page)
@@ -114,14 +117,19 @@
 
 ## Message structure(RabbitMQ)
 * ***state,symbol,orderType,side,quantity,price,note***
-  
+
 ## RabbitMQ installation
-* ```docker run -it --name rabbitmq -d -p 5672:5672 -p 15672:15672 -p 3000:3000 -p 5000:5000 -p 8000:8000 -dit ubuntu:lates```
-* ```apt-get install erlang-nox```
+* ```sudo apt-get install erlang-nox```
 * ```erl```
-* ```apt-get update```
-* ```apt-get install rabbitmq-server```
-* ```service rabbitmq-server status```
-* ```service rabbitmq-server start```
-* ```rabbitmq-plugins enable rabbitmq_management```
-* ```service rabbitmq-server restart```
+* ```wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -```
+* ```sudo apt-get update```
+* ```sudo apt-get install rabbitmq-server```
+* ```systemctl status rabbitmq-server```
+* ```sudo service rabbitmq-server start```
+* ```sudo service rabbitmq-server stop```
+* ```sudo service rabbitmq-server restart```
+* ```sudo rabbitmq-plugins enable rabbitmq_management```
+* ```sudo service rabbitmq-server restart```
+* ```sudo rabbitmqctl add_user test test```
+* ```sudo rabbitmqctl set_user_tags test administrator```
+* ```sudo rabbitmqctl set_permissions -p / test ".*" ".*" ".*"```

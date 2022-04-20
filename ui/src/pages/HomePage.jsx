@@ -1,15 +1,6 @@
 import * as React from 'react';
 import {Switch, Route} from 'react-router-dom';
 import PropTypes from 'prop-types';
-// import AssetsPage from './AssetsPage';
-// import TradePage from './TradePage';
-// import LoginPage from './LoginPage';
-// import RegisterPage from './RegisterPage';
-// import OrderPage from './OrderPage';
-// import SettingPage from "./SettingPage";
-// import ProfilePage from './ProfilePage';
-// import BlogPage from './BlogPage';
-// import HomePageContent from '../pageContent/HomePageContent';
 import account from '../_mocks_/account';
 import graphQLFetch from '../graphQLFetch';
 import { createHashHistory } from 'history';

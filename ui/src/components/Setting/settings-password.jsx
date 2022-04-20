@@ -63,7 +63,8 @@ function SettingsPasswordContent(props) {
                         p: 2
                     }}
                 >
-                    {props.currentUser.email.includes("Google")?
+                    {
+                        props.currentUser.email.includes("Google") ?
                         <Button
                             color="primary"
                             variant="contained"
@@ -80,13 +81,6 @@ function SettingsPasswordContent(props) {
                             Update
                         </Button>
                     }
-                    {/*<Button*/}
-                    {/*    color="primary"*/}
-                    {/*    variant="contained"*/}
-                    {/*    onClick={async () => await handleSubmit()}*/}
-                    {/*>*/}
-                    {/*    Update*/}
-                    {/*</Button>*/}
                 </Box>
             </Card>
         </form>

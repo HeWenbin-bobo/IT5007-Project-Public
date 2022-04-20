@@ -96,7 +96,7 @@ function Register(props) {
               }}
             >
               Already have an account?&nbsp;
-              <Link variant="subtitle2" component={RouterLink} to="login" underline="hover">
+              <Link variant="subtitle2" component={RouterLink} to="login" underline="hover"  href="/#/login">
                 Login
               </Link>
             </Typography>

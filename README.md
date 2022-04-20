@@ -54,7 +54,7 @@
 * View information of all Cryptocurrency (```Trade``` tag)
 * Template for blog (```Blog``` tag)
 * Update profile (```Profile``` tag)
-* Update password (```Setting``` tag)
+* Update password for Non-Google logged in users (```Setting``` tag)
 
 ## Database structure(MongoDB)
 * database name: NUSSwap

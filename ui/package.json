@@ -25,6 +25,7 @@
     "@emotion/styled": "^11.8.1",
     "@faker-js/faker": "^6.1.2",
     "@iconify/react": "^3.1.4",
+    "@loadable/component": "^5.15.2",
     "@mui/icons-material": "^5.5.0",
     "@mui/lab": "^5.0.0-alpha.72",
     "@mui/material": "^5.4.4",

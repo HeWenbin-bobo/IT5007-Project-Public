@@ -1,8 +1,11 @@
 require('dotenv').config();
 const express = require('express');
+const compression = require('compression');
 const proxy = require('http-proxy-middleware');
 
 const app = express();
+
+app.use(compression());
 
 app.use(express.static('public'));
 

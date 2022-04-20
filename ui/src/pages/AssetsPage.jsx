@@ -4,13 +4,22 @@ import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Chart from '../components/Chart';
-import Balance from '../components/Balance';
-import Topup from '../components/Topup';
-import YourAssets from '../components/YourAssets';
-import OrderList from '../components/OrderList';
-import Copyright from '../components/Copyright';
-import WatchList from '../components/WatchList/WatchList';
+// import Chart from '../components/Chart';
+// import Balance from '../components/Balance';
+// import Topup from '../components/Topup';
+// import YourAssets from '../components/YourAssets';
+// import OrderList from '../components/OrderList';
+// import Copyright from '../components/Copyright';
+// import WatchList from '../components/WatchList/WatchList';
+
+import loadable from '@loadable/component';
+const Chart = loadable(() => import('../components/Chart'));
+const Balance = loadable(() => import('../components/Balance'));
+const Topup = loadable(() => import('../components/Topup'));
+const YourAssets = loadable(() => import('../components/YourAssets'));
+const OrderList = loadable(() => import('../components/OrderList'));
+const Copyright = loadable(() => import('../components/Copyright'));
+const WatchList = loadable(() => import('../components/WatchList/WatchList'));
 
 export default class AssetsPage extends React.Component {
     render() {

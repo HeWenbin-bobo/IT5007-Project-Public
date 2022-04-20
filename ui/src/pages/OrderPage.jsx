@@ -4,8 +4,12 @@ import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import OrderList from '../components/OrderList';
-import Copyright from '../components/Copyright';
+// import OrderList from '../components/OrderList';
+// import Copyright from '../components/Copyright';
+
+import loadable from '@loadable/component';
+const OrderList = loadable(() => import('../components/OrderList'));
+const Copyright = loadable(() => import('../components/Copyright'));
 
 export default class OrderPage extends React.Component {
     render() {

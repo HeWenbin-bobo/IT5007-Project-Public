@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon -w server ./uiserver.js",
     "compile": "npx babel src --presets @babel/react --out-dir public",
-    "bundle": "npm install terser -g && browserify ./public/App.js -g [ envify --NODE_ENV production ] -g [ uglifyify -x '**/IT5007-Project-Public/ui/**' --ignore '**/node_modules/**' --debug] | terser --compress --mangle > ./public/App2.js",
+    "bundle": "npm install terser -g && browserify ./public/App.js -g [ envify --NODE_ENV production ] | terser --compress --mangle > ./public/App2.js",
     "fast": "npm run compile && npm run bundle",
     "watch": "babel src --out-dir public --watch --verbose",
     "test": "echo \"Error: no test specified\" && exit 1",

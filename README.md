@@ -22,16 +22,11 @@
         * ```service rabbitmq-server restart```
     * (for api server)
         * ```cd api```
-        * ```npm install```
-        * ```screen mongod```
-            * enter ```Ctrl+A+D```
-        * ```mongo NUSSwap scripts/init.mongo.js```
-        * ```screen npm start```
+        * ```npm run api```
             * enter ```Ctrl+A+D```
     * (for ui server)
         * ```cd ui```
-        * ```npm install```
-        * ```screen npm start```
+        * ```npm run ui```
             * enter ```Ctrl+A+D```
         * If need to recompile, run following commands:
             * ```npm run fast```

@@ -6,8 +6,6 @@ var _reactDom = _interopRequireDefault(require("react-dom"));
 
 var _component = _interopRequireDefault(require("@loadable/component"));
 
-require("babel-polyfill");
-
 var _reactRouterDom = require("react-router-dom");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

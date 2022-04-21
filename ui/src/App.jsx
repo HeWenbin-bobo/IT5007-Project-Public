@@ -2,7 +2,6 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import loadable from '@loadable/component';
 const HomePage = loadable(() => import('./pages/HomePage'));
-import './require-babel-polyfill.js';
 import {HashRouter as Router} from 'react-router-dom';
 
 

@@ -55,7 +55,6 @@
     "@babel/core": "^7.17.5",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.16.7",
-    "babel-polyfill": "^6.26.0",
     "envify": "^4.1.0",
     "uglifyify": "^3.0.4"
   }

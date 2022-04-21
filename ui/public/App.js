@@ -6,6 +6,8 @@ var _reactDom = _interopRequireDefault(require("react-dom"));
 
 var _component = _interopRequireDefault(require("@loadable/component"));
 
+require("babel-polyfill");
+
 var _reactRouterDom = require("react-router-dom");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -40,7 +42,7 @@ var HomePage = (0, _component.default)(function () {
   return Promise.resolve().then(function () {
     return _interopRequireWildcard(require('./pages/HomePage'));
   });
-}); // import HomePage from './pages/HomePage';
+});
 
 var Toplevel = /*#__PURE__*/function (_React$Component) {
   _inherits(Toplevel, _React$Component);

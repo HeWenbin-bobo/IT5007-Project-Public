@@ -14,8 +14,10 @@ if (apiProxyTarget) {
   app.use('/graphql', proxy({ target: apiProxyTarget }));
 }
 
+// const UI_API_ENDPOINT = process.env.UI_API_ENDPOINT
+//   || 'http://35.160.80.61:3000/graphql';
 const UI_API_ENDPOINT = process.env.UI_API_ENDPOINT
-  || 'http://35.160.80.61:3000/graphql';
+    || 'http://localhost:3000/graphql';
 const env = { UI_API_ENDPOINT };
 
 app.get('/env.js', (req, res) => {

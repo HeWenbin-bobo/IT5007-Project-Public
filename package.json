@@ -4,7 +4,7 @@
   "description": "This is a front end project for nus crypto exchange",
   "scripts": {
     "start": "npm run rabbitmq && cd api && npm run api && cd .. && cd ui && npm run ui",
-    "rabbitmq": "service rabbitmq-server restart",
+    "rabbitmq": "sudo service rabbitmq-server restart",
     "dbInit": "cd api && npm run dbInit"
   },
   "repository": {

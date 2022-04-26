@@ -777,19 +777,19 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
                   break;
                 }
 
-                query = "query { logout }";
-                _context15.next = 4;
-                return (0, _graphQLFetch.default)(query);
-
-              case 4:
-                result = _context15.sent;
                 this.setState({
                   currentUser: _account.default,
                   balance: 0,
                   types: [],
                   wallet: [],
                   history: []
-                });
+                }, function () {});
+                query = "query { logout }";
+                _context15.next = 5;
+                return (0, _graphQLFetch.default)(query);
+
+              case 5:
+                result = _context15.sent;
                 alert(result.logout);
                 _context15.next = 10;
                 break;

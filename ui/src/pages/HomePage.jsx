@@ -66,8 +66,16 @@ export default class Homepage extends React.Component {
 
   async componentDidMount() {
     await this.checkLoginStatus();
+    this.timerUpdate = setInterval(
+        async () => await this.tick(),
+        4000
+    );
   }
-  
+
+  componentWillUnmount() {
+    clearInterval(this.timerUpdate);
+  }
+
   //定义孙子及以后辈组件能接收到的参数和方法
   static childContextTypes = {
     balance: PropTypes.number,
@@ -114,6 +122,7 @@ export default class Homepage extends React.Component {
     };
   }
 
+  // Talk to mongodb and get the information of current user
   async currentUserQueryFunction() {
     const query = `query { 
       currentUserQuery {
@@ -124,6 +133,7 @@ export default class Homepage extends React.Component {
     return result.currentUserQuery;
   }
 
+  // Add some money to your wallet, and talk to mongodb to update the information in the database
   async topup() {
     const topupAmount = document.getElementById("topup").value;
     if (topupAmount <= 0) {
@@ -144,6 +154,8 @@ export default class Homepage extends React.Component {
     }
   }
 
+  // Update the profile of the user, such as lastName and firstName
+  // Also, update the record in database
   async updateProfile(firstName, lastName) {
     if (firstName + ' ' + lastName == this.state.currentUser.displayName) {
       alert('Nothing change, please check what you enter!');
@@ -160,6 +172,8 @@ export default class Homepage extends React.Component {
     }
   }
 
+  // Update the password of the user, only for non-Google logged in user
+  // Also, update the record in database
   async updatePassword(password, confirm) {
     if (password == '' || confirm == '') {
       alert('You must enter the new password twice');
@@ -181,6 +195,8 @@ export default class Homepage extends React.Component {
     alert(result.updatePassword);
   }
 
+  // Get the information of current user, such as profile, assets ...
+  // So that we can remember the logged in status when refreshing the web page
   async loadData(userId, email, photoURL) {
     const resultFind = await this.userQuery(email);
     const currentUser =
@@ -200,6 +216,15 @@ export default class Homepage extends React.Component {
     this.setState({ currentUser: currentUser, balance: newBalance, history: newHistory, wallet: newWallet, types: newtypes, orders: newOrders }, ()=>{} );
   }
 
+  async tick() {
+    if (this.state.currentUser != account) {
+      const {id, email, photoURL} = this.state.currentUser;
+      await this.loadData(id, email, photoURL);
+      await this.balanceQuery(id);
+    }
+  }
+
+  // Function for talking to the database and get the information of user
   async userQuery(email) {
     const queryUser = `query userFind($email: String!) {
       userFind(email: $email) {
@@ -210,6 +235,7 @@ export default class Homepage extends React.Component {
     return resultFind;
   }
 
+  // Function for talking to the database and get the types of items that users can buy
   async typesQuery() {
     const typesList = `query {
       typesList {
@@ -221,6 +247,7 @@ export default class Homepage extends React.Component {
     return newtypes;
   }
 
+  // Function for talking to the database and get the assets of current user
   async walletQuery(userId) {
     const walletDetail = `query walletDetail($userId: Int!) {
       walletDetail(userId: $userId) {
@@ -235,6 +262,7 @@ export default class Homepage extends React.Component {
     return newWallet;
   }
 
+  // Function for talking to the database and get the change history of current user's balance
   async historyQuery(userId) {
     const historyList = `query historyList($userId: Int!) {
       historyList(userId: $userId) {
@@ -246,10 +274,11 @@ export default class Homepage extends React.Component {
     return newHistory;
   }
 
+  // Function for talking to the database and get the list of current user's orders
   async orderQuery(userId) {
     const orderList = `query orderList($userId: Int!) {
       orderList(userId: $userId) {
-        id currentState symbol quantity price amount
+        id symbol side quantity openQuantity price filledCost
       }
     }`;
     const orderResult = await graphQLFetch(orderList, { userId });
@@ -257,6 +286,7 @@ export default class Homepage extends React.Component {
     return newOrders;
   }
 
+  // Function for talking to the database and get the current balance of the user
   async balanceQuery(userId) {
     const balanceDetail = `query balanceDetail($userId: Int!) {
       balanceDetail (userId: $userId)
@@ -266,6 +296,8 @@ export default class Homepage extends React.Component {
     return newBalance;
   }
 
+  // Function for user logout
+  // Also, need to talk to database to reset the current user
   async logout() {
     if (this.state.currentUser.email != '') {
       const query = `query { logout }`;
@@ -277,6 +309,8 @@ export default class Homepage extends React.Component {
     }
   }
 
+  // Function for user login
+  // Also, need to talk to database to reset the current user
   async login(email, password) {
     this.changePage("Assets");
 
@@ -299,7 +333,7 @@ export default class Homepage extends React.Component {
     const query = `query login($user: UserInputs!) {
       login(user: $user)
     }`;
-    const user = 
+    const user =
     {
       email: email,
       firstName: '',
@@ -324,13 +358,13 @@ export default class Homepage extends React.Component {
         const newBalance = resultFind.userFind.balance;
 
         const newtypes = await this.typesQuery();
-        
+
         const newWallet = await this.walletQuery(userId);
 
         const newHistory = await this.historyQuery(userId);
 
         const newOrders = await this.orderQuery(userId);
-        
+
         this.setState({ currentUser: currentUser, balance: newBalance, history: newHistory, wallet: newWallet, types: newtypes, orders: newOrders });
         return true;
       }
@@ -338,13 +372,15 @@ export default class Homepage extends React.Component {
     return false;
   }
 
+  // Function for user register
+  // Also, need to talk to database to reset the current user
   async register(firstName, lastName, email, password, photoURL='') {
     this.changePage("Assets");
 
     const mutation = `mutation register($user: UserInputs!) {
       register(user: $user)
     }`;
-    const user = 
+    const user =
     {
       email: email,
       firstName: firstName,
@@ -383,6 +419,7 @@ export default class Homepage extends React.Component {
     return false;
   }
 
+  // Generate the information of assets and then display
   getAssets() {
     const assets = [];
     this.state.wallet.map((item) => {
@@ -393,15 +430,17 @@ export default class Homepage extends React.Component {
     return assets;
   }
 
+  // Generate the information of orders and then display
   getOrders() {
     const orders = [];
-    this.state.orders.map((item) => {
-          orders.push({ id: item.id, state: item.currentState, symbol: item.symbol, quantity: item.quantity, price: item.price, amount: item.amount });
+    this.state.orders.map((order) => {
+          orders.push({ id: order.id, symbol: order.symbol, side: order.side, quantity: order.quantity, openQuantity: order.openQuantity, price: order.price, filledCost: order.filledCost });
         }
     );
     return orders.reverse();
   }
 
+  // Function for purchasing something
   async buy() {
     const quantity = document.getElementById('quantity').value;
     if (quantity > 0) {
@@ -412,7 +451,7 @@ export default class Homepage extends React.Component {
       if (buyOrderType == 'Limit') {
         price = document.getElementById('price').value;
         if (price <= 0) {
-          alert("Please enter a possitive price!");
+          alert("Please enter a positive price!");
           return false;
         }
       }
@@ -445,10 +484,20 @@ export default class Homepage extends React.Component {
     }
   }
 
+  // Function for selling something
   async sell() {
     if ( this.state.wallet.length === 0 ) {
       alert("Before sell, you should buy something");
     } else {
+      const sellOrderType = document.getElementById('sellOrderType').value;
+      let price = 0;
+      if (sellOrderType == 'Limit') {
+        price = document.getElementById('price').value;
+        if (price <= 0) {
+          alert("Please enter a positive price!");
+          return false;
+        }
+      }
       const typeId = document.getElementById('type').value;
       const symbol = this.state.types.find(type => type.id == typeId).symbol;
       const item = this.state.wallet.find(item => item.id == typeId);
@@ -461,19 +510,20 @@ export default class Homepage extends React.Component {
             const mutation = `mutation walletItemSell($item: WalletItemInput!) {
               walletItemSell(item: $item)
             }`;
-            const item = 
+            const item =
             {
               userId: userId,
               id: typeId,
-              quantity: quantity
+              quantity: quantity,
+              price: price,
             };
             const data = await graphQLFetch(mutation, { item });
-    
+
             if (data !== null) {
               const newWallet = await this.walletQuery(userId);
-    
+
               const newHistory = await this.historyQuery(userId);
-    
+
               const newBalance = await this.balanceQuery(userId);
 
               const newOrders = await this.orderQuery(userId);
@@ -491,7 +541,8 @@ export default class Homepage extends React.Component {
       }
     }
   }
-  
+
+  // Function for converting something to another
   async convert() {
     if ( this.state.wallet.length === 0 ) {
       alert("Before convert, you should buy something");
@@ -512,7 +563,7 @@ export default class Homepage extends React.Component {
               const mutation = `mutation walletItemConvert($item: WalletConvertItemInput!) {
                 walletItemConvert(item: $item)
               }`;
-              const item = 
+              const item =
               {
                 userId: userId,
                 idFrom: typeIdFrom,
@@ -520,12 +571,12 @@ export default class Homepage extends React.Component {
                 quantity: quantity
               };
               const data = await graphQLFetch(mutation, { item });
-      
+
               if (data !== null) {
                 const newWallet = await this.walletQuery(userId);
-      
+
                 const newHistory = await this.historyQuery(userId);
-      
+
                 const newBalance = await this.balanceQuery(userId);
 
                 const newOrders = await this.orderQuery(userId);
@@ -545,10 +596,12 @@ export default class Homepage extends React.Component {
     }
   }
 
+  // Function for changing page
   changePage(page) {
     this.setState({ page : page });
   }
 
+  // Function for showing page
   showPage() {
     var temp
     switch(this.state.page) {

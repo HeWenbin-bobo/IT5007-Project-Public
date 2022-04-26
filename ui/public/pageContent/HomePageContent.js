@@ -202,8 +202,9 @@ function HomepageContent(props) {
     onClick: function onClick() {
       props.changePage('Assets');
     }
-  }, /*#__PURE__*/React.createElement(_Title.default, null, "NUSSwap")), /*#__PURE__*/React.createElement(_IconButton.default, {
-    onClick: toggleDrawer
+  }, /*#__PURE__*/React.createElement(_Title.default, null, "NUSwap")), /*#__PURE__*/React.createElement(_IconButton.default, {
+    onClick: toggleDrawer,
+    "aria-label": "showListItems"
   }, /*#__PURE__*/React.createElement(_ChevronLeft.default, null))), /*#__PURE__*/React.createElement(_Divider.default, null), /*#__PURE__*/React.createElement(_List.default, {
     component: "nav"
   }, /*#__PURE__*/React.createElement(_listItems.default, null), /*#__PURE__*/React.createElement(_Divider.default, {

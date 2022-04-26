@@ -94,7 +94,7 @@ function InputAdornmentsContent(props) {
     onChange: handleChange('quantity'),
     endAdornment: /*#__PURE__*/React.createElement(_InputAdornment.default, {
       position: "end"
-    }),
+    }, "Quantity"),
     "aria-describedby": "outlined-quantity-helper-text",
     inputProps: {
       'aria-label': 'quantity'

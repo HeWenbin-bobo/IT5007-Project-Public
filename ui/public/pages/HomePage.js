@@ -156,20 +156,42 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
   _createClass(Homepage, [{
     key: "componentDidMount",
     value: function () {
-      var _componentDidMount = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        return regeneratorRuntime.wrap(function _callee$(_context) {
+      var _componentDidMount = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        var _this2 = this;
+
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                _context.next = 2;
+                _context2.next = 2;
                 return this.checkLoginStatus();
 
               case 2:
+                this.timerUpdate = setInterval( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                  return regeneratorRuntime.wrap(function _callee$(_context) {
+                    while (1) {
+                      switch (_context.prev = _context.next) {
+                        case 0:
+                          _context.next = 2;
+                          return _this2.tick();
+
+                        case 2:
+                          return _context.abrupt("return", _context.sent);
+
+                        case 3:
+                        case "end":
+                          return _context.stop();
+                      }
+                    }
+                  }, _callee);
+                })), 4000);
+
+              case 3:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this);
+        }, _callee2, this);
       }));
 
       function componentDidMount() {
@@ -177,7 +199,12 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
       }
 
       return componentDidMount;
-    }() //定义孙子及以后辈组件能接收到的参数和方法
+    }()
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      clearInterval(this.timerUpdate);
+    } //定义孙子及以后辈组件能接收到的参数和方法
 
   }, {
     key: "getChildContext",
@@ -203,30 +230,31 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
         updateProfile: this.updateProfile,
         updatePassword: this.updatePassword
       };
-    }
+    } // Talk to mongodb and get the information of current user
+
   }, {
     key: "currentUserQueryFunction",
     value: function () {
-      var _currentUserQueryFunction = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+      var _currentUserQueryFunction = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
         var query, result;
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 query = "query { \n      currentUserQuery {\n        currentId, email, photoURL\n      } \n    }";
-                _context2.next = 3;
+                _context3.next = 3;
                 return (0, _graphQLFetch.default)(query);
 
               case 3:
-                result = _context2.sent;
-                return _context2.abrupt("return", result.currentUserQuery);
+                result = _context3.sent;
+                return _context3.abrupt("return", result.currentUserQuery);
 
               case 5:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }));
 
       function currentUserQueryFunction() {
@@ -234,25 +262,26 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
       }
 
       return currentUserQueryFunction;
-    }()
+    }() // Add some money to your wallet, and talk to mongodb to update the information in the database
+
   }, {
     key: "topup",
     value: function () {
-      var _topup = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+      var _topup = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
         var topupAmount, userId, topupInput, mutation, result, newBalance, newHistory;
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 topupAmount = document.getElementById("topup").value;
 
                 if (!(topupAmount <= 0)) {
-                  _context3.next = 5;
+                  _context4.next = 5;
                   break;
                 }
 
                 alert('You should enter a positive value!');
-                _context3.next = 17;
+                _context4.next = 17;
                 break;
 
               case 5:
@@ -262,20 +291,20 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
                   userId: userId
                 };
                 mutation = "mutation topup($topupInput: TopupInput!) {\n        topup(topupInput: $topupInput)\n      }";
-                _context3.next = 10;
+                _context4.next = 10;
                 return (0, _graphQLFetch.default)(mutation, {
                   topupInput: topupInput
                 });
 
               case 10:
-                result = _context3.sent;
+                result = _context4.sent;
                 newBalance = result.topup;
                 console.log(newBalance);
-                _context3.next = 15;
+                _context4.next = 15;
                 return this.historyQuery(userId);
 
               case 15:
-                newHistory = _context3.sent;
+                newHistory = _context4.sent;
                 this.setState({
                   balance: newBalance,
                   history: newHistory
@@ -285,10 +314,10 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
 
               case 17:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee4, this);
       }));
 
       function topup() {
@@ -296,23 +325,25 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
       }
 
       return topup;
-    }()
+    }() // Update the profile of the user, such as lastName and firstName
+    // Also, update the record in database
+
   }, {
     key: "updateProfile",
     value: function () {
-      var _updateProfile = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(firstName, lastName) {
+      var _updateProfile = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(firstName, lastName) {
         var profileInput, mutation, result, newDisplayName, newUser;
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 if (!(firstName + ' ' + lastName == this.state.currentUser.displayName)) {
-                  _context4.next = 4;
+                  _context5.next = 4;
                   break;
                 }
 
                 alert('Nothing change, please check what you enter!');
-                _context4.next = 13;
+                _context5.next = 13;
                 break;
 
               case 4:
@@ -322,13 +353,13 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
                   lastName: lastName
                 };
                 mutation = "mutation updateProfile($profileInput: ProfileInput!) {\n        updateProfile(profileInput: $profileInput)\n      }";
-                _context4.next = 8;
+                _context5.next = 8;
                 return (0, _graphQLFetch.default)(mutation, {
                   profileInput: profileInput
                 });
 
               case 8:
-                result = _context4.sent;
+                result = _context5.sent;
                 newDisplayName = firstName + ' ' + lastName;
                 newUser = Object.assign({}, this.state.currentUser);
                 newUser.displayName = newDisplayName;
@@ -338,10 +369,10 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
 
               case 13:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee5, this);
       }));
 
       function updateProfile(_x, _x2) {
@@ -349,41 +380,43 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
       }
 
       return updateProfile;
-    }()
+    }() // Update the password of the user, only for non-Google logged in user
+    // Also, update the record in database
+
   }, {
     key: "updatePassword",
     value: function () {
-      var _updatePassword = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(password, confirm) {
+      var _updatePassword = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(password, confirm) {
         var passwordInput, mutation, result;
-        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+        return regeneratorRuntime.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
                 if (!(password == '' || confirm == '')) {
-                  _context5.next = 3;
+                  _context6.next = 3;
                   break;
                 }
 
                 alert('You must enter the new password twice');
-                return _context5.abrupt("return", false);
+                return _context6.abrupt("return", false);
 
               case 3:
                 if (!(password.length * confirm.length < 9)) {
-                  _context5.next = 6;
+                  _context6.next = 6;
                   break;
                 }
 
                 alert('Your new password is too short');
-                return _context5.abrupt("return", false);
+                return _context6.abrupt("return", false);
 
               case 6:
                 if (!(password != confirm)) {
-                  _context5.next = 9;
+                  _context6.next = 9;
                   break;
                 }
 
                 alert('You must enter the new password twice correctly');
-                return _context5.abrupt("return", false);
+                return _context6.abrupt("return", false);
 
               case 9:
                 passwordInput = {
@@ -391,21 +424,21 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
                   password: password
                 };
                 mutation = "mutation updatePassword($passwordInput: PasswordInput!) {\n      updatePassword(passwordInput: $passwordInput)\n    }";
-                _context5.next = 13;
+                _context6.next = 13;
                 return (0, _graphQLFetch.default)(mutation, {
                   passwordInput: passwordInput
                 });
 
               case 13:
-                result = _context5.sent;
+                result = _context6.sent;
                 alert(result.updatePassword);
 
               case 15:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5, this);
+        }, _callee6, this);
       }));
 
       function updatePassword(_x3, _x4) {
@@ -413,21 +446,23 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
       }
 
       return updatePassword;
-    }()
+    }() // Get the information of current user, such as profile, assets ...
+    // So that we can remember the logged in status when refreshing the web page
+
   }, {
     key: "loadData",
     value: function () {
-      var _loadData = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(userId, email, photoURL) {
+      var _loadData = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(userId, email, photoURL) {
         var resultFind, currentUser, newBalance, newtypes, newWallet, newHistory, newOrders;
-        return regeneratorRuntime.wrap(function _callee6$(_context6) {
+        return regeneratorRuntime.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                _context6.next = 2;
+                _context7.next = 2;
                 return this.userQuery(email);
 
               case 2:
-                resultFind = _context6.sent;
+                resultFind = _context7.sent;
                 currentUser = {
                   id: resultFind.userFind.id,
                   displayName: resultFind.userFind.firstName + ' ' + resultFind.userFind.lastName,
@@ -436,26 +471,26 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
                   photoURL: photoURL
                 };
                 newBalance = resultFind.userFind.balance;
-                _context6.next = 7;
+                _context7.next = 7;
                 return this.typesQuery();
 
               case 7:
-                newtypes = _context6.sent;
-                _context6.next = 10;
+                newtypes = _context7.sent;
+                _context7.next = 10;
                 return this.walletQuery(userId);
 
               case 10:
-                newWallet = _context6.sent;
-                _context6.next = 13;
+                newWallet = _context7.sent;
+                _context7.next = 13;
                 return this.historyQuery(userId);
 
               case 13:
-                newHistory = _context6.sent;
-                _context6.next = 16;
+                newHistory = _context7.sent;
+                _context7.next = 16;
                 return this.orderQuery(userId);
 
               case 16:
-                newOrders = _context6.sent;
+                newOrders = _context7.sent;
                 this.setState({
                   currentUser: currentUser,
                   balance: newBalance,
@@ -467,10 +502,10 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
 
               case 18:
               case "end":
-                return _context6.stop();
+                return _context7.stop();
             }
           }
-        }, _callee6, this);
+        }, _callee7, this);
       }));
 
       function loadData(_x5, _x6, _x7) {
@@ -480,94 +515,63 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
       return loadData;
     }()
   }, {
-    key: "userQuery",
+    key: "tick",
     value: function () {
-      var _userQuery = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(email) {
-        var queryUser, resultFind;
-        return regeneratorRuntime.wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                queryUser = "query userFind($email: String!) {\n      userFind(email: $email) {\n        _id id email firstName lastName password balance photoURL\n      }\n    }";
-                _context7.next = 3;
-                return (0, _graphQLFetch.default)(queryUser, {
-                  email: email
-                });
+      var _tick = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
+        var _this$state$currentUs, id, email, photoURL;
 
-              case 3:
-                resultFind = _context7.sent;
-                return _context7.abrupt("return", resultFind);
-
-              case 5:
-              case "end":
-                return _context7.stop();
-            }
-          }
-        }, _callee7);
-      }));
-
-      function userQuery(_x8) {
-        return _userQuery.apply(this, arguments);
-      }
-
-      return userQuery;
-    }()
-  }, {
-    key: "typesQuery",
-    value: function () {
-      var _typesQuery = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
-        var typesList, typesResult, newtypes;
         return regeneratorRuntime.wrap(function _callee8$(_context8) {
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
-                typesList = "query {\n      typesList {\n        id symbol description price\n      }\n    }";
-                _context8.next = 3;
-                return (0, _graphQLFetch.default)(typesList);
+                if (!(this.state.currentUser != _account.default)) {
+                  _context8.next = 6;
+                  break;
+                }
 
-              case 3:
-                typesResult = _context8.sent;
-                newtypes = typesResult.typesList;
-                return _context8.abrupt("return", newtypes);
+                _this$state$currentUs = this.state.currentUser, id = _this$state$currentUs.id, email = _this$state$currentUs.email, photoURL = _this$state$currentUs.photoURL;
+                _context8.next = 4;
+                return this.loadData(id, email, photoURL);
+
+              case 4:
+                _context8.next = 6;
+                return this.balanceQuery(id);
 
               case 6:
               case "end":
                 return _context8.stop();
             }
           }
-        }, _callee8);
+        }, _callee8, this);
       }));
 
-      function typesQuery() {
-        return _typesQuery.apply(this, arguments);
+      function tick() {
+        return _tick.apply(this, arguments);
       }
 
-      return typesQuery;
-    }()
+      return tick;
+    }() // Function for talking to the database and get the information of user
+
   }, {
-    key: "walletQuery",
+    key: "userQuery",
     value: function () {
-      var _walletQuery = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(userId) {
-        var walletDetail, walletResult, newWallet;
+      var _userQuery = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(email) {
+        var queryUser, resultFind;
         return regeneratorRuntime.wrap(function _callee9$(_context9) {
           while (1) {
             switch (_context9.prev = _context9.next) {
               case 0:
-                walletDetail = "query walletDetail($userId: Int!) {\n      walletDetail(userId: $userId) {\n        id symbol quantity\n      }\n    }";
+                queryUser = "query userFind($email: String!) {\n      userFind(email: $email) {\n        _id id email firstName lastName password balance photoURL\n      }\n    }";
                 _context9.next = 3;
-                return (0, _graphQLFetch.default)(walletDetail, {
-                  userId: userId
+                return (0, _graphQLFetch.default)(queryUser, {
+                  email: email
                 });
 
               case 3:
-                walletResult = _context9.sent;
-                newWallet = walletResult.walletDetail;
-                newWallet.sort(function (a, b) {
-                  return a.id - b.id;
-                });
-                return _context9.abrupt("return", newWallet);
+                resultFind = _context9.sent;
+                return _context9.abrupt("return", resultFind);
 
-              case 7:
+              case 5:
               case "end":
                 return _context9.stop();
             }
@@ -575,31 +579,30 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
         }, _callee9);
       }));
 
-      function walletQuery(_x9) {
-        return _walletQuery.apply(this, arguments);
+      function userQuery(_x8) {
+        return _userQuery.apply(this, arguments);
       }
 
-      return walletQuery;
-    }()
+      return userQuery;
+    }() // Function for talking to the database and get the types of items that users can buy
+
   }, {
-    key: "historyQuery",
+    key: "typesQuery",
     value: function () {
-      var _historyQuery = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(userId) {
-        var historyList, historyResult, newHistory;
+      var _typesQuery = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
+        var typesList, typesResult, newtypes;
         return regeneratorRuntime.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
-                historyList = "query historyList($userId: Int!) {\n      historyList(userId: $userId) {\n        id time balance\n      }\n    }";
+                typesList = "query {\n      typesList {\n        id symbol description price\n      }\n    }";
                 _context10.next = 3;
-                return (0, _graphQLFetch.default)(historyList, {
-                  userId: userId
-                });
+                return (0, _graphQLFetch.default)(typesList);
 
               case 3:
-                historyResult = _context10.sent;
-                newHistory = historyResult.historyList;
-                return _context10.abrupt("return", newHistory);
+                typesResult = _context10.sent;
+                newtypes = typesResult.typesList;
+                return _context10.abrupt("return", newtypes);
 
               case 6:
               case "end":
@@ -609,33 +612,37 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
         }, _callee10);
       }));
 
-      function historyQuery(_x10) {
-        return _historyQuery.apply(this, arguments);
+      function typesQuery() {
+        return _typesQuery.apply(this, arguments);
       }
 
-      return historyQuery;
-    }()
+      return typesQuery;
+    }() // Function for talking to the database and get the assets of current user
+
   }, {
-    key: "orderQuery",
+    key: "walletQuery",
     value: function () {
-      var _orderQuery = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11(userId) {
-        var orderList, orderResult, newOrders;
+      var _walletQuery = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11(userId) {
+        var walletDetail, walletResult, newWallet;
         return regeneratorRuntime.wrap(function _callee11$(_context11) {
           while (1) {
             switch (_context11.prev = _context11.next) {
               case 0:
-                orderList = "query orderList($userId: Int!) {\n      orderList(userId: $userId) {\n        id currentState symbol quantity price amount\n      }\n    }";
+                walletDetail = "query walletDetail($userId: Int!) {\n      walletDetail(userId: $userId) {\n        id symbol quantity\n      }\n    }";
                 _context11.next = 3;
-                return (0, _graphQLFetch.default)(orderList, {
+                return (0, _graphQLFetch.default)(walletDetail, {
                   userId: userId
                 });
 
               case 3:
-                orderResult = _context11.sent;
-                newOrders = orderResult.orderList;
-                return _context11.abrupt("return", newOrders);
+                walletResult = _context11.sent;
+                newWallet = walletResult.walletDetail;
+                newWallet.sort(function (a, b) {
+                  return a.id - b.id;
+                });
+                return _context11.abrupt("return", newWallet);
 
-              case 6:
+              case 7:
               case "end":
                 return _context11.stop();
             }
@@ -643,31 +650,32 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
         }, _callee11);
       }));
 
-      function orderQuery(_x11) {
-        return _orderQuery.apply(this, arguments);
+      function walletQuery(_x9) {
+        return _walletQuery.apply(this, arguments);
       }
 
-      return orderQuery;
-    }()
+      return walletQuery;
+    }() // Function for talking to the database and get the change history of current user's balance
+
   }, {
-    key: "balanceQuery",
+    key: "historyQuery",
     value: function () {
-      var _balanceQuery = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12(userId) {
-        var balanceDetail, balanceResult, newBalance;
+      var _historyQuery = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12(userId) {
+        var historyList, historyResult, newHistory;
         return regeneratorRuntime.wrap(function _callee12$(_context12) {
           while (1) {
             switch (_context12.prev = _context12.next) {
               case 0:
-                balanceDetail = "query balanceDetail($userId: Int!) {\n      balanceDetail (userId: $userId)\n    }";
+                historyList = "query historyList($userId: Int!) {\n      historyList(userId: $userId) {\n        id time balance\n      }\n    }";
                 _context12.next = 3;
-                return (0, _graphQLFetch.default)(balanceDetail, {
+                return (0, _graphQLFetch.default)(historyList, {
                   userId: userId
                 });
 
               case 3:
-                balanceResult = _context12.sent;
-                newBalance = balanceResult.balanceDetail;
-                return _context12.abrupt("return", newBalance);
+                historyResult = _context12.sent;
+                newHistory = historyResult.historyList;
+                return _context12.abrupt("return", newHistory);
 
               case 6:
               case "end":
@@ -677,32 +685,104 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
         }, _callee12);
       }));
 
+      function historyQuery(_x10) {
+        return _historyQuery.apply(this, arguments);
+      }
+
+      return historyQuery;
+    }() // Function for talking to the database and get the list of current user's orders
+
+  }, {
+    key: "orderQuery",
+    value: function () {
+      var _orderQuery = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee13(userId) {
+        var orderList, orderResult, newOrders;
+        return regeneratorRuntime.wrap(function _callee13$(_context13) {
+          while (1) {
+            switch (_context13.prev = _context13.next) {
+              case 0:
+                orderList = "query orderList($userId: Int!) {\n      orderList(userId: $userId) {\n        id symbol side quantity openQuantity price filledCost\n      }\n    }";
+                _context13.next = 3;
+                return (0, _graphQLFetch.default)(orderList, {
+                  userId: userId
+                });
+
+              case 3:
+                orderResult = _context13.sent;
+                newOrders = orderResult.orderList;
+                return _context13.abrupt("return", newOrders);
+
+              case 6:
+              case "end":
+                return _context13.stop();
+            }
+          }
+        }, _callee13);
+      }));
+
+      function orderQuery(_x11) {
+        return _orderQuery.apply(this, arguments);
+      }
+
+      return orderQuery;
+    }() // Function for talking to the database and get the current balance of the user
+
+  }, {
+    key: "balanceQuery",
+    value: function () {
+      var _balanceQuery = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee14(userId) {
+        var balanceDetail, balanceResult, newBalance;
+        return regeneratorRuntime.wrap(function _callee14$(_context14) {
+          while (1) {
+            switch (_context14.prev = _context14.next) {
+              case 0:
+                balanceDetail = "query balanceDetail($userId: Int!) {\n      balanceDetail (userId: $userId)\n    }";
+                _context14.next = 3;
+                return (0, _graphQLFetch.default)(balanceDetail, {
+                  userId: userId
+                });
+
+              case 3:
+                balanceResult = _context14.sent;
+                newBalance = balanceResult.balanceDetail;
+                return _context14.abrupt("return", newBalance);
+
+              case 6:
+              case "end":
+                return _context14.stop();
+            }
+          }
+        }, _callee14);
+      }));
+
       function balanceQuery(_x12) {
         return _balanceQuery.apply(this, arguments);
       }
 
       return balanceQuery;
-    }()
+    }() // Function for user logout
+    // Also, need to talk to database to reset the current user
+
   }, {
     key: "logout",
     value: function () {
-      var _logout = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee13() {
+      var _logout = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee15() {
         var query, result;
-        return regeneratorRuntime.wrap(function _callee13$(_context13) {
+        return regeneratorRuntime.wrap(function _callee15$(_context15) {
           while (1) {
-            switch (_context13.prev = _context13.next) {
+            switch (_context15.prev = _context15.next) {
               case 0:
                 if (!(this.state.currentUser.email != '')) {
-                  _context13.next = 9;
+                  _context15.next = 9;
                   break;
                 }
 
                 query = "query { logout }";
-                _context13.next = 4;
+                _context15.next = 4;
                 return (0, _graphQLFetch.default)(query);
 
               case 4:
-                result = _context13.sent;
+                result = _context15.sent;
                 this.setState({
                   currentUser: _account.default,
                   balance: 0,
@@ -711,7 +791,7 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
                   history: []
                 });
                 alert(result.logout);
-                _context13.next = 10;
+                _context15.next = 10;
                 break;
 
               case 9:
@@ -719,10 +799,10 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
 
               case 10:
               case "end":
-                return _context13.stop();
+                return _context15.stop();
             }
           }
-        }, _callee13, this);
+        }, _callee15, this);
       }));
 
       function logout() {
@@ -730,41 +810,43 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
       }
 
       return logout;
-    }()
+    }() // Function for user login
+    // Also, need to talk to database to reset the current user
+
   }, {
     key: "login",
     value: function () {
-      var _login = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee14(email, password) {
+      var _login = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee16(email, password) {
         var queryUserList, userList, query, user, data, resultFind, currentUser, userId, newBalance, newtypes, newWallet, newHistory, newOrders;
-        return regeneratorRuntime.wrap(function _callee14$(_context14) {
+        return regeneratorRuntime.wrap(function _callee16$(_context16) {
           while (1) {
-            switch (_context14.prev = _context14.next) {
+            switch (_context16.prev = _context16.next) {
               case 0:
                 this.changePage("Assets");
 
                 if (!(this.state.currentUser.email != '')) {
-                  _context14.next = 4;
+                  _context16.next = 4;
                   break;
                 }
 
                 alert("You have logged in");
-                return _context14.abrupt("return", true);
+                return _context16.abrupt("return", true);
 
               case 4:
                 queryUserList = "query {\n      users {\n        id email firstName lastName password balance photoURL\n      }\n    }";
-                _context14.next = 7;
+                _context16.next = 7;
                 return (0, _graphQLFetch.default)(queryUserList);
 
               case 7:
-                userList = _context14.sent;
+                userList = _context16.sent;
 
                 if (!(userList.users.length === 0)) {
-                  _context14.next = 11;
+                  _context16.next = 11;
                   break;
                 }
 
                 alert("Before log in, you should first register!");
-                return _context14.abrupt("return", false);
+                return _context16.abrupt("return", false);
 
               case 11:
                 query = "query login($user: UserInputs!) {\n      login(user: $user)\n    }";
@@ -775,31 +857,31 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
                   password: password,
                   photoURL: ''
                 };
-                _context14.next = 15;
+                _context16.next = 15;
                 return (0, _graphQLFetch.default)(query, {
                   user: user
                 });
 
               case 15:
-                data = _context14.sent;
+                data = _context16.sent;
 
                 if (!(data !== null)) {
-                  _context14.next = 39;
+                  _context16.next = 39;
                   break;
                 }
 
                 alert(data.login);
 
                 if (!(data.login === 'Successfully login!')) {
-                  _context14.next = 39;
+                  _context16.next = 39;
                   break;
                 }
 
-                _context14.next = 21;
+                _context16.next = 21;
                 return this.userQuery(email);
 
               case 21:
-                resultFind = _context14.sent;
+                resultFind = _context16.sent;
                 currentUser = {
                   id: resultFind.userFind.id,
                   displayName: resultFind.userFind.firstName + ' ' + resultFind.userFind.lastName,
@@ -808,26 +890,26 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
                 };
                 userId = currentUser.id;
                 newBalance = resultFind.userFind.balance;
-                _context14.next = 27;
+                _context16.next = 27;
                 return this.typesQuery();
 
               case 27:
-                newtypes = _context14.sent;
-                _context14.next = 30;
+                newtypes = _context16.sent;
+                _context16.next = 30;
                 return this.walletQuery(userId);
 
               case 30:
-                newWallet = _context14.sent;
-                _context14.next = 33;
+                newWallet = _context16.sent;
+                _context16.next = 33;
                 return this.historyQuery(userId);
 
               case 33:
-                newHistory = _context14.sent;
-                _context14.next = 36;
+                newHistory = _context16.sent;
+                _context16.next = 36;
                 return this.orderQuery(userId);
 
               case 36:
-                newOrders = _context14.sent;
+                newOrders = _context16.sent;
                 this.setState({
                   currentUser: currentUser,
                   balance: newBalance,
@@ -836,17 +918,17 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
                   types: newtypes,
                   orders: newOrders
                 });
-                return _context14.abrupt("return", true);
+                return _context16.abrupt("return", true);
 
               case 39:
-                return _context14.abrupt("return", false);
+                return _context16.abrupt("return", false);
 
               case 40:
               case "end":
-                return _context14.stop();
+                return _context16.stop();
             }
           }
-        }, _callee14, this);
+        }, _callee16, this);
       }));
 
       function login(_x13, _x14) {
@@ -854,11 +936,13 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
       }
 
       return login;
-    }()
+    }() // Function for user register
+    // Also, need to talk to database to reset the current user
+
   }, {
     key: "register",
     value: function () {
-      var _register = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee15(firstName, lastName, email, password) {
+      var _register = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee17(firstName, lastName, email, password) {
         var photoURL,
             mutation,
             user,
@@ -871,12 +955,12 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
             newWallet,
             newHistory,
             newOrders,
-            _args15 = arguments;
-        return regeneratorRuntime.wrap(function _callee15$(_context15) {
+            _args17 = arguments;
+        return regeneratorRuntime.wrap(function _callee17$(_context17) {
           while (1) {
-            switch (_context15.prev = _context15.next) {
+            switch (_context17.prev = _context17.next) {
               case 0:
-                photoURL = _args15.length > 4 && _args15[4] !== undefined ? _args15[4] : '';
+                photoURL = _args17.length > 4 && _args17[4] !== undefined ? _args17[4] : '';
                 this.changePage("Assets");
                 mutation = "mutation register($user: UserInputs!) {\n      register(user: $user)\n    }";
                 user = {
@@ -886,31 +970,31 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
                   password: password,
                   photoURL: photoURL == '' ? '' : photoURL
                 };
-                _context15.next = 6;
+                _context17.next = 6;
                 return (0, _graphQLFetch.default)(mutation, {
                   user: user
                 });
 
               case 6:
-                data = _context15.sent;
+                data = _context17.sent;
 
                 if (!(data !== null)) {
-                  _context15.next = 30;
+                  _context17.next = 30;
                   break;
                 }
 
                 alert(data.register);
 
                 if (!(data.register === 'Successfully register!')) {
-                  _context15.next = 30;
+                  _context17.next = 30;
                   break;
                 }
 
-                _context15.next = 12;
+                _context17.next = 12;
                 return this.userQuery(email);
 
               case 12:
-                resultFind = _context15.sent;
+                resultFind = _context17.sent;
                 currentUser = {
                   id: resultFind.userFind.id,
                   displayName: resultFind.userFind.firstName + ' ' + resultFind.userFind.lastName,
@@ -919,262 +1003,11 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
                 };
                 userId = currentUser.id;
                 newBalance = resultFind.userFind.balance;
-                _context15.next = 18;
+                _context17.next = 18;
                 return this.typesQuery();
 
               case 18:
-                newtypes = _context15.sent;
-                _context15.next = 21;
-                return this.walletQuery(userId);
-
-              case 21:
-                newWallet = _context15.sent;
-                _context15.next = 24;
-                return this.historyQuery(userId);
-
-              case 24:
-                newHistory = _context15.sent;
-                _context15.next = 27;
-                return this.orderQuery(userId);
-
-              case 27:
-                newOrders = _context15.sent;
-                this.setState({
-                  currentUser: currentUser,
-                  balance: newBalance,
-                  history: newHistory,
-                  wallet: newWallet,
-                  types: newtypes,
-                  orders: newOrders
-                });
-                return _context15.abrupt("return", true);
-
-              case 30:
-                return _context15.abrupt("return", false);
-
-              case 31:
-              case "end":
-                return _context15.stop();
-            }
-          }
-        }, _callee15, this);
-      }));
-
-      function register(_x15, _x16, _x17, _x18) {
-        return _register.apply(this, arguments);
-      }
-
-      return register;
-    }()
-  }, {
-    key: "getAssets",
-    value: function getAssets() {
-      var _this2 = this;
-
-      var assets = [];
-      this.state.wallet.map(function (item) {
-        /*assets.push({ id: item.id, symbol: item.symbol, balance: item.balance, price: this.state.types.find(type => type.id == item.id).price });*/
-        assets.push({
-          id: item.id,
-          symbol: item.symbol,
-          quantity: item.quantity,
-          description: _this2.state.types.find(function (type) {
-            return type.id == item.id;
-          }).description
-        });
-      });
-      return assets;
-    }
-  }, {
-    key: "getOrders",
-    value: function getOrders() {
-      var orders = [];
-      this.state.orders.map(function (item) {
-        orders.push({
-          id: item.id,
-          state: item.currentState,
-          symbol: item.symbol,
-          quantity: item.quantity,
-          price: item.price,
-          amount: item.amount
-        });
-      });
-      return orders.reverse();
-    }
-  }, {
-    key: "buy",
-    value: function () {
-      var _buy = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee16() {
-        var quantity, userId, typeId, buyOrderType, price, mutation, item, data, newWallet, newHistory, newBalance, newOrders;
-        return regeneratorRuntime.wrap(function _callee16$(_context16) {
-          while (1) {
-            switch (_context16.prev = _context16.next) {
-              case 0:
-                quantity = document.getElementById('quantity').value;
-
-                if (!(quantity > 0)) {
-                  _context16.next = 32;
-                  break;
-                }
-
-                userId = this.state.currentUser.id;
-                typeId = document.getElementById('type').value;
-                buyOrderType = document.getElementById('buyOrderType').value;
-                price = 0;
-
-                if (!(buyOrderType == 'Limit')) {
-                  _context16.next = 11;
-                  break;
-                }
-
-                price = document.getElementById('price').value;
-
-                if (!(price <= 0)) {
-                  _context16.next = 11;
-                  break;
-                }
-
-                alert("Please enter a possitive price!");
-                return _context16.abrupt("return", false);
-
-              case 11:
-                mutation = "mutation walletItemBuy($item: WalletItemInput!) {\n        walletItemBuy(item: $item)\n      }";
-                item = {
-                  userId: userId,
-                  id: typeId,
-                  quantity: quantity,
-                  price: price
-                };
-                _context16.next = 15;
-                return (0, _graphQLFetch.default)(mutation, {
-                  item: item
-                });
-
-              case 15:
-                data = _context16.sent;
-
-                if (!(data !== null)) {
-                  _context16.next = 30;
-                  break;
-                }
-
-                _context16.next = 19;
-                return this.walletQuery(userId);
-
-              case 19:
-                newWallet = _context16.sent;
-                _context16.next = 22;
-                return this.historyQuery(userId);
-
-              case 22:
-                newHistory = _context16.sent;
-                _context16.next = 25;
-                return this.balanceQuery(userId);
-
-              case 25:
-                newBalance = _context16.sent;
-                _context16.next = 28;
-                return this.orderQuery(userId);
-
-              case 28:
-                newOrders = _context16.sent;
-                this.setState({
-                  wallet: newWallet,
-                  balance: newBalance,
-                  history: newHistory,
-                  orders: newOrders
-                }, function () {
-                  alert(data.walletItemBuy);
-                });
-
-              case 30:
-                _context16.next = 33;
-                break;
-
-              case 32:
-                alert("Please enter a positive modification!");
-
-              case 33:
-              case "end":
-                return _context16.stop();
-            }
-          }
-        }, _callee16, this);
-      }));
-
-      function buy() {
-        return _buy.apply(this, arguments);
-      }
-
-      return buy;
-    }()
-  }, {
-    key: "sell",
-    value: function () {
-      var _sell = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee17() {
-        var typeId, symbol, item, quantity, typeQuantity, userId, mutation, _item, data, newWallet, newHistory, newBalance, newOrders;
-
-        return regeneratorRuntime.wrap(function _callee17$(_context17) {
-          while (1) {
-            switch (_context17.prev = _context17.next) {
-              case 0:
-                if (!(this.state.wallet.length === 0)) {
-                  _context17.next = 4;
-                  break;
-                }
-
-                alert("Before sell, you should buy something");
-                _context17.next = 41;
-                break;
-
-              case 4:
-                typeId = document.getElementById('type').value;
-                symbol = this.state.types.find(function (type) {
-                  return type.id == typeId;
-                }).symbol;
-                item = this.state.wallet.find(function (item) {
-                  return item.id == typeId;
-                });
-
-                if (!(item != undefined)) {
-                  _context17.next = 40;
-                  break;
-                }
-
-                quantity = document.getElementById('quantity').value;
-
-                if (!(quantity > 0)) {
-                  _context17.next = 37;
-                  break;
-                }
-
-                typeQuantity = item.quantity;
-
-                if (!(typeQuantity >= quantity)) {
-                  _context17.next = 34;
-                  break;
-                }
-
-                userId = this.state.currentUser.id;
-                mutation = "mutation walletItemSell($item: WalletItemInput!) {\n              walletItemSell(item: $item)\n            }";
-                _item = {
-                  userId: userId,
-                  id: typeId,
-                  quantity: quantity
-                };
-                _context17.next = 17;
-                return (0, _graphQLFetch.default)(mutation, {
-                  item: _item
-                });
-
-              case 17:
-                data = _context17.sent;
-
-                if (!(data !== null)) {
-                  _context17.next = 32;
-                  break;
-                }
-
+                newtypes = _context17.sent;
                 _context17.next = 21;
                 return this.walletQuery(userId);
 
@@ -1186,15 +1019,291 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
               case 24:
                 newHistory = _context17.sent;
                 _context17.next = 27;
-                return this.balanceQuery(userId);
-
-              case 27:
-                newBalance = _context17.sent;
-                _context17.next = 30;
                 return this.orderQuery(userId);
 
-              case 30:
+              case 27:
                 newOrders = _context17.sent;
+                this.setState({
+                  currentUser: currentUser,
+                  balance: newBalance,
+                  history: newHistory,
+                  wallet: newWallet,
+                  types: newtypes,
+                  orders: newOrders
+                });
+                return _context17.abrupt("return", true);
+
+              case 30:
+                return _context17.abrupt("return", false);
+
+              case 31:
+              case "end":
+                return _context17.stop();
+            }
+          }
+        }, _callee17, this);
+      }));
+
+      function register(_x15, _x16, _x17, _x18) {
+        return _register.apply(this, arguments);
+      }
+
+      return register;
+    }() // Generate the information of assets and then display
+
+  }, {
+    key: "getAssets",
+    value: function getAssets() {
+      var _this3 = this;
+
+      var assets = [];
+      this.state.wallet.map(function (item) {
+        /*assets.push({ id: item.id, symbol: item.symbol, balance: item.balance, price: this.state.types.find(type => type.id == item.id).price });*/
+        assets.push({
+          id: item.id,
+          symbol: item.symbol,
+          quantity: item.quantity,
+          description: _this3.state.types.find(function (type) {
+            return type.id == item.id;
+          }).description
+        });
+      });
+      return assets;
+    } // Generate the information of orders and then display
+
+  }, {
+    key: "getOrders",
+    value: function getOrders() {
+      var orders = [];
+      this.state.orders.map(function (order) {
+        orders.push({
+          id: order.id,
+          symbol: order.symbol,
+          side: order.side,
+          quantity: order.quantity,
+          openQuantity: order.openQuantity,
+          price: order.price,
+          filledCost: order.filledCost
+        });
+      });
+      return orders.reverse();
+    } // Function for purchasing something
+
+  }, {
+    key: "buy",
+    value: function () {
+      var _buy = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee18() {
+        var quantity, userId, typeId, buyOrderType, price, mutation, item, data, newWallet, newHistory, newBalance, newOrders;
+        return regeneratorRuntime.wrap(function _callee18$(_context18) {
+          while (1) {
+            switch (_context18.prev = _context18.next) {
+              case 0:
+                quantity = document.getElementById('quantity').value;
+
+                if (!(quantity > 0)) {
+                  _context18.next = 32;
+                  break;
+                }
+
+                userId = this.state.currentUser.id;
+                typeId = document.getElementById('type').value;
+                buyOrderType = document.getElementById('buyOrderType').value;
+                price = 0;
+
+                if (!(buyOrderType == 'Limit')) {
+                  _context18.next = 11;
+                  break;
+                }
+
+                price = document.getElementById('price').value;
+
+                if (!(price <= 0)) {
+                  _context18.next = 11;
+                  break;
+                }
+
+                alert("Please enter a positive price!");
+                return _context18.abrupt("return", false);
+
+              case 11:
+                mutation = "mutation walletItemBuy($item: WalletItemInput!) {\n        walletItemBuy(item: $item)\n      }";
+                item = {
+                  userId: userId,
+                  id: typeId,
+                  quantity: quantity,
+                  price: price
+                };
+                _context18.next = 15;
+                return (0, _graphQLFetch.default)(mutation, {
+                  item: item
+                });
+
+              case 15:
+                data = _context18.sent;
+
+                if (!(data !== null)) {
+                  _context18.next = 30;
+                  break;
+                }
+
+                _context18.next = 19;
+                return this.walletQuery(userId);
+
+              case 19:
+                newWallet = _context18.sent;
+                _context18.next = 22;
+                return this.historyQuery(userId);
+
+              case 22:
+                newHistory = _context18.sent;
+                _context18.next = 25;
+                return this.balanceQuery(userId);
+
+              case 25:
+                newBalance = _context18.sent;
+                _context18.next = 28;
+                return this.orderQuery(userId);
+
+              case 28:
+                newOrders = _context18.sent;
+                this.setState({
+                  wallet: newWallet,
+                  balance: newBalance,
+                  history: newHistory,
+                  orders: newOrders
+                }, function () {
+                  alert(data.walletItemBuy);
+                });
+
+              case 30:
+                _context18.next = 33;
+                break;
+
+              case 32:
+                alert("Please enter a positive modification!");
+
+              case 33:
+              case "end":
+                return _context18.stop();
+            }
+          }
+        }, _callee18, this);
+      }));
+
+      function buy() {
+        return _buy.apply(this, arguments);
+      }
+
+      return buy;
+    }() // Function for selling something
+
+  }, {
+    key: "sell",
+    value: function () {
+      var _sell = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee19() {
+        var sellOrderType, price, typeId, symbol, item, quantity, typeQuantity, userId, mutation, _item, data, newWallet, newHistory, newBalance, newOrders;
+
+        return regeneratorRuntime.wrap(function _callee19$(_context19) {
+          while (1) {
+            switch (_context19.prev = _context19.next) {
+              case 0:
+                if (!(this.state.wallet.length === 0)) {
+                  _context19.next = 4;
+                  break;
+                }
+
+                alert("Before sell, you should buy something");
+                _context19.next = 48;
+                break;
+
+              case 4:
+                sellOrderType = document.getElementById('sellOrderType').value;
+                price = 0;
+
+                if (!(sellOrderType == 'Limit')) {
+                  _context19.next = 11;
+                  break;
+                }
+
+                price = document.getElementById('price').value;
+
+                if (!(price <= 0)) {
+                  _context19.next = 11;
+                  break;
+                }
+
+                alert("Please enter a positive price!");
+                return _context19.abrupt("return", false);
+
+              case 11:
+                typeId = document.getElementById('type').value;
+                symbol = this.state.types.find(function (type) {
+                  return type.id == typeId;
+                }).symbol;
+                item = this.state.wallet.find(function (item) {
+                  return item.id == typeId;
+                });
+
+                if (!(item != undefined)) {
+                  _context19.next = 47;
+                  break;
+                }
+
+                quantity = document.getElementById('quantity').value;
+
+                if (!(quantity > 0)) {
+                  _context19.next = 44;
+                  break;
+                }
+
+                typeQuantity = item.quantity;
+
+                if (!(typeQuantity >= quantity)) {
+                  _context19.next = 41;
+                  break;
+                }
+
+                userId = this.state.currentUser.id;
+                mutation = "mutation walletItemSell($item: WalletItemInput!) {\n              walletItemSell(item: $item)\n            }";
+                _item = {
+                  userId: userId,
+                  id: typeId,
+                  quantity: quantity,
+                  price: price
+                };
+                _context19.next = 24;
+                return (0, _graphQLFetch.default)(mutation, {
+                  item: _item
+                });
+
+              case 24:
+                data = _context19.sent;
+
+                if (!(data !== null)) {
+                  _context19.next = 39;
+                  break;
+                }
+
+                _context19.next = 28;
+                return this.walletQuery(userId);
+
+              case 28:
+                newWallet = _context19.sent;
+                _context19.next = 31;
+                return this.historyQuery(userId);
+
+              case 31:
+                newHistory = _context19.sent;
+                _context19.next = 34;
+                return this.balanceQuery(userId);
+
+              case 34:
+                newBalance = _context19.sent;
+                _context19.next = 37;
+                return this.orderQuery(userId);
+
+              case 37:
+                newOrders = _context19.sent;
                 this.setState({
                   wallet: newWallet,
                   balance: newBalance,
@@ -1204,33 +1313,33 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
                   alert(data.walletItemSell);
                 });
 
-              case 32:
-                _context17.next = 35;
+              case 39:
+                _context19.next = 42;
                 break;
-
-              case 34:
-                alert("You do not have enough ".concat(symbol, "! You only have ").concat(typeQuantity));
-
-              case 35:
-                _context17.next = 38;
-                break;
-
-              case 37:
-                alert("Please enter a positive modification!");
-
-              case 38:
-                _context17.next = 41;
-                break;
-
-              case 40:
-                alert("You do not own ".concat(symbol, "!"));
 
               case 41:
+                alert("You do not have enough ".concat(symbol, "! You only have ").concat(typeQuantity));
+
+              case 42:
+                _context19.next = 45;
+                break;
+
+              case 44:
+                alert("Please enter a positive modification!");
+
+              case 45:
+                _context19.next = 48;
+                break;
+
+              case 47:
+                alert("You do not own ".concat(symbol, "!"));
+
+              case 48:
               case "end":
-                return _context17.stop();
+                return _context19.stop();
             }
           }
-        }, _callee17, this);
+        }, _callee19, this);
       }));
 
       function sell() {
@@ -1238,23 +1347,24 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
       }
 
       return sell;
-    }()
+    }() // Function for converting something to another
+
   }, {
     key: "convert",
     value: function () {
-      var _convert = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee18() {
+      var _convert = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee20() {
         var typeIdFrom, symbolFrom, typeIdTo, symbolTo, itemFrom, quantity, userId, mutation, item, data, newWallet, newHistory, newBalance, newOrders;
-        return regeneratorRuntime.wrap(function _callee18$(_context18) {
+        return regeneratorRuntime.wrap(function _callee20$(_context20) {
           while (1) {
-            switch (_context18.prev = _context18.next) {
+            switch (_context20.prev = _context20.next) {
               case 0:
                 if (!(this.state.wallet.length === 0)) {
-                  _context18.next = 4;
+                  _context20.next = 4;
                   break;
                 }
 
                 alert("Before convert, you should buy something");
-                _context18.next = 46;
+                _context20.next = 46;
                 break;
 
               case 4:
@@ -1268,12 +1378,12 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
                 }).symbol;
 
                 if (!(typeIdFrom == typeIdTo)) {
-                  _context18.next = 12;
+                  _context20.next = 12;
                   break;
                 }
 
                 alert('From and To types should not be the same!');
-                _context18.next = 46;
+                _context20.next = 46;
                 break;
 
               case 12:
@@ -1282,19 +1392,19 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
                 });
 
                 if (!(itemFrom !== undefined)) {
-                  _context18.next = 45;
+                  _context20.next = 45;
                   break;
                 }
 
                 quantity = document.getElementById('quantity').value;
 
                 if (!(quantity > 0)) {
-                  _context18.next = 42;
+                  _context20.next = 42;
                   break;
                 }
 
                 if (!(itemFrom.quantity >= quantity)) {
-                  _context18.next = 39;
+                  _context20.next = 39;
                   break;
                 }
 
@@ -1306,39 +1416,39 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
                   idTo: typeIdTo,
                   quantity: quantity
                 };
-                _context18.next = 22;
+                _context20.next = 22;
                 return (0, _graphQLFetch.default)(mutation, {
                   item: item
                 });
 
               case 22:
-                data = _context18.sent;
+                data = _context20.sent;
 
                 if (!(data !== null)) {
-                  _context18.next = 37;
+                  _context20.next = 37;
                   break;
                 }
 
-                _context18.next = 26;
+                _context20.next = 26;
                 return this.walletQuery(userId);
 
               case 26:
-                newWallet = _context18.sent;
-                _context18.next = 29;
+                newWallet = _context20.sent;
+                _context20.next = 29;
                 return this.historyQuery(userId);
 
               case 29:
-                newHistory = _context18.sent;
-                _context18.next = 32;
+                newHistory = _context20.sent;
+                _context20.next = 32;
                 return this.balanceQuery(userId);
 
               case 32:
-                newBalance = _context18.sent;
-                _context18.next = 35;
+                newBalance = _context20.sent;
+                _context20.next = 35;
                 return this.orderQuery(userId);
 
               case 35:
-                newOrders = _context18.sent;
+                newOrders = _context20.sent;
                 this.setState({
                   wallet: newWallet,
                   balance: newBalance,
@@ -1349,21 +1459,21 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
                 });
 
               case 37:
-                _context18.next = 40;
+                _context20.next = 40;
                 break;
 
               case 39:
                 alert("You do not have enough ".concat(symbolFrom, "! You only have ").concat(itemFrom.quantity));
 
               case 40:
-                _context18.next = 43;
+                _context20.next = 43;
                 break;
 
               case 42:
                 alert("Please enter a positive modification!");
 
               case 43:
-                _context18.next = 46;
+                _context20.next = 46;
                 break;
 
               case 45:
@@ -1371,10 +1481,10 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
 
               case 46:
               case "end":
-                return _context18.stop();
+                return _context20.stop();
             }
           }
-        }, _callee18, this);
+        }, _callee20, this);
       }));
 
       function convert() {
@@ -1382,14 +1492,16 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
       }
 
       return convert;
-    }()
+    }() // Function for changing page
+
   }, {
     key: "changePage",
     value: function changePage(page) {
       this.setState({
         page: page
       });
-    }
+    } // Function for showing page
+
   }, {
     key: "showPage",
     value: function showPage() {
@@ -1437,53 +1549,53 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "checkLoginStatus",
     value: function () {
-      var _checkLoginStatus = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee20() {
-        var _this3 = this;
+      var _checkLoginStatus = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee22() {
+        var _this4 = this;
 
         var result;
-        return regeneratorRuntime.wrap(function _callee20$(_context20) {
+        return regeneratorRuntime.wrap(function _callee22$(_context22) {
           while (1) {
-            switch (_context20.prev = _context20.next) {
+            switch (_context22.prev = _context22.next) {
               case 0:
-                _context20.next = 2;
+                _context22.next = 2;
                 return this.currentUserQueryFunction();
 
               case 2:
-                result = _context20.sent;
+                result = _context22.sent;
 
                 if (!(result.currentId === -1)) {
-                  _context20.next = 7;
+                  _context22.next = 7;
                   break;
                 }
 
                 this.state.webHistory.replace('/login');
-                _context20.next = 9;
+                _context22.next = 9;
                 break;
 
               case 7:
-                _context20.next = 9;
-                return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee19() {
-                  return regeneratorRuntime.wrap(function _callee19$(_context19) {
+                _context22.next = 9;
+                return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee21() {
+                  return regeneratorRuntime.wrap(function _callee21$(_context21) {
                     while (1) {
-                      switch (_context19.prev = _context19.next) {
+                      switch (_context21.prev = _context21.next) {
                         case 0:
-                          _context19.next = 2;
-                          return _this3.loadData(result.currentId, result.email, result.photoURL);
+                          _context21.next = 2;
+                          return _this4.loadData(result.currentId, result.email, result.photoURL);
 
                         case 2:
                         case "end":
-                          return _context19.stop();
+                          return _context21.stop();
                       }
                     }
-                  }, _callee19);
+                  }, _callee21);
                 }))();
 
               case 9:
               case "end":
-                return _context20.stop();
+                return _context22.stop();
             }
           }
-        }, _callee20, this);
+        }, _callee22, this);
       }));
 
       function checkLoginStatus() {
@@ -1495,7 +1607,7 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/React.createElement(_reactRouterDom.Route, {
         path: "/login"
@@ -1508,7 +1620,7 @@ var Homepage = /*#__PURE__*/function (_React$Component) {
         showPage: this.showPage,
         state: this.state
       }))), this.state.currentUser === _account.default ? this.state.webHistory.replace('/login') : function () {
-        _this4.state.webHistory.replace('/');
+        _this5.state.webHistory.replace('/');
       }());
     }
   }]);

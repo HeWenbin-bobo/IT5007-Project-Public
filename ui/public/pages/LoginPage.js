@@ -132,7 +132,7 @@ function Login(props) {
   }, "Get started")), /*#__PURE__*/React.createElement(_material.Typography, {
     variant: "h4",
     gutterBottom: true
-  }, "Sign in to NUSSwap"), /*#__PURE__*/React.createElement(_material.Typography, {
+  }, "Sign in to NUSwap"), /*#__PURE__*/React.createElement(_material.Typography, {
     sx: {
       color: 'text.secondary'
     }

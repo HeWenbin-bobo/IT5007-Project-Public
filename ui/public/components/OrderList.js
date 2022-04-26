@@ -60,16 +60,16 @@ function OrderListContent(props) {
     sx: {
       mt: 3
     }
-  }, /*#__PURE__*/React.createElement(_material.Card, null, /*#__PURE__*/React.createElement(_material.CardContent, null, /*#__PURE__*/React.createElement(_Title.default, null, "Order List"), /*#__PURE__*/React.createElement(_Table.default, {
+  }, /*#__PURE__*/React.createElement(_material.Card, null, /*#__PURE__*/React.createElement(_material.CardContent, null, /*#__PURE__*/React.createElement(_Title.default, null, "Trade History"), /*#__PURE__*/React.createElement(_Table.default, {
     size: "small"
-  }, /*#__PURE__*/React.createElement(_TableHead.default, null, /*#__PURE__*/React.createElement(_TableRow.default, null, /*#__PURE__*/React.createElement(_TableCell.default, null, "Id"), /*#__PURE__*/React.createElement(_TableCell.default, null, "State"), /*#__PURE__*/React.createElement(_TableCell.default, null, "Symbol"), /*#__PURE__*/React.createElement(_TableCell.default, null, "Quantity"), /*#__PURE__*/React.createElement(_TableCell.default, null, "Price"), /*#__PURE__*/React.createElement(_TableCell.default, {
+  }, /*#__PURE__*/React.createElement(_TableHead.default, null, /*#__PURE__*/React.createElement(_TableRow.default, null, /*#__PURE__*/React.createElement(_TableCell.default, null, "Id"), /*#__PURE__*/React.createElement(_TableCell.default, null, "Symbol"), /*#__PURE__*/React.createElement(_TableCell.default, null, "Side"), /*#__PURE__*/React.createElement(_TableCell.default, null, "Quantity"), /*#__PURE__*/React.createElement(_TableCell.default, null, "Open Quantity"), /*#__PURE__*/React.createElement(_TableCell.default, null, "Price"), /*#__PURE__*/React.createElement(_TableCell.default, {
     align: "right"
-  }, "Amount"))), /*#__PURE__*/React.createElement(_TableBody.default, null, orders.map(function (row) {
+  }, "Filled Cost"))), /*#__PURE__*/React.createElement(_TableBody.default, null, orders.map(function (row) {
     return /*#__PURE__*/React.createElement(_TableRow.default, {
       key: row.id
-    }, /*#__PURE__*/React.createElement(_TableCell.default, null, row.id), /*#__PURE__*/React.createElement(_TableCell.default, null, row.state), /*#__PURE__*/React.createElement(_TableCell.default, null, row.symbol), /*#__PURE__*/React.createElement(_TableCell.default, null, row.quantity), /*#__PURE__*/React.createElement(_TableCell.default, null, "$".concat(row.price)), /*#__PURE__*/React.createElement(_TableCell.default, {
+    }, /*#__PURE__*/React.createElement(_TableCell.default, null, row.id), /*#__PURE__*/React.createElement(_TableCell.default, null, row.symbol), /*#__PURE__*/React.createElement(_TableCell.default, null, row.side), /*#__PURE__*/React.createElement(_TableCell.default, null, row.quantity), /*#__PURE__*/React.createElement(_TableCell.default, null, row.openQuantity), /*#__PURE__*/React.createElement(_TableCell.default, null, "$".concat(row.price == 0 ? 'Market price' : row.price)), /*#__PURE__*/React.createElement(_TableCell.default, {
       align: "right"
-    }, "$".concat(row.amount)));
+    }, "$".concat(row.filledCost)));
   }))), props.num != -1 ? /*#__PURE__*/React.createElement(_material.Button, {
     variant: "outlined",
     size: "medium",
@@ -79,7 +79,7 @@ function OrderListContent(props) {
     sx: {
       mt: 3
     }
-  }, "See more orders") : /*#__PURE__*/React.createElement(_material.Button, {
+  }, "See more trades") : /*#__PURE__*/React.createElement(_material.Button, {
     variant: "outlined",
     size: "medium",
     onClick: function onClick() {

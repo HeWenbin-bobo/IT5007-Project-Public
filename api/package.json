@@ -1,5 +1,5 @@
 {
-  "name": "NUS-Crypto-Exchange-FrontEnd",
+  "name": "IT5007-Project-Public",
   "version": "1.0.0",
   "description": "This is a front end project for nus crypto exchange",
   "main": "index.js",
@@ -7,14 +7,14 @@
     "start": "nodemon -e js,graphql -w . -w .env server.js",
     "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "api": "npm install && sudo screen mongod && mongo NUSSwap scripts/init.mongo.js && screen npm start",
-    "dbInit": "mongo NUSSwap scripts/init.mongo.js"
+    "api": "npm install && sudo screen mongod && npm run dbInit && screen npm start",
+    "dbInit": "mongo NUSwap scripts/init.mongo.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HeWenbin-bobo/IT5007-Project-Public.git"
   },
-  "author": "vasan.promern@gmail.com",
+  "author": "hewenbin243854232@outlook.com",
   "license": "ISC",
   "homepage": "https://github.com/HeWenbin-bobo/IT5007-Project-Public.git",
   "dependencies": {

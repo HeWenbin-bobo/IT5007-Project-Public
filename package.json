@@ -1,9 +1,10 @@
 {
-  "name": "NUS-Crypto-Exchange-FrontEnd",
+  "name": "IT5007-Project-Public",
   "version": "1.0.0",
   "description": "This is a front end project for nus crypto exchange",
   "scripts": {
-    "start": "npm run rabbitmq && cd api && npm run api && cd .. && cd ui && npm run ui",
+    "start": "npm run rabbitmq && cd api && npm run api && cd .. && cd ui && npm run ui && cd .. && npm run matchingEngine",
+    "matchingEngine": "screen python3 ./MatchingEngine/main.py",
     "rabbitmq": "sudo service rabbitmq-server restart",
     "dbInit": "cd api && npm run dbInit"
   },

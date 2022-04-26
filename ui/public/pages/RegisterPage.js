@@ -115,7 +115,7 @@ function Register(props) {
       mt: 0,
       mb: 5
     }
-  }, "Have fun in NUSSwap"), /*#__PURE__*/React.createElement("img", {
+  }, "Have fun in NUSwap"), /*#__PURE__*/React.createElement("img", {
     alt: "register",
     src: "/img/background.jpg"
   })), /*#__PURE__*/React.createElement(_material.Container, {

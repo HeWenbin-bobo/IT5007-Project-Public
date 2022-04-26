@@ -49,7 +49,7 @@ function CopyrightContent(props) {
   }, props), 'Copyright © ', /*#__PURE__*/React.createElement(_Link.default, {
     color: "inherit",
     href: "/"
-  }, "Your Website"), ' ', new Date().getFullYear(), '.');
+  }, "NUSwap"), ' ', new Date().getFullYear(), '.');
 }
 
 var Copyright = /*#__PURE__*/function (_React$Component) {

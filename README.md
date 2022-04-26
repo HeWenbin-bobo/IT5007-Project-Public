@@ -12,15 +12,16 @@
 ## Setup
 * ```git clone https://github.com/HeWenbin-bobo/IT5007-Project-Public.git```
 * ```cd IT5007-Project-Public```
-* ```git checkout origin/AWS_withRabbitMQ```
+* ```git checkout origin/AWS```
 * (Automatically setup)
     * ```npm run start```
         * only need to enter ```Ctrl+A+D``` when creating screen
             * one for mongodb
             * one for api server
             * one for ui server
+            * one for matching engine
 * (Manully setup)
-        * ```sudo service rabbitmq-server restart```
+    * ```service rabbitmq-server restart```
     * (for api server)
         * ```cd api```
         * ```npm run api```
@@ -31,9 +32,12 @@
             * enter ```Ctrl+A+D```
         * If need to recompile, run following commands:
             * ```npm run fast```
+    * (for MatchingEngine)
+        * ```cd MatchingEngine```
+            * ```screen python3 main.py```
 
 ## Web Browser
-* Enter ```http://35.160.80.61.nip.io:8000/``` on web browser
+* Enter ```http://35.160.80.61:8000``` on web browser
 
 ## Functions
 * User registration (```/#/register``` page)
@@ -54,12 +58,12 @@
 * collections:
     * types: Record predefined types that can be traded
         * id: *[Int]* Unique
-        * typeName: *[String]* Unique
+        * symbol: *[String]* Unique
         * price: *[Float]*
     * wallet: Record what the user have bought
         * id: *[Int]*
         * userId: *[Int]*
-        * typeName: *[String]*
+        * symbol: *[String]*
         * balance: *[Float]*
     * history: Record the change process of balance
         * id: *[Int]*
@@ -74,7 +78,7 @@
         * email: *[String]* Unique
         * firstName: *[String]*
         * lastName: *[String]*
-        * balance: *[Float]*
+        * balance: *[String]*
     * userCounter: Record the number of users
         * _id: *[String]*
         * current: *[Int]*
@@ -109,7 +113,7 @@
         * current: *[Int]*
 
 ## Message structure(RabbitMQ)
-* ***state,symbol,orderType,side,quantity,price,note***
+* ******
 
 ## RabbitMQ installation
 * ```sudo apt-get install erlang-nox```
@@ -126,3 +130,11 @@
 * ```sudo rabbitmqctl add_user test test```
 * ```sudo rabbitmqctl set_user_tags test administrator```
 * ```sudo rabbitmqctl set_permissions -p / test ".*" ".*" ".*"```
+
+## Python3 installation
+* ```sudo apt-get update```
+* ```sudo apt-get install python3```
+* ```sudo apt install python3-pip```
+* ```pip install pymongo```
+* ```pip install sortedcontainers```
+* ```pip install pika```

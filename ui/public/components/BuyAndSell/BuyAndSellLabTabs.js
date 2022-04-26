@@ -31,6 +31,8 @@ var _BuyButton = _interopRequireDefault(require("./Buy/BuyButton"));
 
 var _SellTextField = _interopRequireDefault(require("./Sell/SellTextField"));
 
+var _SellOrderTypeAndPrice = _interopRequireDefault(require("./Sell/SellOrderTypeAndPrice"));
+
 var _SellType = _interopRequireDefault(require("./Sell/SellType"));
 
 var _SellButton = _interopRequireDefault(require("./Sell/SellButton"));
@@ -124,13 +126,13 @@ function LabTabsContent(props) {
   }, /*#__PURE__*/React.createElement(_Grid.default, {
     item: true,
     xs: true
-  }, /*#__PURE__*/React.createElement(_BuyTextField.default, null)), /*#__PURE__*/React.createElement(_Grid.default, {
-    item: true,
-    xs: true
   }, /*#__PURE__*/React.createElement(_BuyOrderTypeAndPrice.default, null)), /*#__PURE__*/React.createElement(_Grid.default, {
     item: true,
     xs: true
   }, /*#__PURE__*/React.createElement(_BuyType.default, null)), /*#__PURE__*/React.createElement(_Grid.default, {
+    item: true,
+    xs: true
+  }, /*#__PURE__*/React.createElement(_BuyTextField.default, null)), /*#__PURE__*/React.createElement(_Grid.default, {
     item: true,
     xs: true
   }, /*#__PURE__*/React.createElement(_BuyButton.default, null)))), /*#__PURE__*/React.createElement(_TabPanel.default, {
@@ -144,10 +146,13 @@ function LabTabsContent(props) {
   }, /*#__PURE__*/React.createElement(_Grid.default, {
     item: true,
     xs: true
-  }, /*#__PURE__*/React.createElement(_SellTextField.default, null)), /*#__PURE__*/React.createElement(_Grid.default, {
+  }, /*#__PURE__*/React.createElement(_SellOrderTypeAndPrice.default, null)), /*#__PURE__*/React.createElement(_Grid.default, {
     item: true,
     xs: true
   }, /*#__PURE__*/React.createElement(_SellType.default, null)), /*#__PURE__*/React.createElement(_Grid.default, {
+    item: true,
+    xs: true
+  }, /*#__PURE__*/React.createElement(_SellTextField.default, null)), /*#__PURE__*/React.createElement(_Grid.default, {
     item: true,
     xs: true
   }, /*#__PURE__*/React.createElement(_SellButton.default, null)))), /*#__PURE__*/React.createElement(_TabPanel.default, {

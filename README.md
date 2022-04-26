@@ -12,7 +12,7 @@
 ## Setup
 * ```git clone https://github.com/HeWenbin-bobo/IT5007-Project-Public.git```
 * ```cd IT5007-Project-Public```
-* ```git checkout origin/AWS```
+* ```git checkout origin/AWS_withRabbitMQ_withMatchingEngine```
 * (Automatically setup)
     * ```npm run start```
         * only need to enter ```Ctrl+A+D``` when creating screen

@@ -24,6 +24,7 @@
         * ```nvm alias default 10```
 * (Automatically setup)
     * ```npm run start```
+        * Follow the installation process (such as press 'Y')
         * only need to enter ```Ctrl+A+D``` when creating screen
             * one for mongodb
             * one for api server

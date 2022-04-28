@@ -30,6 +30,7 @@
             * one for ui server
             * one for matching engine
 * (Manully setup)
+    * ```npm run Installation```
     * ```service rabbitmq-server restart```
     * (for api server)
         * ```cd api```

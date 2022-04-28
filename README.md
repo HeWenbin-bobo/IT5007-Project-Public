@@ -11,9 +11,17 @@
 
 ## Setup
 * ```docker run -it --name NUSwap -d -p 5672:5672 -p 15672:15672 -p 3000:3000 -p 5000:5000 -p 8000:8000 -dit ubuntu:latest```
+    * ```apt update```
+    * ```apt install git```
 * ```git clone https://github.com/HeWenbin-bobo/IT5007-Project-Public.git```
 * ```cd IT5007-Project-Public```
 * ```git checkout origin/main```
+    * ```apt install curl```
+    * ```curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash```
+    * ```export NVM_DIR="$HOME/.nvm"```
+    * ```[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm```
+    * ```nvm install 10```
+        * ```nvm alias default 10```
 * (Automatically setup)
     * ```npm run start```
         * only need to enter ```Ctrl+A+D``` when creating screen
@@ -34,8 +42,7 @@
         * If need to recompile, run following commands:
             * ```npm run fast```
     * (for MatchingEngine)
-        * ```cd MatchingEngine```
-            * ```screen python3 main.py```
+        * ```npm run matchingEngine```
 
 ## Web Browser
 * Enter ```localhost:8000``` on web browser
@@ -121,8 +128,8 @@
 * ```erl```
 * ```apt-get update```
 * ```apt-get install rabbitmq-server```
-* ```service rabbitmq-server status```
 * ```service rabbitmq-server start```
+* ```service rabbitmq-server status```
 * ```rabbitmq-plugins enable rabbitmq_management```
 * ```service rabbitmq-server restart```
 
@@ -130,3 +137,6 @@
 * ```apt-get update```
 * ```apt-get install python3```
 * ```apt install python3-pip```
+* ```pip install pymongo```
+* ```pip instal pika```
+* ```pip instal sortedcontainers```

@@ -10,6 +10,7 @@
 * rabbitmq web management: 15672
 
 ## Setup
+* ```docker run -it --name NUSwap -d -p 5672:5672 -p 15672:15672 -p 3000:3000 -p 5000:5000 -p 8000:8000 -dit ubuntu:latest```
 * ```git clone https://github.com/HeWenbin-bobo/IT5007-Project-Public.git```
 * ```cd IT5007-Project-Public```
 * ```git checkout origin/main```
@@ -116,7 +117,6 @@
 * ******
   
 ## RabbitMQ installation
-* ```docker run -it --name rabbitmq -d -p 5672:5672 -p 15672:15672 -p 3000:3000 -p 5000:5000 -p 8000:8000 -dit ubuntu:lates```
 * ```apt-get install erlang-nox```
 * ```erl```
 * ```apt-get update```

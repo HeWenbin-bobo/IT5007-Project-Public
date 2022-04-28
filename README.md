@@ -130,6 +130,3 @@
 * ```apt-get update```
 * ```apt-get install python3```
 * ```apt install python3-pip```
-* ```pip install pymongo```
-* ```pip install sortedcontainers```
-* ```pip install pika```

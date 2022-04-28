@@ -15,6 +15,7 @@
 * ```git checkout origin/AWS_withRabbitMQ_withMatchingEngine```
 * (Automatically setup)
     * ```npm run start```
+        * If meet 'Y' or 'N', please press 'Y'
         * only need to enter ```Ctrl+A+D``` when creating screen
             * one for mongodb
             * one for api server

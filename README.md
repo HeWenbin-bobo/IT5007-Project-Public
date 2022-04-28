@@ -21,7 +21,7 @@
     * ```export NVM_DIR="$HOME/.nvm"```
     * ```[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm```
     * ```nvm install 10```
-        * ```nvm alias default 10```
+    * ```nvm alias default 10```
 * (Automatically setup)
     * ```npm run start```
         * Follow the installation process (such as press 'Y')
